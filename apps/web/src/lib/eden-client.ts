@@ -1,4 +1,4 @@
 import type { App } from "@api/index";
 import { treaty } from "@elysiajs/eden";
 
-export const client = treaty<App>("localhost:3000");
+export const api = treaty<App>("localhost:3000");
