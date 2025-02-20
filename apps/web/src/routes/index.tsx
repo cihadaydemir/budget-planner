@@ -1,5 +1,6 @@
+import { Button } from "@/components/ui";
 import { usePockets } from "@/hooks/pockets/usePockets";
-import { api } from "@/lib/eden-client";
+
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
@@ -21,7 +22,10 @@ function HomeComponent() {
 					</div>
 				))
 			) : (
-				<p>Seems like you don't have any pockets yet. Create one</p>
+				<div>
+					<p>Seems like you don't have any pockets yet. Create one</p>
+					<Button>Create Pocket</Button>
+				</div>
 			)}
 		</div>
 	);

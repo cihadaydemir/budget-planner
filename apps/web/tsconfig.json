@@ -9,8 +9,15 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@api/*": ["../api/src/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@api/*": [
+        "../api/src/*"
+      ],
+      "ui": [
+        "./src/components/ui/index.ts"
+      ]
     }
   }
 }

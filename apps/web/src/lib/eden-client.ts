@@ -1,4 +1,5 @@
 import type { App } from "@api/index";
-import { treaty } from "@elysiajs/eden";
 
-export const api = treaty<App>("localhost:3000");
+import { createEdenTreatyReactQuery } from "@ap0nia/eden-react-query";
+
+export const api = createEdenTreatyReactQuery<App>("localhost:3000");
