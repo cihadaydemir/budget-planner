@@ -10,8 +10,7 @@ import { ThemeProvider } from "./theme-provider";
 declare module "react-aria-components" {
 	interface RouterConfig {
 		href: ToOptions["to"];
-		params: ToOptions["params"];
-		routerOptions: Omit<NavigateOptions, "params">;
+		routerOptions: Omit<NavigateOptions, keyof ToOptions>;
 	}
 }
 
@@ -21,7 +20,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 	return (
 		<RouterProvider
 			navigate={(to, options) => router.navigate({ to, ...options })}
-			useHref={(to) => router.buildLocation({ to: to }).href}
+			useHref={(to) => router.buildLocation({ to }).href}
 		>
 			<ThemeProvider defaultTheme="system" storageKey="ui-theme">
 				{children}
