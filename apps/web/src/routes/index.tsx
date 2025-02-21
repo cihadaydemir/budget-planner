@@ -1,3 +1,4 @@
+import { CreatePocketModal } from "@/components/create-pocket-modal";
 import { Button } from "@/components/ui";
 import { usePockets } from "@/hooks/pockets/usePockets";
 import { api } from "@/lib/eden-client";
@@ -16,7 +17,7 @@ function HomeComponent() {
 		return (
 			<div className="w-full h-full flex flex-col justify-center items-center gap-3">
 				<p>Seems like you don't have any pockets yet.</p>
-				<Button>Create Pocket</Button>
+				<CreatePocketModal />
 			</div>
 		);
 	}
