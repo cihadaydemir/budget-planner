@@ -3,23 +3,26 @@ import { Button, Form, Modal, NumberField, TextField } from "./ui";
 import { useCreatePocketMutation } from "@/hooks/pockets/useCreatePocketMutation";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { useState } from "react";
 
 export const CreatePocketModal = () => {
 	const { control, handleSubmit } = useForm<CreatePocketSchemaType>({});
 	const createPocketMutation = useCreatePocketMutation();
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const onSubmit = (data: CreatePocketSchemaType) => {
 		createPocketMutation.mutate(data, {
 			onSuccess(data, variables, context) {
+				setIsModalOpen(false);
 				toast(`Pocket ${data.data?.[0].name} created successfully`);
 			},
 		});
 	};
 
 	return (
-		<Modal>
+		<Modal isOpen={isModalOpen} onOpenChange={setIsModalOpen}>
 			<Button>Create Pocket</Button>
-			<Modal.Content>
+			<Modal.Content isBlurred>
 				<Modal.Header>
 					<Modal.Title>Create Pocket</Modal.Title>
 					<Modal.Description>
