@@ -1,4 +1,7 @@
 import { Providers } from "@/components/providers";
+import AppSidebar from "@/components/sidebar/app-sidebar";
+import AppSidebarNav from "@/components/sidebar/app-sidebar-nav";
+import { Container, SidebarInset } from "@/components/ui";
 import {
 	Link,
 	type NavigateOptions,
@@ -15,8 +18,16 @@ export const Route = createRootRoute({
 function RootComponent() {
 	return (
 		<Providers>
-			<Outlet />
-			<TanStackRouterDevtools position="bottom-right" />
+			<AppSidebar collapsible="dock" />
+			<SidebarInset>
+				<AppSidebarNav />
+				<main className="flex min-h-screen flex-col items-center py-2 bg-bg text-fg overflow-y-hidden">
+					<Container intent="padded-content">
+						<Outlet />
+					</Container>
+				</main>
+				<TanStackRouterDevtools position="bottom-right" />
+			</SidebarInset>
 		</Providers>
 	);
 }

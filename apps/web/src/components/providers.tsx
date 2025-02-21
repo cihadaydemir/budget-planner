@@ -6,6 +6,7 @@ import {
 import type React from "react";
 import { RouterProvider } from "react-aria-components";
 import { ThemeProvider } from "./theme-provider";
+import { SidebarProvider } from "./ui";
 
 declare module "react-aria-components" {
 	interface RouterConfig {
@@ -23,7 +24,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 			useHref={(to) => router.buildLocation({ to }).href}
 		>
 			<ThemeProvider defaultTheme="system" storageKey="ui-theme">
-				{children}
+				<SidebarProvider>{children}</SidebarProvider>
 			</ThemeProvider>
 		</RouterProvider>
 	);
