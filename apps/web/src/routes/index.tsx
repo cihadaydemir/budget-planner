@@ -11,7 +11,6 @@ export const Route = createFileRoute("/")({
 
 function HomeComponent() {
 	const { data: pockets, error, isLoading } = usePockets();
-	// const { data: pockets } = api.pockets.get.useQuery();
 
 	if (!pockets) {
 		return (
