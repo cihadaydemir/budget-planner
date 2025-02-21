@@ -12,12 +12,19 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as PocketPocketIdImport } from './routes/pocket/$pocketId'
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PocketPocketIdRoute = PocketPocketIdImport.update({
+  id: '/pocket/$pocketId',
+  path: '/pocket/$pocketId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -32,6 +39,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/pocket/$pocketId': {
+      id: '/pocket/$pocketId'
+      path: '/pocket/$pocketId'
+      fullPath: '/pocket/$pocketId'
+      preLoaderRoute: typeof PocketPocketIdImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -39,32 +53,37 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/pocket/$pocketId': typeof PocketPocketIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/pocket/$pocketId': typeof PocketPocketIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/pocket/$pocketId': typeof PocketPocketIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/pocket/$pocketId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/pocket/$pocketId'
+  id: '__root__' | '/' | '/pocket/$pocketId'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PocketPocketIdRoute: typeof PocketPocketIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PocketPocketIdRoute: PocketPocketIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +96,15 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/pocket/$pocketId"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/pocket/$pocketId": {
+      "filePath": "pocket/$pocketId.tsx"
     }
   }
 }
