@@ -11,7 +11,7 @@ export const pocketsRoute = new Elysia({ prefix: "/pockets" })
 		return await db.select().from(pocketSchema);
 	})
 	.post(
-		"",
+		"/create",
 		async ({ body }) => {
 			return await db.insert(pocketSchema).values(body).returning();
 		},
