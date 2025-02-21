@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui";
 import { usePockets } from "@/hooks/pockets/usePockets";
+import { api } from "@/lib/eden-client";
 
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -8,25 +9,27 @@ export const Route = createFileRoute("/")({
 });
 
 function HomeComponent() {
-	const { data, error } = usePockets();
-	console.log("data", data);
+	const { data: pockets, error, isLoading } = usePockets();
+	// const { data: pockets } = api.pockets.get.useQuery();
+
+	if (!pockets) {
+		return (
+			<div className="w-full h-full flex flex-col justify-center items-center gap-3">
+				<p>Seems like you don't have any pockets yet.</p>
+				<Button>Create Pocket</Button>
+			</div>
+		);
+	}
+
 	return (
 		<div className="p-2">
-			<h3>Welcome Home!</h3>
-			{data?.data ? (
-				data.data.map((item) => (
-					<div>
-						<p className="font-bold">{item.name}</p>
-						<p>{item.description}</p>
-						<p>{item.budget} EUR</p>
-					</div>
-				))
-			) : (
-				<div>
-					<p>Seems like you don't have any pockets yet. Create one</p>
-					<Button>Create Pocket</Button>
+			{pockets.map((item) => (
+				<div key={item.id}>
+					<p className="font-bold">{item.name}</p>
+					<p>{item.description}</p>
+					<p>{item.budget} EUR</p>
 				</div>
-			)}
+			))}
 		</div>
 	);
 }
