@@ -10,7 +10,7 @@ import {
 	IconReceipt2,
 	IconSettings,
 } from "justd-icons";
-import { useLocation, useRouter } from "@tanstack/react-router";
+import { useLocation, useParams, useRouter } from "@tanstack/react-router";
 import {
 	Avatar,
 	Menu,
@@ -35,7 +35,7 @@ export default function AppSidebar(
 	const currentPath = location.pathname;
 	const { data: pockets } = usePockets();
 	const router = useRouter();
-
+	const selectedPocketParam = useParams({ from: "/pocket/$pocketId" });
 	return (
 		<Sidebar {...props}>
 			<SidebarHeader>
@@ -57,6 +57,7 @@ export default function AppSidebar(
 						</SidebarItem>
 						{pockets?.map((pocket) => (
 							<SidebarItem
+								isCurrent={pocket.id === selectedPocketParam.pocketId}
 								key={pocket.id}
 								onPress={(e) => {
 									router.navigate({
