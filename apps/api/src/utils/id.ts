@@ -6,7 +6,7 @@ const nanoid = customAlphabet(alphabet);
 
 const prefixes = {
 	pocket: "pck",
-	expense: "exp",
+	transaction: "trn",
 } as const;
 
 export type IdPrefix = keyof typeof prefixes;
