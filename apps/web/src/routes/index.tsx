@@ -1,10 +1,8 @@
 import { CreatePocketModal } from "@/components/create-pocket-modal";
-import { Button } from "@/components/ui";
+import { Heading } from "@/components/ui";
 import { usePockets } from "@/hooks/pockets/usePockets";
-import { api } from "@/lib/eden-client";
 
 import { createFileRoute } from "@tanstack/react-router";
-import { Heading } from "react-aria-components";
 
 export const Route = createFileRoute("/")({
 	component: HomeComponent,
@@ -23,17 +21,20 @@ function HomeComponent() {
 	}
 
 	return (
-		<div className="p-2">
-			<Heading level={1}>Pockets</Heading>
-			<CreatePocketModal />
-
-			{pockets.map((item) => (
-				<div key={item.id}>
-					<p className="font-bold">{item.name}</p>
-					<p>{item.description}</p>
-					<p>{item.budget} EUR</p>
-				</div>
-			))}
+		<div className="flex flex-col w-full h-full gap-3">
+			<div className="flex justify-between">
+				<Heading level={1}>Pockets</Heading>
+				<CreatePocketModal />
+			</div>
+			<div className="flex flex-col md:flex-row gap-3">
+				{pockets.map((item) => (
+					<div key={item.id}>
+						<p className="font-bold">{item.name}</p>
+						<p>{item.description}</p>
+						<p>{item.budget} EUR</p>
+					</div>
+				))}
+			</div>
 		</div>
 	);
 }
