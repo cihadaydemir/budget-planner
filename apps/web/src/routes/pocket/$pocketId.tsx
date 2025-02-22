@@ -11,7 +11,7 @@ function RouteComponent() {
 	const { data: pockets } = usePockets();
 	const pocket = pockets?.find((pocket) => pocket.id === params.pocketId);
 	return (
-		<div className="flex flex-col w-full h-full">
+		<div className="flex flex-col w-full h-full py-4">
 			<Heading level={1}>{pocket?.name}</Heading>
 		</div>
 	);
