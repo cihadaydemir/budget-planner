@@ -5,12 +5,14 @@ export const schemas = {
 	insert: spreads(
 		{
 			pocket: table.pocketSchema,
+			transaction: table.transactionSchema,
 		},
 		"insert",
 	),
 	select: spreads(
 		{
 			pocket: table.pocketSchema,
+			transaction: table.transactionSchema,
 		},
 		"select",
 	),
