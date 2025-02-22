@@ -6,13 +6,24 @@ import {
 	insertTransactionSchema,
 	type CreateTransactionSchemaType,
 } from "@api/db/types/transaction";
+import { useCreateTransactionMutation } from "@/hooks/transactions/useCreateTransactionMutation";
+import { toast } from "sonner";
 
 export const CreateTransactionModal = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const { control, handleSubmit } = useForm({
 		resolver: typeboxResolver(insertTransactionSchema),
 	});
-	const onSubmit = (data: CreateTransactionSchemaType) => {};
+	const createTransactionMutation = useCreateTransactionMutation();
+
+	const onSubmit = (data: CreateTransactionSchemaType) => {
+		createTransactionMutation.mutate(data, {
+			onSuccess: (data, variables, context) => {
+				setIsModalOpen(false);
+				toast(`Transaction ${data.data?.[0].name} created successfully`);
+			},
+		});
+	};
 
 	return (
 		<Modal isOpen={isModalOpen} onOpenChange={setIsModalOpen}>
