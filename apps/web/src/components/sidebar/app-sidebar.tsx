@@ -52,13 +52,14 @@ export default function AppSidebar(
 					<SidebarSection title="Pockets">
 						<SidebarItem
 							href="/"
-							tooltip="Pockets"
+							tooltip="Overview"
 							isCurrent={"/" === currentPath}
 							onPress={(e) => {
 								setIsOpenOnMobile(false);
 							}}
 						>
-							<SidebarLabel>Pockets</SidebarLabel>
+							<IconDashboard />
+							<SidebarLabel>Overview</SidebarLabel>
 						</SidebarItem>
 						{pockets?.map((pocket) => (
 							<SidebarItem
