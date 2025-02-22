@@ -1,3 +1,4 @@
+import { CreateTransactionModal } from "@/components/create-transaction-modal";
 import { Heading } from "@/components/ui";
 import { usePockets } from "@/hooks/pockets/usePockets";
 import { createFileRoute } from "@tanstack/react-router";
@@ -12,7 +13,10 @@ function RouteComponent() {
 	const pocket = pockets?.find((pocket) => pocket.id === params.pocketId);
 	return (
 		<div className="flex flex-col w-full h-full py-4">
-			<Heading level={1}>{pocket?.name}</Heading>
+			<div className="flex justify-between">
+				<Heading level={1}>{pocket?.name}</Heading>
+				<CreateTransactionModal />
+			</div>
 		</div>
 	);
 }

@@ -1,12 +1,18 @@
-import type { CreatePocketSchemaType } from "@api/db/types/pocket";
+import {
+	insertPocketSchema,
+	type CreatePocketSchemaType,
+} from "@api/db/types/pocket";
 import { Button, Form, Modal, NumberField, TextField } from "./ui";
 import { useCreatePocketMutation } from "@/hooks/pockets/useCreatePocketMutation";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useState } from "react";
+import { typeboxResolver } from "@hookform/resolvers/typebox";
 
 export const CreatePocketModal = () => {
-	const { control, handleSubmit } = useForm<CreatePocketSchemaType>({});
+	const { control, handleSubmit } = useForm<CreatePocketSchemaType>({
+		resolver: typeboxResolver(insertPocketSchema),
+	});
 	const createPocketMutation = useCreatePocketMutation();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
