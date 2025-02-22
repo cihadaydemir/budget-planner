@@ -14,6 +14,7 @@ import { useLocation, useParams, useRouter } from "@tanstack/react-router";
 import {
 	Avatar,
 	Menu,
+	Separator,
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
@@ -23,6 +24,7 @@ import {
 	SidebarRail,
 	SidebarSection,
 	SidebarSectionGroup,
+	useSidebar,
 } from "../ui";
 import { usePockets } from "@/hooks/pockets/usePockets";
 
@@ -31,11 +33,12 @@ import { usePockets } from "@/hooks/pockets/usePockets";
 export default function AppSidebar(
 	props: React.ComponentProps<typeof Sidebar>,
 ) {
+	const { setIsOpenOnMobile } = useSidebar();
 	const location = useLocation();
 	const currentPath = location.pathname;
 	const { data: pockets } = usePockets();
 	const router = useRouter();
-	const selectedPocketParam = useParams({ from: "/pocket/$pocketId" });
+	console.log("path", currentPath);
 	return (
 		<Sidebar {...props}>
 			<SidebarHeader>
@@ -51,22 +54,25 @@ export default function AppSidebar(
 							href="/"
 							tooltip="Pockets"
 							isCurrent={"/" === currentPath}
+							onPress={(e) => {
+								setIsOpenOnMobile(false);
+							}}
 						>
-							<IconDashboard />
 							<SidebarLabel>Pockets</SidebarLabel>
 						</SidebarItem>
 						{pockets?.map((pocket) => (
 							<SidebarItem
-								isCurrent={pocket.id === selectedPocketParam.pocketId}
+								isCurrent={pocket.id === currentPath.split("/")[2]}
 								key={pocket.id}
 								onPress={(e) => {
 									router.navigate({
 										to: `/pocket/${pocket.id}`,
 										params: { pocketId: pocket.id },
 									});
+									setIsOpenOnMobile(false);
 								}}
 							>
-								{pocket.name}
+								<SidebarLabel>{pocket.name}</SidebarLabel>
 							</SidebarItem>
 						))}
 					</SidebarSection>

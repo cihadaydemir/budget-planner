@@ -4,6 +4,7 @@ import { usePockets } from "@/hooks/pockets/usePockets";
 import { api } from "@/lib/eden-client";
 
 import { createFileRoute } from "@tanstack/react-router";
+import { Heading } from "react-aria-components";
 
 export const Route = createFileRoute("/")({
 	component: HomeComponent,
@@ -23,6 +24,9 @@ function HomeComponent() {
 
 	return (
 		<div className="p-2">
+			<Heading level={1}>Pockets</Heading>
+			<CreatePocketModal />
+
 			{pockets.map((item) => (
 				<div key={item.id}>
 					<p className="font-bold">{item.name}</p>
