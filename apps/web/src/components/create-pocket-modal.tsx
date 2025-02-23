@@ -2,15 +2,17 @@ import {
 	insertPocketSchema,
 	type CreatePocketSchemaType,
 } from "@api/db/types/pocket";
-import { Button, Form, Modal, NumberField, TextField } from "./ui";
+import { Button, Checkbox, Form, Modal, NumberField, TextField } from "./ui";
 import { useCreatePocketMutation } from "@/hooks/pockets/useCreatePocketMutation";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useState } from "react";
 import { typeboxResolver } from "@hookform/resolvers/typebox";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const CreatePocketModal = () => {
-	const { control, handleSubmit } = useForm<CreatePocketSchemaType>({
+	const queryClient = useQueryClient();
+	const { control, handleSubmit, formState } = useForm({
 		resolver: typeboxResolver(insertPocketSchema),
 	});
 	const createPocketMutation = useCreatePocketMutation();
@@ -61,14 +63,11 @@ export const CreatePocketModal = () => {
 							control={control}
 							name="budget"
 							render={({ field }) => (
-								<NumberField
-									{...field}
-									isRequired
-									name="budget"
-									label="Budget"
-								/>
+								<NumberField {...field} name="budget" label="Budget" />
 							)}
 						/>
+
+						{JSON.stringify(formState.errors)}
 					</Modal.Body>
 					<Modal.Footer>
 						<Modal.Close>Close</Modal.Close>

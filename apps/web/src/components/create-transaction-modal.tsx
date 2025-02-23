@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, Modal, NumberField, TextField } from "./ui";
+import { Button, Checkbox, Form, Modal, NumberField, TextField } from "./ui";
 import { Controller, useForm } from "react-hook-form";
 import { typeboxResolver } from "@hookform/resolvers/typebox";
 import {
@@ -8,21 +8,32 @@ import {
 } from "@api/db/types/transaction";
 import { useCreateTransactionMutation } from "@/hooks/transactions/useCreateTransactionMutation";
 import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
+import { useParams } from "@tanstack/react-router";
 
 export const CreateTransactionModal = () => {
+	const params = useParams({ from: "/pocket/$pocketId" });
+	const queryClient = useQueryClient();
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const { control, handleSubmit } = useForm({
+	const { control, handleSubmit, formState } = useForm({
 		resolver: typeboxResolver(insertTransactionSchema),
 	});
 	const createTransactionMutation = useCreateTransactionMutation();
 
 	const onSubmit = (data: CreateTransactionSchemaType) => {
-		createTransactionMutation.mutate(data, {
-			onSuccess: (data, variables, context) => {
-				setIsModalOpen(false);
-				toast(`Transaction ${data.data?.[0].name} created successfully`);
+		console.log("pocketId", params.pocketId);
+		createTransactionMutation.mutate(
+			{ ...data, pocketId: params.pocketId },
+			{
+				onSuccess: (data, variables, context) => {
+					setIsModalOpen(false);
+					queryClient.invalidateQueries({
+						queryKey: ["transactions", params.pocketId],
+					});
+					toast(`Transaction ${data.data?.[0].name} created successfully`);
+				},
 			},
-		});
+		);
 	};
 
 	return (
@@ -34,6 +45,7 @@ export const CreateTransactionModal = () => {
 				</Modal.Header>
 				<Form onSubmit={handleSubmit(onSubmit)}>
 					<Modal.Body>
+						{JSON.stringify(formState.errors)}
 						<Controller
 							control={control}
 							name="name"
@@ -75,12 +87,27 @@ export const CreateTransactionModal = () => {
 								/>
 							)}
 						/>
+						<Controller
+							control={control}
+							name="isPaid"
+							render={({ field }) => (
+								<Checkbox
+									{...field}
+									onChange={field.onChange}
+									isSelected={field.value}
+									value="updates"
+									name="isPaid"
+									label="Is Paid"
+									defaultSelected={false}
+								/>
+							)}
+						/>
 					</Modal.Body>
+					<Modal.Footer>
+						<Modal.Close>Cancel</Modal.Close>
+						<Button type="submit">Create</Button>
+					</Modal.Footer>
 				</Form>
-				<Modal.Footer>
-					<Modal.Close>Cancel</Modal.Close>
-					<Button type="submit">Create</Button>
-				</Modal.Footer>
 			</Modal.Content>
 		</Modal>
 	);
