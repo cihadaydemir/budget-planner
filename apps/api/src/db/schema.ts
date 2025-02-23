@@ -18,7 +18,7 @@ export const pocketSchema = sqliteTable("pockets", {
 	...defaultFields("pocket"),
 	name: text("name").notNull(),
 	description: text("description"),
-	budget: integer("budget").notNull(),
+	budget: integer("budget"),
 });
 
 export const transactionSchema = sqliteTable("transactions", {
@@ -26,6 +26,7 @@ export const transactionSchema = sqliteTable("transactions", {
 	name: text("name").notNull(),
 	description: text("description"),
 	amount: integer("amount").notNull(),
+	isPaid: integer("is_paid", { mode: "boolean" }).notNull().default(false),
 	pocketId: text("pocket_id")
 		.notNull()
 		.references(() => pocketSchema.id),

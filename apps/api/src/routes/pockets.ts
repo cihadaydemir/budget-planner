@@ -3,6 +3,7 @@ import { schemas } from "../db/model";
 import { db } from "../db";
 import { pocketSchema, table } from "../db/schema";
 import { eq } from "drizzle-orm";
+import { insertPocketSchema } from "../db/types";
 
 const { pocket } = schemas.insert;
 
@@ -13,10 +14,11 @@ export const pocketsRoute = new Elysia({ prefix: "/pockets" })
 	.post(
 		"/create",
 		async ({ body }) => {
+			console.log("triggered", body);
 			return await db.insert(pocketSchema).values(body).returning();
 		},
 		{
-			body: t.Omit(t.Object(pocket), ["id"]),
+			body: insertPocketSchema,
 		},
 	)
 	.delete("/:id", async ({ params }) => {

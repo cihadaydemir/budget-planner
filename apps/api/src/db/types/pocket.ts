@@ -1,9 +1,12 @@
-import { createInsertSchema } from "drizzle-typebox";
 import { t, type Static } from "elysia";
-import { table } from "../schema";
+import { schemas } from "../model";
 
-export const insertPocketSchema = createInsertSchema(table.pocketSchema, {
+const { pocket: insertPocket } = schemas.insert;
+
+export const insertPocketSchema = t.Object({
+	name: insertPocket.name,
 	description: t.Optional(t.String()),
+	budget: t.Optional(t.Integer()),
 });
 
 export type CreatePocketSchemaType = Omit<

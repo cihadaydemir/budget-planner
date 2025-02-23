@@ -2,10 +2,10 @@ import Elysia from "elysia";
 import { db } from "../db";
 import { table } from "../db/schema";
 import { eq } from "drizzle-orm";
-import { insertPocketSchema, insertTransactionSchema } from "../db/types";
+import { insertTransactionSchema } from "../db/types";
 
 export const transactionsRoute = new Elysia({ prefix: "/transactions" })
-	.get("/:pocketId", async ({ params }) => {
+	.get("/pocket/:pocketId", async ({ params }) => {
 		return await db
 			.select()
 			.from(table.transactionSchema)
