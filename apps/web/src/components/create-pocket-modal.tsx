@@ -66,8 +66,6 @@ export const CreatePocketModal = () => {
 								<NumberField {...field} name="budget" label="Budget" />
 							)}
 						/>
-
-						{JSON.stringify(formState.errors)}
 					</Modal.Body>
 					<Modal.Footer>
 						<Modal.Close>Close</Modal.Close>

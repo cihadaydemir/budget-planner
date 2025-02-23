@@ -9,6 +9,7 @@ export const insertTransactionSchema = t.Object(
 		description: t.Optional(t.String()),
 		amount: insertTransaction.amount,
 		isPaid: t.Boolean(),
+		pocketId: insertTransaction.pocketId,
 	},
 	{
 		amount: t.Integer({
@@ -19,7 +20,7 @@ export const insertTransactionSchema = t.Object(
 );
 export type CreateTransactionSchemaType = Static<
 	typeof insertTransactionSchema
-> & { pocketId: string };
+>;
 
 const { transaction } = schemas.select;
 

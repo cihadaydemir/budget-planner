@@ -15,18 +15,22 @@ export const CreateTransactionModal = () => {
 	const params = useParams({ from: "/pocket/$pocketId" });
 	const queryClient = useQueryClient();
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const { control, handleSubmit, formState } = useForm({
+	const { control, handleSubmit, formState, reset } = useForm({
 		resolver: typeboxResolver(insertTransactionSchema),
+		defaultValues: {
+			pocketId: params.pocketId,
+			isPaid: false,
+		},
 	});
 	const createTransactionMutation = useCreateTransactionMutation();
 
 	const onSubmit = (data: CreateTransactionSchemaType) => {
-		console.log("pocketId", params.pocketId);
 		createTransactionMutation.mutate(
 			{ ...data, pocketId: params.pocketId },
 			{
 				onSuccess: (data, variables, context) => {
 					setIsModalOpen(false);
+					reset();
 					queryClient.invalidateQueries({
 						queryKey: ["transactions", params.pocketId],
 					});
@@ -45,7 +49,6 @@ export const CreateTransactionModal = () => {
 				</Modal.Header>
 				<Form onSubmit={handleSubmit(onSubmit)}>
 					<Modal.Body>
-						{JSON.stringify(formState.errors)}
 						<Controller
 							control={control}
 							name="name"
