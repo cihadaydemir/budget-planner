@@ -1,7 +1,10 @@
+import { BudgetOverview } from "@/components/budget-overview";
+import { BudgetOverviewCard } from "@/components/budget-overview-card";
 import { CreateTransactionModal } from "@/components/create-transaction-modal";
 import { Heading } from "@/components/ui";
 import { usePockets } from "@/hooks/pockets/usePockets";
 import { useTransactions } from "@/hooks/transactions/useTransactions";
+import { getTotalSpent, getTransactionsStatistics } from "@/utils/statistics";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/pocket/$pocketId")({
@@ -14,13 +17,29 @@ function RouteComponent() {
 	const pocket = pockets?.find((pocket) => pocket.id === params.pocketId);
 	const { data: transactions } = useTransactions(params.pocketId);
 
-	console.log("transactions", transactions);
+	if (!transactions) {
+		return <div>Loading...</div>;
+	}
+
 	return (
 		<div className="flex flex-col w-full h-full py-4">
 			<div className="flex justify-between">
 				<Heading level={1}>{pocket?.name}</Heading>
 				<CreateTransactionModal />
 			</div>
+
+			{pocket?.budget && (
+				<BudgetOverviewCard
+					totalBudget={pocket.budget}
+					statisticsData={getTransactionsStatistics(transactions)}
+				/>
+			)}
+			{transactions?.map((transaction) => (
+				<div key={transaction.id}>
+					{transaction.name} - {transaction.amount}{" "}
+					{transaction.isPaid ? "Paid" : "Not Paid"}
+				</div>
+			))}
 		</div>
 	);
 }

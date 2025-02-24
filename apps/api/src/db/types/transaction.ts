@@ -27,3 +27,5 @@ const { transaction } = schemas.select;
 export const selectTransactionSchema = t.Omit(t.Object({ ...transaction }), [
 	"serialId",
 ]);
+
+export type Transaction = Static<typeof selectTransactionSchema>;

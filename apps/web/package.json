@@ -34,6 +34,7 @@
     "@tanstack/react-router": "^1.106.0",
     "@tanstack/router-devtools": "^1.106.0",
     "justd-icons": "^1.10.25",
+    "motion": "^12.4.7",
     "react": "^19.0.0",
     "react-aria-components": "^1.6.0",
     "react-dom": "^19.0.0",
