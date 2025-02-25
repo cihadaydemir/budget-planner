@@ -8,7 +8,8 @@ export type StatisticsDataType = {
 
 export const getTransactionsStatistics = (transactions: Transaction[]) => {
 	if (transactions.length === 0) {
-		return 0;
+		console.log("no transactions");
+		return null;
 	}
 	const defaultStatistics = {
 		totalSpent: 0,

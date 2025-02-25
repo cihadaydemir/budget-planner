@@ -38,7 +38,7 @@ export default function AppSidebar(
 	const currentPath = location.pathname;
 	const { data: pockets } = usePockets();
 	const router = useRouter();
-	console.log("path", currentPath);
+
 	return (
 		<Sidebar {...props}>
 			<SidebarHeader>

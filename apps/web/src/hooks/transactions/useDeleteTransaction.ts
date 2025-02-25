@@ -1,7 +1,8 @@
 import { api } from "@/lib/eden-client";
 import { useMutation } from "@tanstack/react-query";
 
-export const useDeleteTransaction = (transactionId: string) =>
+export const useDeleteTransaction = () =>
 	useMutation({
-		mutationFn: () => api.transactions({ transactionId }).delete(),
+		mutationFn: (transactionId: string) =>
+			api.transactions({ transactionId }).delete(),
 	});

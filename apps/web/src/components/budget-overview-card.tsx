@@ -1,5 +1,5 @@
 import type { StatisticsDataType } from "@/utils/statistics";
-import { Card, Meter } from "./ui";
+import { Card, Grid, Meter } from "./ui";
 
 interface BudgetOverviewCardProps {
 	totalBudget: number | null;
@@ -19,8 +19,8 @@ export const BudgetOverviewCard = ({
 
 	return (
 		<Card>
-			<Card.Content>
-				<div className="flex gap-2 py-2 justify-between flex-wrap">
+			<Card.Content className="flex flex-col p-4 gap-4">
+				{/* <div className="flex gap-2 py-2 justify-between">
 					{!totalBudget && <p>{statisticsData.totalSpent} Euro</p>}
 					{totalBudget && (
 						<>
@@ -42,7 +42,41 @@ export const BudgetOverviewCard = ({
 							</div>
 						</>
 					)}
-				</div>
+				</div> */}
+				<Grid
+					columns={{
+						initial: 2,
+						sm: 1,
+						md: 4,
+						xl: 4,
+					}}
+					gap={{
+						initial: 2,
+					}}
+					autoRows="fr"
+				>
+					{!totalBudget && <p>{statisticsData.totalSpent} Euro</p>}
+					{totalBudget && (
+						<>
+							<Grid.Item className="flex flex-col gap-1">
+								<p className="text-muted-fg">Total Budget</p>
+								<p className="font-bold">{`${totalBudget}€`}</p>
+							</Grid.Item>
+							<Grid.Item className="flex flex-col gap-1">
+								<p className="text-muted-fg">Paid</p>
+								<p className="font-bold">{`${statisticsData.totalPaid}€`}</p>
+							</Grid.Item>
+							<Grid.Item className="flex flex-col gap-1">
+								<p className="text-muted-fg">Not Paid</p>
+								<p className="font-bold">{`${statisticsData.totalNotPaid}€`}</p>
+							</Grid.Item>
+							<Grid.Item className="flex flex-col gap-1">
+								<p className="text-muted-fg">Remaining</p>
+								<p className="font-bold">{`${totalBudget - statisticsData.totalSpent}€`}</p>
+							</Grid.Item>
+						</>
+					)}
+				</Grid>
 				<Meter
 					label="Spent"
 					value={statisticsData.totalSpent}

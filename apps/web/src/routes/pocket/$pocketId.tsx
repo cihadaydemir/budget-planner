@@ -1,6 +1,7 @@
 import { BudgetOverview } from "@/components/budget-overview";
 import { BudgetOverviewCard } from "@/components/budget-overview-card";
 import { CreateTransactionModal } from "@/components/create-transaction-modal";
+import { ExpenseList } from "@/components/expense-list";
 import { Heading } from "@/components/ui";
 import { usePockets } from "@/hooks/pockets/usePockets";
 import { useTransactions } from "@/hooks/transactions/useTransactions";
@@ -29,20 +30,14 @@ function RouteComponent() {
 					<CreateTransactionModal />
 				</div>
 			</div>
-
 			{pocket?.budget && (
 				<BudgetOverviewCard
 					totalBudget={pocket.budget}
 					statisticsData={getTransactionsStatistics(transactions)}
 				/>
 			)}
-			{transactions?.map((transaction) => (
-				<div key={transaction.id}>
-					{transaction.name} - {transaction.amount}{" "}
-					{transaction.isPaid ? "Paid" : "Not Paid"}
-				</div>
-			))}
-			<div className="self-center md:hidden mt-auto">
+			<ExpenseList transactions={transactions} />
+			<div className="self-center md:hidden mt-auto z-10 fixed bottom-10">
 				<CreateTransactionModal />
 			</div>
 		</div>
