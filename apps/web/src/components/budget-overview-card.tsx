@@ -18,7 +18,7 @@ export const BudgetOverviewCard = ({
 	};
 
 	return (
-		<Card>
+		<Card className="bg-navbar">
 			<Card.Content className="flex flex-col p-4 gap-4">
 				{/* <div className="flex gap-2 py-2 justify-between">
 					{!totalBudget && <p>{statisticsData.totalSpent} Euro</p>}
@@ -63,16 +63,16 @@ export const BudgetOverviewCard = ({
 								<p className="font-bold">{`${totalBudget}€`}</p>
 							</Grid.Item>
 							<Grid.Item className="flex flex-col gap-1">
+								<p className="text-muted-fg">Remaining</p>
+								<p className="font-bold">{`${totalBudget - statisticsData.totalSpent}€`}</p>
+							</Grid.Item>
+							<Grid.Item className="flex flex-col gap-1">
 								<p className="text-muted-fg">Paid</p>
 								<p className="font-bold">{`${statisticsData.totalPaid}€`}</p>
 							</Grid.Item>
 							<Grid.Item className="flex flex-col gap-1">
 								<p className="text-muted-fg">Not Paid</p>
 								<p className="font-bold">{`${statisticsData.totalNotPaid}€`}</p>
-							</Grid.Item>
-							<Grid.Item className="flex flex-col gap-1">
-								<p className="text-muted-fg">Remaining</p>
-								<p className="font-bold">{`${totalBudget - statisticsData.totalSpent}€`}</p>
 							</Grid.Item>
 						</>
 					)}

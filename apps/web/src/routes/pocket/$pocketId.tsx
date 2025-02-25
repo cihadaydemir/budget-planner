@@ -1,12 +1,12 @@
-import { BudgetOverview } from "@/components/budget-overview";
 import { BudgetOverviewCard } from "@/components/budget-overview-card";
 import { CreateTransactionModal } from "@/components/create-transaction-modal";
 import { ExpenseList } from "@/components/expense-list";
-import { Heading } from "@/components/ui";
+import { Heading, Tabs } from "@/components/ui";
 import { usePockets } from "@/hooks/pockets/usePockets";
 import { useTransactions } from "@/hooks/transactions/useTransactions";
-import { getTotalSpent, getTransactionsStatistics } from "@/utils/statistics";
+import { getTransactionsStatistics } from "@/utils/statistics";
 import { createFileRoute } from "@tanstack/react-router";
+import { Collection } from "react-aria-components";
 
 export const Route = createFileRoute("/pocket/$pocketId")({
 	component: RouteComponent,
@@ -22,6 +22,36 @@ function RouteComponent() {
 		return <div>Loading...</div>;
 	}
 
+	const tabs = [
+		{
+			id: 1,
+			title: "All",
+			content: <ExpenseList transactions={transactions} />,
+		},
+		{
+			id: 2,
+			title: "Paid",
+			content: (
+				<ExpenseList
+					transactions={transactions.filter(
+						(transaction) => transaction.isPaid === true,
+					)}
+				/>
+			),
+		},
+		{
+			id: 3,
+			title: "Unpaid",
+			content: (
+				<ExpenseList
+					transactions={transactions.filter(
+						(transaction) => transaction.isPaid === false,
+					)}
+				/>
+			),
+		},
+	];
+
 	return (
 		<div className="flex flex-col w-full h-full py-4 gap-4">
 			<div className="flex justify-between">
@@ -36,7 +66,16 @@ function RouteComponent() {
 					statisticsData={getTransactionsStatistics(transactions)}
 				/>
 			)}
-			<ExpenseList transactions={transactions} />
+
+			<Tabs aria-label="Expenses" className="mt-4">
+				<Tabs.List aria-label="Expense tabs" items={tabs}>
+					{(item) => <Tabs.Tab>{item.title}</Tabs.Tab>}
+				</Tabs.List>
+
+				<Collection items={tabs}>
+					{(item) => <Tabs.Panel key={item.id}>{item.content}</Tabs.Panel>}
+				</Collection>
+			</Tabs>
 			<div className="self-center md:hidden mt-auto z-10 fixed bottom-10">
 				<CreateTransactionModal />
 			</div>

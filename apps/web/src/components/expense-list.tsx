@@ -29,7 +29,7 @@ export const ExpenseList = ({ transactions }: ExpenseListProps) => {
 			{transactions.map((transaction) => (
 				<Card
 					key={transaction.id}
-					className="flex items-center p-2 justify-between"
+					className="flex items-center p-2 justify-between bg-navbar"
 				>
 					<div className="flex flex-col gap-1">
 						<p className="font-bold">{transaction.amount}€</p>
