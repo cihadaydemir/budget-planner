@@ -22,10 +22,12 @@ function RouteComponent() {
 	}
 
 	return (
-		<div className="flex flex-col w-full h-full py-4">
+		<div className="flex flex-col w-full h-full py-4 gap-4">
 			<div className="flex justify-between">
 				<Heading level={1}>{pocket?.name}</Heading>
-				<CreateTransactionModal />
+				<div className="md:block hidden">
+					<CreateTransactionModal />
+				</div>
 			</div>
 
 			{pocket?.budget && (
@@ -40,6 +42,9 @@ function RouteComponent() {
 					{transaction.isPaid ? "Paid" : "Not Paid"}
 				</div>
 			))}
+			<div className="self-center md:hidden mt-auto">
+				<CreateTransactionModal />
+			</div>
 		</div>
 	);
 }

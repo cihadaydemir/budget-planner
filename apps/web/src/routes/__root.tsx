@@ -21,12 +21,10 @@ function RootComponent() {
 			<AppSidebar collapsible="dock" />
 			<SidebarInset>
 				<AppSidebarNav />
-				<main className="flex min-h-screen flex-col items-center py-2 bg-bg text-fg overflow-y-hidden">
-					<Container intent="padded-content" className="h-full w-full">
-						<Toast />
-						<Outlet />
-					</Container>
-				</main>
+				<Container intent="padded-content" className="h-full w-full">
+					<Toast />
+					<Outlet />
+				</Container>
 				<TanStackRouterDevtools position="bottom-right" />
 			</SidebarInset>
 		</Providers>

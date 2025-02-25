@@ -10,6 +10,7 @@ import { useCreateTransactionMutation } from "@/hooks/transactions/useCreateTran
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "@tanstack/react-router";
+import { IconPlus } from "justd-icons";
 
 export const CreateTransactionModal = () => {
 	const params = useParams({ from: "/pocket/$pocketId" });
@@ -42,10 +43,13 @@ export const CreateTransactionModal = () => {
 
 	return (
 		<Modal isOpen={isModalOpen} onOpenChange={setIsModalOpen}>
-			<Button>Create Transaction</Button>
+			<Button>
+				<IconPlus className="" />
+				Add Expense
+			</Button>
 			<Modal.Content isBlurred>
 				<Modal.Header>
-					<Modal.Title>Create Transaction</Modal.Title>
+					<Modal.Title>Add Expense</Modal.Title>
 				</Modal.Header>
 				<Form onSubmit={handleSubmit(onSubmit)}>
 					<Modal.Body>
@@ -69,7 +73,7 @@ export const CreateTransactionModal = () => {
 								<TextField
 									{...field}
 									label="Description"
-									placeholder="Describe what your transaction is about."
+									placeholder="Describe what your expense is about."
 								/>
 							)}
 						/>
@@ -108,7 +112,7 @@ export const CreateTransactionModal = () => {
 					</Modal.Body>
 					<Modal.Footer>
 						<Modal.Close>Cancel</Modal.Close>
-						<Button type="submit">Create</Button>
+						<Button type="submit">Add</Button>
 					</Modal.Footer>
 				</Form>
 			</Modal.Content>
