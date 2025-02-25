@@ -13,6 +13,8 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as PocketPocketIdImport } from './routes/pocket/$pocketId'
+import { Route as AuthSignUpImport } from './routes/auth/sign-up'
+import { Route as AuthSignInImport } from './routes/auth/sign-in'
 
 // Create/Update Routes
 
@@ -28,6 +30,18 @@ const PocketPocketIdRoute = PocketPocketIdImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AuthSignUpRoute = AuthSignUpImport.update({
+  id: '/auth/sign-up',
+  path: '/auth/sign-up',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthSignInRoute = AuthSignInImport.update({
+  id: '/auth/sign-in',
+  path: '/auth/sign-in',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -37,6 +51,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/sign-in': {
+      id: '/auth/sign-in'
+      path: '/auth/sign-in'
+      fullPath: '/auth/sign-in'
+      preLoaderRoute: typeof AuthSignInImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/sign-up': {
+      id: '/auth/sign-up'
+      path: '/auth/sign-up'
+      fullPath: '/auth/sign-up'
+      preLoaderRoute: typeof AuthSignUpImport
       parentRoute: typeof rootRoute
     }
     '/pocket/$pocketId': {
@@ -53,36 +81,46 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth/sign-in': typeof AuthSignInRoute
+  '/auth/sign-up': typeof AuthSignUpRoute
   '/pocket/$pocketId': typeof PocketPocketIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth/sign-in': typeof AuthSignInRoute
+  '/auth/sign-up': typeof AuthSignUpRoute
   '/pocket/$pocketId': typeof PocketPocketIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/auth/sign-in': typeof AuthSignInRoute
+  '/auth/sign-up': typeof AuthSignUpRoute
   '/pocket/$pocketId': typeof PocketPocketIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/pocket/$pocketId'
+  fullPaths: '/' | '/auth/sign-in' | '/auth/sign-up' | '/pocket/$pocketId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/pocket/$pocketId'
-  id: '__root__' | '/' | '/pocket/$pocketId'
+  to: '/' | '/auth/sign-in' | '/auth/sign-up' | '/pocket/$pocketId'
+  id: '__root__' | '/' | '/auth/sign-in' | '/auth/sign-up' | '/pocket/$pocketId'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthSignInRoute: typeof AuthSignInRoute
+  AuthSignUpRoute: typeof AuthSignUpRoute
   PocketPocketIdRoute: typeof PocketPocketIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthSignInRoute: AuthSignInRoute,
+  AuthSignUpRoute: AuthSignUpRoute,
   PocketPocketIdRoute: PocketPocketIdRoute,
 }
 
@@ -97,11 +135,19 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/auth/sign-in",
+        "/auth/sign-up",
         "/pocket/$pocketId"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/auth/sign-in": {
+      "filePath": "auth/sign-in.tsx"
+    },
+    "/auth/sign-up": {
+      "filePath": "auth/sign-up.tsx"
     },
     "/pocket/$pocketId": {
       "filePath": "pocket/$pocketId.tsx"
