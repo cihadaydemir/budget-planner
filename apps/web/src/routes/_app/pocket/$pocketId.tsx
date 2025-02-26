@@ -8,7 +8,7 @@ import { getTransactionsStatistics } from "@/utils/statistics";
 import { createFileRoute } from "@tanstack/react-router";
 import { Collection } from "react-aria-components";
 
-export const Route = createFileRoute("/pocket/$pocketId")({
+export const Route = createFileRoute("/_app/pocket/$pocketId")({
 	component: RouteComponent,
 });
 
