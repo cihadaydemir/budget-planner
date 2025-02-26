@@ -15,6 +15,13 @@
       "when": 1740269596282,
       "tag": "0001_mean_nomad",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1740608044420,
+      "tag": "0002_third_electro",
+      "breakpoints": true
     }
   ]
 }

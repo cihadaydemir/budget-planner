@@ -19,6 +19,7 @@ export const pocketSchema = sqliteTable("pockets", {
 	name: text("name").notNull(),
 	description: text("description"),
 	budget: integer("budget"),
+	userId: text("user_id").references(() => user.id),
 });
 
 export const transactionSchema = sqliteTable("transactions", {
@@ -30,6 +31,7 @@ export const transactionSchema = sqliteTable("transactions", {
 	pocketId: text("pocket_id")
 		.notNull()
 		.references(() => pocketSchema.id),
+	userId: text("user_id").references(() => user.id),
 });
 
 export const user = sqliteTable("user", {
