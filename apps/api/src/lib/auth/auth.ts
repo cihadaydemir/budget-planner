@@ -4,6 +4,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "../../db";
 import { user, session, verification, account } from "../../db/schema";
 export const auth = betterAuth({
+	appName: "Budget-Planner",
 	database: drizzleAdapter(db, {
 		// We're using Drizzle as our database
 		provider: "sqlite",
@@ -17,6 +18,7 @@ export const auth = betterAuth({
 			account,
 		},
 	}),
+	trustedOrigins: ["http://localhost:3001"],
 	emailAndPassword: {
 		enabled: true, // If you want to use email and password auth
 	},

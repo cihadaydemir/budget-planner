@@ -1,11 +1,19 @@
-import { Elysia } from "elysia";
-import { pocketsRoute } from "./routes/pockets";
 import cors from "@elysiajs/cors";
-import { transactionsRoute } from "./routes/transactions";
+import { Elysia } from "elysia";
+
 import betterAuthView from "./lib/auth/auth-view";
+import { pocketsRoute } from "./routes/pockets";
+import { transactionsRoute } from "./routes/transactions";
 
 const app = new Elysia()
-	.use(cors())
+	.use(
+		cors({
+			origin: "http://localhost:3001",
+			methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+			credentials: true,
+			allowedHeaders: ["Content-Type", "Authorization"],
+		}),
+	)
 	.all("/api/auth/*", betterAuthView)
 	.use(pocketsRoute)
 	.use(transactionsRoute)
