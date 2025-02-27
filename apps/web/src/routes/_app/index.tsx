@@ -12,10 +12,13 @@ function HomeComponent() {
 	const { data: pockets, error, isLoading } = usePockets();
 
 	if (!pockets) {
+		console.log("no pockets");
 		return (
 			<div className="w-full h-full flex flex-col justify-center items-center gap-3">
 				<p>Seems like you don't have any pockets yet.</p>
-				<CreatePocketModal />
+				<div className="hidden md:block">
+					<CreatePocketModal />
+				</div>
 			</div>
 		);
 	}
@@ -24,7 +27,9 @@ function HomeComponent() {
 		<div className="flex flex-col w-full h-full gap-3 py-4">
 			<div className="flex justify-between">
 				<Heading level={1}>Pockets</Heading>
-				<CreatePocketModal />
+				<div className="hidden md:block">
+					<CreatePocketModal />
+				</div>
 			</div>
 			<div className="flex flex-col md:flex-row gap-3">
 				{pockets.map((item) => (
@@ -40,6 +45,9 @@ function HomeComponent() {
 						</Card.Content>
 					</Card>
 				))}
+			</div>
+			<div className="self-center md:hidden mt-auto z-10 fixed bottom-10">
+				<CreatePocketModal />
 			</div>
 		</div>
 	);

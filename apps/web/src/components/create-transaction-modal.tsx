@@ -13,7 +13,7 @@ import { useParams } from "@tanstack/react-router";
 import { IconPlus } from "justd-icons";
 
 export const CreateTransactionModal = () => {
-	const params = useParams({ from: "/pocket/$pocketId" });
+	const params = useParams({ from: "/_app/pocket/$pocketId" });
 	const queryClient = useQueryClient();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const { control, handleSubmit, formState, reset } = useForm({

@@ -1,14 +1,15 @@
+import { useCreatePocketMutation } from "@/hooks/pockets/useCreatePocketMutation";
 import {
 	insertPocketSchema,
 	type CreatePocketSchemaType,
 } from "@api/db/types/pocket";
-import { Button, Checkbox, Form, Modal, NumberField, TextField } from "./ui";
-import { useCreatePocketMutation } from "@/hooks/pockets/useCreatePocketMutation";
-import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { useState } from "react";
 import { typeboxResolver } from "@hookform/resolvers/typebox";
 import { useQueryClient } from "@tanstack/react-query";
+import { IconPlus } from "justd-icons";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { Button, Form, Modal, NumberField, TextField } from "./ui";
 
 export const CreatePocketModal = () => {
 	const queryClient = useQueryClient();
@@ -29,7 +30,10 @@ export const CreatePocketModal = () => {
 
 	return (
 		<Modal isOpen={isModalOpen} onOpenChange={setIsModalOpen}>
-			<Button>Create Pocket</Button>
+			<Button>
+				<IconPlus />
+				Create Pocket
+			</Button>
 			<Modal.Content isBlurred>
 				<Modal.Header>
 					<Modal.Title>Create Pocket</Modal.Title>
