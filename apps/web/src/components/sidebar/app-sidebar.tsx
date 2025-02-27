@@ -89,14 +89,10 @@ export default function AppSidebar(
 						aria-label="Profile"
 						data-slot="menu-trigger"
 					>
-						<Avatar shape="square" src={"session?.user.image"} />
+						<Avatar shape="square" src={session?.user.image} />
 						<div className="in-data-[sidebar-collapsible=dock]:hidden text-sm">
-							<SidebarLabel>
-								{session?.user.name}
-								Username
-							</SidebarLabel>
+							<SidebarLabel>{session?.user.name}</SidebarLabel>
 							<span className="-mt-0.5 block text-muted-fg">
-								Email
 								{session?.user.email}
 							</span>
 						</div>
