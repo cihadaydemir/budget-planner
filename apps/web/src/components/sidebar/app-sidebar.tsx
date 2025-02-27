@@ -27,6 +27,7 @@ import {
 	useSidebar,
 } from "../ui";
 import { usePockets } from "@/hooks/pockets/usePockets";
+import { authClient } from "@/lib/auth-client";
 
 // import { authClient } from "~/lib/auth-client";
 
@@ -38,6 +39,7 @@ export default function AppSidebar(
 	const currentPath = location.pathname;
 	const { data: pockets } = usePockets();
 	const router = useRouter();
+	const { data: session } = authClient.useSession();
 
 	return (
 		<Sidebar {...props}>
@@ -90,12 +92,12 @@ export default function AppSidebar(
 						<Avatar shape="square" src={"session?.user.image"} />
 						<div className="in-data-[sidebar-collapsible=dock]:hidden text-sm">
 							<SidebarLabel>
-								{/* {session?.user.name} */}
+								{session?.user.name}
 								Username
 							</SidebarLabel>
 							<span className="-mt-0.5 block text-muted-fg">
 								Email
-								{/* {session?.user.email} */}
+								{session?.user.email}
 							</span>
 						</div>
 						<IconChevronLgDown
@@ -110,7 +112,7 @@ export default function AppSidebar(
 						<Menu.Section>
 							<Menu.Header separator>
 								Username
-								{/* <span className="block">{session?.user.name}</span> */}
+								<span className="block">{session?.user.name}</span>
 							</Menu.Header>
 						</Menu.Section>
 
@@ -132,7 +134,7 @@ export default function AppSidebar(
 						<Menu.Separator />
 						<Menu.Item
 							onAction={async () => {
-								// await authClient.signOut();
+								await authClient.signOut();
 							}}
 						>
 							<IconLogout />

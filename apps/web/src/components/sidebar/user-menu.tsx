@@ -9,15 +9,17 @@ import {
 
 // import { authClient } from "~/lib/auth-client";
 
-import { useRouter } from "@tanstack/react-router";
+import { useNavigate, useRouter } from "@tanstack/react-router";
 
 import { Avatar, Menu } from "../ui";
 import { useTheme } from "../theme-provider";
+import { authClient } from "@/lib/auth-client";
 
 export default function UserMenu() {
 	const { theme, setTheme } = useTheme();
-	const router = useRouter();
-	// const { data: session } = authClient.useSession();
+
+	const navigate = useNavigate();
+	const { data: session } = authClient.useSession();
 
 	return (
 		<Menu>
@@ -28,7 +30,7 @@ export default function UserMenu() {
 				<Menu.Section>
 					<Menu.Header separator>
 						Username
-						{/* <span className="block">{session?.user.name}</span> */}
+						<span className="block">{session?.user.name}</span>
 					</Menu.Header>
 				</Menu.Section>
 				<Menu.Item href="/">
@@ -71,13 +73,15 @@ export default function UserMenu() {
 				<Menu.Separator />
 				<Menu.Item
 					onAction={async () => {
-						// await authClient.signOut({
-						// 	fetchOptions: {
-						// 		onSuccess: () => {
-						// 			// router.navigate("/auth/sign-in");
-						// 		},
-						// 	},
-						// });
+						await authClient.signOut({
+							fetchOptions: {
+								onSuccess: () => {
+									navigate({
+										to: "/auth/sign-in",
+									});
+								},
+							},
+						});
 					}}
 				>
 					<IconLogout />
