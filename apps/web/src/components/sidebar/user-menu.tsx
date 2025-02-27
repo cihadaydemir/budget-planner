@@ -29,7 +29,6 @@ export default function UserMenu() {
 			<Menu.Content placement="bottom" showArrow className="sm:min-w-64">
 				<Menu.Section>
 					<Menu.Header separator>
-						Username
 						<span className="block">{session?.user.name}</span>
 					</Menu.Header>
 				</Menu.Section>

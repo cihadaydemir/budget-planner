@@ -45,7 +45,6 @@ export default function AppSidebar(
 		<Sidebar {...props}>
 			<SidebarHeader>
 				<div className="flex gap-2 items-center">
-					{/* <IconCar className="size-5" /> */}
 					<SidebarLabel className="font-medium">💰 Budget Planner</SidebarLabel>
 				</div>
 			</SidebarHeader>
