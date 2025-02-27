@@ -1,20 +1,18 @@
 "use client";
 
+import { usePockets } from "@/hooks/pockets/usePockets";
+import { authClient } from "@/lib/auth-client";
+import { useLocation, useNavigate, useRouter } from "@tanstack/react-router";
 import {
-	IconCar,
 	IconChevronLgDown,
 	IconDashboard,
 	IconHeadphones,
 	IconLogout,
-	IconNotebookCover,
-	IconReceipt2,
 	IconSettings,
 } from "justd-icons";
-import { useLocation, useParams, useRouter } from "@tanstack/react-router";
 import {
 	Avatar,
 	Menu,
-	Separator,
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
@@ -26,10 +24,6 @@ import {
 	SidebarSectionGroup,
 	useSidebar,
 } from "../ui";
-import { usePockets } from "@/hooks/pockets/usePockets";
-import { authClient } from "@/lib/auth-client";
-
-// import { authClient } from "~/lib/auth-client";
 
 export default function AppSidebar(
 	props: React.ComponentProps<typeof Sidebar>,
@@ -38,15 +32,13 @@ export default function AppSidebar(
 	const location = useLocation();
 	const currentPath = location.pathname;
 	const { data: pockets } = usePockets();
-	const router = useRouter();
 	const { data: session } = authClient.useSession();
+	const navigate = useNavigate();
 
 	return (
 		<Sidebar {...props}>
 			<SidebarHeader>
-				<div className="flex gap-2 items-center">
-					<SidebarLabel className="font-medium">💰 Budget Planner</SidebarLabel>
-				</div>
+				<SidebarLabel className="font-medium">💰 Budget Planner</SidebarLabel>
 			</SidebarHeader>
 			<SidebarContent>
 				<SidebarSectionGroup>
@@ -67,8 +59,8 @@ export default function AppSidebar(
 								isCurrent={pocket.id === currentPath.split("/")[2]}
 								key={pocket.id}
 								onPress={(e) => {
-									router.navigate({
-										to: `/pocket/${pocket.id}`,
+									navigate({
+										to: "/pocket/$pocketId",
 										params: { pocketId: pocket.id },
 									});
 									setIsOpenOnMobile(false);

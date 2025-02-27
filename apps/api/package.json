@@ -10,22 +10,21 @@
   },
   "dependencies": {
     "@ap0nia/eden": "^1.6.0",
-    "@ap0nia/eden-react-query": "^1.6.0",
     "@elysiajs/cors": "^1.2.0",
     "@libsql/client": "^0.14.0",
     "better-auth": "^1.1.21",
     "dotenv": "^16.4.7",
-    "drizzle-orm": "^0.39.3",
+    "drizzle-orm": "^0.40.0",
     "drizzle-typebox": "^0.3.0",
-    "elysia": "^1.2.15",
+    "elysia": "^1.2.22",
     "superjson": "^2.2.2"
   },
   "devDependencies": {
     "bun-types": "latest",
-    "drizzle-kit": "^0.30.4"
+    "drizzle-kit": "^0.30.5"
   },
   "override": {
-    "@sinclair/typebox": "0.32.4"
+    "@sinclair/typebox": "0.34.0"
   },
   "exports": {
     ".": {

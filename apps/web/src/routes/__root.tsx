@@ -15,9 +15,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 function RootComponent() {
 	return (
 		<Providers>
-			<Container intent="padded-content" className="h-full w-full">
-				<Outlet />
-			</Container>
+			<Outlet />
+
 			<TanStackRouterDevtools position="bottom-right" />
 		</Providers>
 	);

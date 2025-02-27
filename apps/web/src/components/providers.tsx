@@ -24,10 +24,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
 			useHref={(to) => router.buildLocation({ to }).href}
 		>
 			<ThemeProvider defaultTheme="system" storageKey="ui-theme">
-				<SidebarProvider>
-					<Toast />
-					{children}
-				</SidebarProvider>
+				<Toast />
+				{children}
 			</ThemeProvider>
 		</RouterProvider>
 	);
