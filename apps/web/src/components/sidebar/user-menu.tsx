@@ -24,7 +24,7 @@ export default function UserMenu() {
 	return (
 		<Menu>
 			<Menu.Trigger className="ml-auto md:hidden" aria-label="Open Menu">
-				<Avatar alt="User avatar" src={"session?.user.image"} />
+				<Avatar alt="User avatar" src={session?.user.image} />
 			</Menu.Trigger>
 			<Menu.Content placement="bottom" showArrow className="sm:min-w-64">
 				<Menu.Section>
