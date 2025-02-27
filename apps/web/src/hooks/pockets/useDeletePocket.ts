@@ -1,7 +1,7 @@
 import { api } from "@/lib/eden-client";
 import { useMutation } from "@tanstack/react-query";
 
-export const useDeletePocket = (pocketId: string) =>
+export const useDeletePocket = () =>
 	useMutation({
-		mutationFn: () => api.pockets({ id: pocketId }).delete(),
+		mutationFn: (pocketId: string) => api.pockets({ id: pocketId }).delete(),
 	});
