@@ -17,14 +17,17 @@ function HomeComponent() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [editingPocket, setEditingPocket] = useState<Pocket>();
 
-	if (!pockets) {
+	if (!pockets || pockets.length === 0) {
 		console.log("no pockets");
 		return (
 			<div className="h-full flex flex-col justify-center items-center gap-3">
 				<p>Seems like you don't have any pockets yet.</p>
-				<div className="hidden md:block">
-					<Button onPress={() => setIsOpen(true)}>Create Pocket</Button>
-					{/* <CreatePocketModal isOpen={isOpen} setIsOpen={setIsOpen} /> */}
+				<div className="">
+					<Button onPress={() => setIsOpen(true)}>
+						<IconPlus />
+						Create Pocket
+					</Button>
+					<CreatePocketModal isOpen={isOpen} setIsOpen={setIsOpen} />
 				</div>
 			</div>
 		);
