@@ -6,6 +6,7 @@ import { usePockets } from "@/hooks/pockets/usePockets";
 import { useTransactions } from "@/hooks/transactions/useTransactions";
 import { getTransactionsStatistics } from "@/utils/statistics";
 import { createFileRoute } from "@tanstack/react-router";
+import { useMemo } from "react";
 import { Collection } from "react-aria-components";
 
 export const Route = createFileRoute("/_app/pocket/$pocketId")({
@@ -16,10 +17,27 @@ function RouteComponent() {
 	const params = Route.useParams();
 	const { data: pockets } = usePockets();
 	const pocket = pockets?.find((pocket) => pocket.id === params.pocketId);
-	const { data: transactions } = useTransactions(params.pocketId);
+	const {
+		data: transactions,
+		isLoading: transactionsIsLoading,
+		error: transactionsError,
+	} = useTransactions(params.pocketId);
+
+	if (transactionsIsLoading || transactionsError) {
+		return <div>Loading...</div>;
+	}
 
 	if (!transactions) {
-		return <div>Loading...</div>;
+		return (
+			<div className="flex flex-col w-full h-full py-4 gap-4">
+				<div className="flex justify-between">
+					<Heading level={1}>{pocket?.name}</Heading>
+					<div className="md:block hidden">
+						<CreateTransactionModal />
+					</div>
+				</div>
+			</div>
+		);
 	}
 
 	const tabs = [
@@ -52,6 +70,10 @@ function RouteComponent() {
 		},
 	];
 
+	// const calculateStatistics = useMemo(() => {
+	// 	return getTransactionsStatistics(transactions);
+	// }, [transactions]);
+
 	return (
 		<div className="flex flex-col w-full h-full py-4 gap-4">
 			<div className="flex justify-between">
@@ -63,7 +85,7 @@ function RouteComponent() {
 			{pocket?.budget && (
 				<BudgetOverviewCard
 					totalBudget={pocket.budget}
-					statisticsData={getTransactionsStatistics(transactions)}
+					statisticsData={{ totalNotPaid: 0, totalPaid: 0, totalSpent: 0 }}
 				/>
 			)}
 

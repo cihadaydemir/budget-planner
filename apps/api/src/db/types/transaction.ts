@@ -1,10 +1,11 @@
-import { type Static, t } from "elysia";
+import { t, type Static } from "elysia";
 import { schemas } from "../model";
 
 const { transaction: insertTransaction } = schemas.insert;
 
 export const insertTransactionSchema = t.Object(
 	{
+		id: insertTransaction.id,
 		name: insertTransaction.name,
 		description: t.Optional(t.String()),
 		amount: insertTransaction.amount,
@@ -18,7 +19,7 @@ export const insertTransactionSchema = t.Object(
 		}),
 	},
 );
-export type CreateTransactionSchemaType = Static<
+export type InsertTransactionSchemaType = Static<
 	typeof insertTransactionSchema
 >;
 

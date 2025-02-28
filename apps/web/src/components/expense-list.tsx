@@ -8,6 +8,8 @@ import {
 } from "justd-icons";
 import { useDeleteTransaction } from "@/hooks/transactions/useDeleteTransaction";
 import { toast } from "sonner";
+import { useEditTransaction } from "@/hooks/transactions/useEditTransaction";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface ExpenseListProps {
 	transactions: Transaction[];
@@ -15,7 +17,8 @@ interface ExpenseListProps {
 
 export const ExpenseList = ({ transactions }: ExpenseListProps) => {
 	const deleteExpenseMutation = useDeleteTransaction();
-
+	const editTransactionMutation = useEditTransaction();
+	const queryClient = useQueryClient();
 	if (transactions.length === 0) {
 		return (
 			<div className="mt-auto mb-auto">
@@ -36,8 +39,28 @@ export const ExpenseList = ({ transactions }: ExpenseListProps) => {
 						<p className="text-muted-fg">{transaction.name}</p>
 					</div>
 					<div className="flex gap-4">
-						{transaction.isPaid && (
-							<Button appearance="outline">
+						{!transaction.isPaid && (
+							<Button
+								appearance="outline"
+								onPress={() => {
+									editTransactionMutation.mutate(
+										{
+											transactionId: transaction.id,
+											data: { isPaid: true },
+										},
+										{
+											onSuccess: () => {
+												queryClient.invalidateQueries({
+													queryKey: ["transactions", transaction.pocketId],
+												});
+												toast.success(
+													`Transaction ${transaction.name} marked as paid successfully`,
+												);
+											},
+										},
+									);
+								}}
+							>
 								<IconCheck />
 								Mark as paid
 							</Button>

@@ -1,9 +1,9 @@
 import { api } from "@/lib/eden-client";
-import type { CreateTransactionSchemaType } from "@api/db/types";
+import type { InsertTransactionSchemaType } from "@api/db/types";
 import { useMutation } from "@tanstack/react-query";
 
 export const useCreateTransactionMutation = () =>
 	useMutation({
-		mutationFn: (data: CreateTransactionSchemaType) =>
+		mutationFn: (data: InsertTransactionSchemaType) =>
 			api.transactions.post(data),
 	});
