@@ -1,11 +1,12 @@
 import { BudgetOverviewCard } from "@/components/budget-overview-card";
 import { CreateTransactionModal } from "@/components/create-transaction-modal";
 import { ExpenseList } from "@/components/expense-list";
-import { Heading, Tabs } from "@/components/ui";
+import { Button, Heading, Tabs } from "@/components/ui";
 import { usePockets } from "@/hooks/pockets/usePockets";
 import { useTransactions } from "@/hooks/transactions/useTransactions";
 import { getTransactionsStatistics } from "@/utils/statistics";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { IconBack, IconChevronLeft } from "justd-icons";
 import { useMemo } from "react";
 import { Collection } from "react-aria-components";
 
@@ -22,6 +23,7 @@ function RouteComponent() {
 		isLoading: transactionsIsLoading,
 		error: transactionsError,
 	} = useTransactions(params.pocketId);
+	const router = useRouter();
 
 	if (transactionsIsLoading || transactionsError) {
 		return <div>Loading...</div>;
@@ -77,6 +79,15 @@ function RouteComponent() {
 	return (
 		<div className="flex flex-col w-full h-full py-4 gap-4">
 			<div className="flex justify-between">
+				<Button
+					appearance="plain"
+					onPress={() => {
+						router.history.back();
+					}}
+				>
+					<IconChevronLeft />
+					Pockets
+				</Button>
 				<Heading level={1}>{pocket?.name}</Heading>
 				<div className="md:block hidden">
 					<CreateTransactionModal />
