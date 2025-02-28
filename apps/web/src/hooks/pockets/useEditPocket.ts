@@ -1,6 +1,6 @@
 import { api } from "@/lib/eden-client";
 import type { InsertPocketSchemaType } from "@api/db/types";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 export const useEditPocket = () =>
 	useMutation({

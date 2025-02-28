@@ -2,10 +2,9 @@ import { useDeletePocket } from "@/hooks/pockets/useDeletePocket";
 import type { Pocket } from "@api/db/types";
 import { useNavigate } from "@tanstack/react-router";
 import { IconDotsVertical, IconHighlight, IconTrash } from "justd-icons";
-import { useState } from "react";
 import { toast } from "sonner";
-import { CreatePocketModal } from "./create-pocket-modal";
 import { Card, Menu } from "./ui";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface PocketsCardProps {
 	pocket: Pocket;
@@ -21,8 +20,8 @@ export const PocketsCard = ({
 	setEditingPocket,
 }: PocketsCardProps) => {
 	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 	const deletePocketMutation = useDeletePocket();
-	// const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
 	return (
 		<>
@@ -63,6 +62,9 @@ export const PocketsCard = ({
 											toast.success(
 												`Pocket ${pocket.name} deleted successfully`,
 											);
+											queryClient.invalidateQueries({
+												queryKey: ["pockets"],
+											});
 										},
 									})
 								}

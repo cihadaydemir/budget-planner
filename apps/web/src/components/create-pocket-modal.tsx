@@ -18,7 +18,7 @@ interface CreatePocketModalProps {
 	isOpen: boolean;
 	setIsOpen: (isOpen: boolean) => void;
 	editingPocket?: Pocket;
-	setEditingPocket: (editingPocket: Pocket | undefined) => void;
+	setEditingPocket?: (editingPocket: Pocket | undefined) => void;
 }
 
 export const CreatePocketModal = ({
@@ -48,7 +48,7 @@ export const CreatePocketModal = ({
 						queryClient.invalidateQueries({
 							queryKey: ["pockets"],
 						});
-						setEditingPocket(undefined);
+						setEditingPocket?.(undefined);
 						toast(`Pocket ${data.data?.[0].name} updated successfully`);
 					},
 				},
@@ -80,7 +80,7 @@ export const CreatePocketModal = ({
 				isOpen={isOpen}
 				onOpenChange={(val) => {
 					setIsOpen(val);
-					setEditingPocket(undefined);
+					setEditingPocket?.(undefined);
 				}}
 			>
 				<Modal.Header>
