@@ -78,7 +78,7 @@ function RouteComponent() {
 
 	return (
 		<div className="flex flex-col w-full h-full py-4 gap-4">
-			<div className="flex justify-between">
+			<div className="flex gap-2 items-center">
 				<Button
 					appearance="plain"
 					onPress={() => {
@@ -89,7 +89,7 @@ function RouteComponent() {
 					Pockets
 				</Button>
 				<Heading level={1}>{pocket?.name}</Heading>
-				<div className="md:block hidden">
+				<div className="md:block hidden ml-auto ">
 					<CreateTransactionModal />
 				</div>
 			</div>
