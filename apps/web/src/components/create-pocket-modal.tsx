@@ -1,42 +1,90 @@
 import { useCreatePocketMutation } from "@/hooks/pockets/useCreatePocketMutation";
+import { useEditPocket } from "@/hooks/pockets/useEditPocket";
+import { usePockets } from "@/hooks/pockets/usePockets";
 import {
 	insertPocketSchema,
-	type CreatePocketSchemaType,
+	type InsertPocketSchemaType,
+	type Pocket,
 } from "@api/db/types/pocket";
 import { typeboxResolver } from "@hookform/resolvers/typebox";
 import { useQueryClient } from "@tanstack/react-query";
-import { IconPlus } from "justd-icons";
-import { useState } from "react";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button, Form, Modal, NumberField, TextField } from "./ui";
 
-export const CreatePocketModal = () => {
+interface CreatePocketModalProps {
+	// isEdit: boolean;
+	isOpen: boolean;
+	setIsOpen: (isOpen: boolean) => void;
+	editingPocket?: Pocket;
+	setEditingPocket: (editingPocket: Pocket | undefined) => void;
+}
+
+export const CreatePocketModal = ({
+	editingPocket,
+	setEditingPocket,
+	isOpen,
+	setIsOpen,
+}: CreatePocketModalProps) => {
+	const { data: pockets } = usePockets();
 	const queryClient = useQueryClient();
-	const { control, handleSubmit, formState } = useForm({
+	const { control, handleSubmit, formState, reset } = useForm({
 		resolver: typeboxResolver(insertPocketSchema),
 	});
 	const createPocketMutation = useCreatePocketMutation();
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const editPocketMutation = useEditPocket();
 
-	const onSubmit = (data: CreatePocketSchemaType) => {
-		createPocketMutation.mutate(data, {
-			onSuccess(data, variables, context) {
-				setIsModalOpen(false);
-				toast(`Pocket ${data.data?.[0].name} created successfully`);
-			},
-		});
+	const onSubmit = (data: InsertPocketSchemaType) => {
+		if (editingPocket) {
+			editPocketMutation.mutate(
+				{
+					data,
+					pocketId: editingPocket.id,
+				},
+				{
+					onSuccess(data, variables, context) {
+						setIsOpen(false);
+						queryClient.invalidateQueries({
+							queryKey: ["pockets"],
+						});
+						setEditingPocket(undefined);
+						toast(`Pocket ${data.data?.[0].name} updated successfully`);
+					},
+				},
+			);
+		} else {
+			createPocketMutation.mutate(data, {
+				onSuccess(data, variables, context) {
+					setIsOpen(false);
+					queryClient.invalidateQueries({
+						queryKey: ["pockets"],
+					});
+					toast(`Pocket ${data.data?.[0].name} created successfully`);
+				},
+			});
+		}
 	};
+	useEffect(() => {
+		reset({
+			name: editingPocket?.name ?? "",
+			description: editingPocket?.description ?? "",
+			budget: editingPocket?.budget ?? undefined,
+		});
+	}, [editingPocket, reset]);
 
 	return (
-		<Modal isOpen={isModalOpen} onOpenChange={setIsModalOpen}>
-			<Button>
-				<IconPlus />
-				Create Pocket
-			</Button>
-			<Modal.Content isBlurred>
+		<>
+			<Modal.Content
+				isBlurred
+				isOpen={isOpen}
+				onOpenChange={(val) => {
+					setIsOpen(val);
+					setEditingPocket(undefined);
+				}}
+			>
 				<Modal.Header>
-					<Modal.Title>Create Pocket</Modal.Title>
+					<Modal.Title>{`${editingPocket ? "Edit" : "Create"} Pocket`}</Modal.Title>
 					<Modal.Description>
 						To be able to manage your budgets, you need to create a pocket.
 					</Modal.Description>
@@ -46,9 +94,10 @@ export const CreatePocketModal = () => {
 						<Controller
 							control={control}
 							name="name"
-							render={({ field }) => (
+							render={({ field, fieldState, formState }) => (
 								<TextField
 									{...field}
+									defaultValue={formState.defaultValues?.name}
 									isRequired
 									autoFocus
 									label="Name"
@@ -78,6 +127,6 @@ export const CreatePocketModal = () => {
 					</Modal.Footer>
 				</Form>
 			</Modal.Content>
-		</Modal>
+		</>
 	);
 };
