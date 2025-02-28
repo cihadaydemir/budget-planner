@@ -4,6 +4,8 @@ import { IconDotsVertical, IconHighlight, IconTrash } from "justd-icons";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
 import { useDeletePocket } from "@/hooks/pockets/useDeletePocket";
+import { useEditPocket } from "@/hooks/pockets/useEditPocket";
+import { CreatePocketModal } from "./create-pocket-modal";
 
 interface PocketsCardProps {
 	pocket: Pocket;
@@ -33,10 +35,11 @@ export const PocketsCard = ({ pocket }: PocketsCardProps) => {
 						<IconDotsVertical className="size-4" />
 					</Menu.Trigger>
 					<Menu.Content>
-						<Menu.Item>
+						<CreatePocketModal isEdit />
+						{/* <Menu.Item>
 							<IconHighlight />
 							Edit
-						</Menu.Item>
+						</Menu.Item> */}
 						<Menu.Separator />
 						<Menu.Item
 							isDanger
