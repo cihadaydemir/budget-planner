@@ -19,10 +19,21 @@ export const transactionRelations = relations(
 			fields: [table.transactionSchema.pocketId],
 			references: [table.pocketSchema.id],
 		}),
+		category: one(table.expenseCategorySchema, {
+			fields: [table.transactionSchema.categoryId],
+			references: [table.expenseCategorySchema.id],
+		}),
 		userId: one(table.user, {
 			fields: [table.transactionSchema.userId],
 			references: [table.user.id],
 		}),
+	}),
+);
+
+export const categoryRelations = relations(
+	table.expenseCategorySchema,
+	({ many }) => ({
+		transactions: many(table.transactionSchema),
 	}),
 );
 

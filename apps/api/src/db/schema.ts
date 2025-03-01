@@ -28,10 +28,16 @@ export const transactionSchema = sqliteTable("transactions", {
 	description: text("description"),
 	amount: integer("amount").notNull(),
 	isPaid: integer("is_paid", { mode: "boolean" }).notNull().default(false),
+	categoryId: text("category").references(() => expenseCategorySchema.id),
 	pocketId: text("pocket_id")
 		.notNull()
 		.references(() => pocketSchema.id),
 	userId: text("user_id").references(() => user.id),
+});
+
+export const expenseCategorySchema = sqliteTable("expense_category", {
+	...defaultFields("category"),
+	name: text("name").notNull(),
 });
 
 export const user = sqliteTable("user", {
@@ -91,6 +97,7 @@ export const verification = sqliteTable("verification", {
 export const table = {
 	pocketSchema,
 	transactionSchema,
+	expenseCategorySchema,
 	user,
 	session,
 	verification,
