@@ -25,6 +25,11 @@ function RouteComponent() {
 	} = useTransactions(params.pocketId);
 	const router = useRouter();
 
+	const calculateStatistics = useMemo(() => {
+		if (!transactions) return;
+		return getTransactionsStatistics(transactions);
+	}, [transactions]);
+
 	if (transactionsIsLoading || transactionsError) {
 		return <div>Loading...</div>;
 	}
@@ -72,10 +77,6 @@ function RouteComponent() {
 		},
 	];
 
-	// const calculateStatistics = useMemo(() => {
-	// 	return getTransactionsStatistics(transactions);
-	// }, [transactions]);
-
 	return (
 		<div className="flex flex-col w-full h-full py-4 gap-4">
 			<div className="flex gap-2 items-center">
@@ -93,10 +94,10 @@ function RouteComponent() {
 					<CreateTransactionModal />
 				</div>
 			</div>
-			{pocket?.budget && (
+			{pocket?.budget && calculateStatistics && (
 				<BudgetOverviewCard
 					totalBudget={pocket.budget}
-					statisticsData={{ totalNotPaid: 0, totalPaid: 0, totalSpent: 0 }}
+					statisticsData={calculateStatistics}
 				/>
 			)}
 
