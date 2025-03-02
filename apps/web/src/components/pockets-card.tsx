@@ -3,7 +3,7 @@ import type { Pocket } from "@api/db/types";
 import { useNavigate } from "@tanstack/react-router";
 import { IconDotsVertical, IconHighlight, IconTrash } from "justd-icons";
 import { toast } from "sonner";
-import { Card, Menu } from "./ui";
+import { Button, Card, Menu } from "./ui";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface PocketsCardProps {
@@ -35,14 +35,15 @@ export const PocketsCard = ({
 				}
 				className="cursor-pointer min-w-[250px]"
 			>
-				<Card.Header className=" w-full flex flex-row justify-between">
+				<Card.Header className=" w-full flex flex-row justify-between items-center">
 					<Card.Title>
 						<p className="font-bold">{pocket.name}</p>
 					</Card.Title>
 					<Menu>
-						<Menu.Trigger>
+						<Button size="square-petite" appearance="plain">
 							<IconDotsVertical className="size-4" />
-						</Menu.Trigger>
+						</Button>
+
 						<Menu.Content>
 							<Menu.Item
 								onAction={() => {
