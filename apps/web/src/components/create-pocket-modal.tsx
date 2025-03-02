@@ -27,9 +27,8 @@ export const CreatePocketModal = ({
 	isOpen,
 	setIsOpen,
 }: CreatePocketModalProps) => {
-	const { data: pockets } = usePockets();
 	const queryClient = useQueryClient();
-	const { control, handleSubmit, formState, reset } = useForm({
+	const { control, handleSubmit, reset } = useForm({
 		resolver: typeboxResolver(insertPocketSchema),
 	});
 	const createPocketMutation = useCreatePocketMutation();
@@ -81,6 +80,7 @@ export const CreatePocketModal = ({
 				onOpenChange={(val) => {
 					setIsOpen(val);
 					setEditingPocket?.(undefined);
+					reset();
 				}}
 			>
 				<Modal.Header>
