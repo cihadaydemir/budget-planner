@@ -4,23 +4,16 @@ import { createRouter, RouterProvider } from "@tanstack/react-router";
 import ReactDOM from "react-dom/client";
 import { routeTree } from "./routeTree.gen";
 
-import "./index.css";
-import { authClient, type Session } from "./lib/auth-client";
 import React from "react";
+import "./index.css";
 
 const queryClient = new QueryClient();
-
-export interface AuthContext {
-	session: Session | null;
-}
 
 // Set up a Router instance
 const router = createRouter({
 	routeTree,
 	context: {
-		auth: {
-			session: null,
-		},
+		queryClient: queryClient,
 	},
 	defaultPreload: "intent",
 });
@@ -33,17 +26,14 @@ declare module "@tanstack/react-router" {
 }
 
 function App() {
-	const { data } = authClient.useSession();
 	return (
 		<QueryClientProvider client={queryClient}>
-			<RouterProvider
-				router={router}
-				context={{ auth: data ? { session: data } : { session: null } }}
-			/>
+			<RouterProvider router={router} />
 			<ReactQueryDevtools initialIsOpen={false} />
 		</QueryClientProvider>
 	);
 }
+
 const rootElement = document.getElementById("app")!;
 
 if (!rootElement.innerHTML) {

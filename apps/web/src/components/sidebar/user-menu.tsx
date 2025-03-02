@@ -3,17 +3,16 @@ import {
 	IconDeviceDesktop,
 	IconLogout,
 	IconMoon,
-	IconSettings,
 	IconSun,
 } from "justd-icons";
 
 // import { authClient } from "~/lib/auth-client";
 
-import { useNavigate, useRouter } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 
-import { Avatar, Menu } from "../ui";
+import { authClient, signOut } from "@/lib/auth-client";
 import { useTheme } from "../theme-provider";
-import { authClient } from "@/lib/auth-client";
+import { Avatar, Menu } from "../ui";
 
 export default function UserMenu() {
 	const { theme, setTheme } = useTheme();
@@ -72,7 +71,7 @@ export default function UserMenu() {
 				<Menu.Separator />
 				<Menu.Item
 					onAction={async () => {
-						await authClient.signOut({
+						await signOut({
 							fetchOptions: {
 								onSuccess: () => {
 									navigate({

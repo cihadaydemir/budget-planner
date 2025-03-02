@@ -1,7 +1,7 @@
 "use client";
 
 import { usePockets } from "@/hooks/pockets/usePockets";
-import { authClient } from "@/lib/auth-client";
+import { authClient, signOut } from "@/lib/auth-client";
 import { useLocation, useNavigate, useRouter } from "@tanstack/react-router";
 import {
 	IconChevronLgDown,
@@ -121,7 +121,15 @@ export default function AppSidebar(
 						<Menu.Separator />
 						<Menu.Item
 							onAction={async () => {
-								await authClient.signOut();
+								await signOut({
+									fetchOptions: {
+										onSuccess: () => {
+											navigate({
+												to: "/auth/sign-in",
+											});
+										},
+									},
+								});
 							}}
 						>
 							<IconLogout />

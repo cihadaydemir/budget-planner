@@ -1,16 +1,24 @@
-import React, { useState } from "react";
-import { Button, Checkbox, Form, Modal, NumberField, TextField } from "./ui";
-import { Controller, useForm } from "react-hook-form";
-import { typeboxResolver } from "@hookform/resolvers/typebox";
+import { useCreateTransactionMutation } from "@/hooks/transactions/useCreateTransactionMutation";
 import {
 	insertTransactionSchema,
-	type CreateTransactionSchemaType,
+	type InsertTransactionSchemaType,
 } from "@api/db/types/transaction";
-import { useCreateTransactionMutation } from "@/hooks/transactions/useCreateTransactionMutation";
-import { toast } from "sonner";
+import { typeboxResolver } from "@hookform/resolvers/typebox";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "@tanstack/react-router";
 import { IconPlus } from "justd-icons";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
+import {
+	Button,
+	Form,
+	Label,
+	Modal,
+	NumberField,
+	Switch,
+	TextField,
+} from "./ui";
 
 export const CreateTransactionModal = () => {
 	const params = useParams({ from: "/_app/pocket/$pocketId" });
@@ -25,7 +33,7 @@ export const CreateTransactionModal = () => {
 	});
 	const createTransactionMutation = useCreateTransactionMutation();
 
-	const onSubmit = (data: CreateTransactionSchemaType) => {
+	const onSubmit = (data: InsertTransactionSchemaType) => {
 		createTransactionMutation.mutate(
 			{ ...data, pocketId: params.pocketId },
 			{
@@ -52,7 +60,7 @@ export const CreateTransactionModal = () => {
 					<Modal.Title>Add Expense</Modal.Title>
 				</Modal.Header>
 				<Form onSubmit={handleSubmit(onSubmit)}>
-					<Modal.Body>
+					<Modal.Body className="flex flex-col gap-2 mb-2">
 						<Controller
 							control={control}
 							name="name"
@@ -98,15 +106,17 @@ export const CreateTransactionModal = () => {
 							control={control}
 							name="isPaid"
 							render={({ field }) => (
-								<Checkbox
-									{...field}
-									onChange={field.onChange}
-									isSelected={field.value}
-									value="updates"
-									name="isPaid"
-									label="Is Paid"
-									defaultSelected={false}
-								/>
+								<div className="flex w-max gap-3 border-input border p-2 rounded-lg">
+									<Label>Is Paid</Label>
+									<Switch
+										// {...field}
+										onChange={field.onChange}
+										isSelected={field.value}
+										value="paid"
+										name="isPaid"
+										defaultSelected={false}
+									/>
+								</div>
 							)}
 						/>
 					</Modal.Body>
