@@ -24,7 +24,6 @@
     "vite": "^6.0.3"
   },
   "dependencies": {
-    "@ap0nia/eden-react-query": "^1.6.0",
     "@budget-planner/api": "workspace:*",
     "@elysiajs/eden": "^1.2.0",
     "@hookform/resolvers": "^4.1.1",
@@ -33,7 +32,7 @@
     "@tanstack/react-query-devtools": "^5.66.7",
     "@tanstack/react-router": "^1.106.0",
     "@tanstack/router-devtools": "^1.106.0",
-    "better-auth": "^1.1.21",
+    "better-auth": "^1.2.0",
     "justd-icons": "^1.10.25",
     "motion": "^12.4.7",
     "react": "^19.0.0",
