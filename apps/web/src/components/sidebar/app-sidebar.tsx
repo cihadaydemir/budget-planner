@@ -98,7 +98,6 @@ export default function AppSidebar(
 					>
 						<Menu.Section>
 							<Menu.Header separator>
-								Username
 								<span className="block">{session?.user.name}</span>
 							</Menu.Header>
 						</Menu.Section>
@@ -107,14 +106,18 @@ export default function AppSidebar(
 							<IconDashboard />
 							Overview
 						</Menu.Item>
-						<Menu.Item href="/settings">
+						{/* <Menu.Item href="/settings">
 							<IconSettings />
 							Settings
-						</Menu.Item>
+						</Menu.Item> */}
 
 						<Menu.Separator />
 
-						<Menu.Item href="#contact">
+						<Menu.Item
+							onAction={() => {
+								// TODO: add link to mail
+							}}
+						>
 							<IconHeadphones />
 							Customer Support
 						</Menu.Item>
