@@ -6,8 +6,6 @@ import {
 	IconSun,
 } from "justd-icons";
 
-// import { authClient } from "~/lib/auth-client";
-
 import { useNavigate } from "@tanstack/react-router";
 
 import { authClient, signOut } from "@/lib/auth-client";
@@ -33,7 +31,7 @@ export default function UserMenu() {
 				</Menu.Section>
 				<Menu.Item href="/">
 					<IconDashboard />
-					<Menu.Label>Overview</Menu.Label>
+					<Menu.Label>Dashboard</Menu.Label>
 				</Menu.Item>
 				{/* <Menu.Item href="/settings">
 					<IconSettings />

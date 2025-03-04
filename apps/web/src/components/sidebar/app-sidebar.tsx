@@ -8,10 +8,12 @@ import {
 	IconDashboard,
 	IconHeadphones,
 	IconLogout,
+	IconPlus,
 	IconSettings,
 } from "justd-icons";
 import {
 	Avatar,
+	Button,
 	Menu,
 	Sidebar,
 	SidebarContent,
@@ -24,6 +26,8 @@ import {
 	SidebarSectionGroup,
 	useSidebar,
 } from "../ui";
+import { CreatePocketModal } from "../create-pocket-modal";
+import { useState } from "react";
 
 export default function AppSidebar(
 	props: React.ComponentProps<typeof Sidebar>,
@@ -34,6 +38,7 @@ export default function AppSidebar(
 	const { data: pockets } = usePockets();
 	const { data: session } = authClient.useSession();
 	const navigate = useNavigate();
+	const [isOpen, setIsOpen] = useState(false);
 
 	return (
 		<Sidebar {...props}>
@@ -45,14 +50,14 @@ export default function AppSidebar(
 					<SidebarSection title="Pockets">
 						<SidebarItem
 							href="/"
-							tooltip="Overview"
+							tooltip="Dashboard"
 							isCurrent={"/" === currentPath}
 							onPress={(e) => {
 								setIsOpenOnMobile(false);
 							}}
 						>
 							<IconDashboard />
-							<SidebarLabel>Overview</SidebarLabel>
+							<SidebarLabel>Dashboard</SidebarLabel>
 						</SidebarItem>
 						{pockets?.map((pocket) => (
 							<SidebarItem
