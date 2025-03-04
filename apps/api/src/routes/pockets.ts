@@ -1,39 +1,25 @@
-import Elysia, { error, t } from "elysia";
-import { schemas } from "../db/model";
-import { db } from "../db";
-import { pocketSchema, table } from "../db/schema";
 import { and, eq } from "drizzle-orm";
+import Elysia, { error, t } from "elysia";
+import { db } from "../db";
+import { pocketSchema } from "../db/schema";
 import { insertPocketSchema } from "../db/types";
-import { auth } from "../lib/auth/auth";
-
-const { pocket } = schemas.insert;
+import { authMiddleware, userMiddleware } from "../middlewares/auth-middleware";
 
 export const pocketsRoute = new Elysia({ prefix: "/pockets" })
-	.macro({
-		auth: {
-			async resolve({ error, request: { headers } }) {
-				const session = await auth.api.getSession({
-					headers,
-				});
-
-				if (!session) return error(401);
-
-				return {
-					user: session.user,
-					session: session.session,
-				};
-			},
-		},
-	})
-	.get("", async () => {
-		const pockets = await db.select().from(pocketSchema);
-
-		return await db.select().from(pocketSchema);
+	.use(authMiddleware)
+	.get("", async ({ user }) => {
+		return await db
+			.select()
+			.from(pocketSchema)
+			.where(eq(pocketSchema.userId, user.id));
 	})
 	.post(
 		"/create",
-		async ({ body }) => {
-			return await db.insert(pocketSchema).values(body).returning();
+		async ({ body, user }) => {
+			return await db
+				.insert(pocketSchema)
+				.values({ ...body, userId: user?.id })
+				.returning();
 		},
 		{
 			body: insertPocketSchema,
@@ -41,29 +27,31 @@ export const pocketsRoute = new Elysia({ prefix: "/pockets" })
 	)
 	.post(
 		"/edit/:pocketId",
-		async ({ body, params }) => {
+		async ({ body, params, user }) => {
 			if (!params.pocketId) {
 				return error(500, "pocketId is required");
 			}
-			// TODO check for users id
-			const pocket = await db
-				.select()
-				.from(pocketSchema)
-				.where(eq(pocketSchema.id, params.pocketId));
-			if (pocket.length === 1) {
-				return await db
-					.update(pocketSchema)
-					.set({ ...body })
-					.returning();
-			}
+
+			return await db
+				.update(pocketSchema)
+				.set({ ...body })
+				.where(
+					and(
+						eq(pocketSchema.id, params.pocketId),
+						eq(pocketSchema.userId, user?.id),
+					),
+				)
+				.returning();
 		},
 		{
 			body: t.Partial(insertPocketSchema),
 		},
 	)
-	.delete("/:id", async ({ params }) => {
+	.delete("/:id", async ({ params, user }) => {
 		return await db
 			.delete(pocketSchema)
-			.where(eq(pocketSchema.id, params.id))
+			.where(
+				and(eq(pocketSchema.id, params.id), eq(pocketSchema.userId, user?.id)),
+			)
 			.returning();
 	});
