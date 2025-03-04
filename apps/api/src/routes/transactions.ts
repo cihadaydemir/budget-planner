@@ -29,19 +29,15 @@ export const transactionsRoute = new Elysia({ prefix: "/transactions" })
 				return error(500, "transactionId is required");
 			}
 			// TODO check also user id
-			const transaction = await db
-				.select()
-				.from(table.transactionSchema)
-				.where(eq(table.transactionSchema.id, params.transactionId));
-			if (transaction.length === 1) {
-				return await db
-					.update(table.transactionSchema)
-					.set({
-						...body,
-						updatedAt: new Date().toDateString(),
-					})
-					.returning();
-			}
+
+			return await db
+				.update(table.transactionSchema)
+				.set({
+					...body,
+					updatedAt: new Date().toDateString(),
+				})
+				.where(eq(table.transactionSchema.id, params.transactionId))
+				.returning();
 		},
 		{
 			body: t.Partial(insertTransactionSchema),
