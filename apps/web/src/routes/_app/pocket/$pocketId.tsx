@@ -6,7 +6,7 @@ import { usePockets } from "@/hooks/pockets/usePockets";
 import { useTransactions } from "@/hooks/transactions/useTransactions";
 import { getTransactionsStatistics } from "@/utils/statistics";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { IconBack, IconChevronLeft } from "justd-icons";
+import { IconChevronLeft } from "justd-icons";
 import { useMemo } from "react";
 import { Collection } from "react-aria-components";
 
@@ -89,13 +89,14 @@ function RouteComponent() {
 					<IconChevronLeft />
 					Pockets
 				</Button>
-				<Heading level={1}>{pocket?.name}</Heading>
+
 				<div className="md:block hidden ml-auto ">
 					<CreateTransactionModal />
 				</div>
 			</div>
 			{pocket?.budget && calculateStatistics && (
 				<BudgetOverviewCard
+					pocketTitle={pocket?.name}
 					totalBudget={pocket.budget}
 					statisticsData={calculateStatistics}
 				/>

@@ -2,11 +2,13 @@ import type { StatisticsDataType } from "@/utils/statistics";
 import { Card, Grid, Meter } from "./ui";
 
 interface BudgetOverviewCardProps {
+	pocketTitle: string;
 	totalBudget: number | null;
 	statisticsData: StatisticsDataType;
 }
 
 export const BudgetOverviewCard = ({
+	pocketTitle,
 	statisticsData,
 	totalBudget,
 }: BudgetOverviewCardProps) => {
@@ -19,30 +21,10 @@ export const BudgetOverviewCard = ({
 
 	return (
 		<Card className="bg-navbar">
+			<Card.Header>
+				<Card.Title>{pocketTitle}</Card.Title>
+			</Card.Header>
 			<Card.Content className="flex flex-col p-4 gap-4">
-				{/* <div className="flex gap-2 py-2 justify-between">
-					{!totalBudget && <p>{statisticsData.totalSpent} Euro</p>}
-					{totalBudget && (
-						<>
-							<div className="flex flex-col gap-1">
-								<p className="text-muted-fg">Total Budget</p>
-								<p className="font-bold">{`${totalBudget}€`}</p>
-							</div>
-							<div className="flex flex-col gap-1">
-								<p className="text-muted-fg">Paid</p>
-								<p className="font-bold">{`${statisticsData.totalPaid}€`}</p>
-							</div>
-							<div className="flex flex-col gap-1">
-								<p className="text-muted-fg">Not Paid</p>
-								<p className="font-bold">{`${statisticsData.totalNotPaid}€`}</p>
-							</div>
-							<div className="flex flex-col gap-1">
-								<p className="text-muted-fg">Remaining</p>
-								<p className="font-bold">{`${totalBudget - statisticsData.totalSpent}€`}</p>
-							</div>
-						</>
-					)}
-				</div> */}
 				{!totalBudget && <p>{statisticsData.totalSpent} Euro</p>}
 				{totalBudget && (
 					<Grid
