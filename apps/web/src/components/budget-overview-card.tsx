@@ -1,5 +1,5 @@
 import type { StatisticsDataType } from "@/utils/statistics";
-import { Card, Grid, Meter } from "./ui";
+import { Card, Grid, Heading, Meter } from "./ui";
 
 interface BudgetOverviewCardProps {
 	pocketTitle: string;
@@ -21,10 +21,8 @@ export const BudgetOverviewCard = ({
 
 	return (
 		<Card className="bg-navbar">
-			<Card.Header>
-				<Card.Title>{pocketTitle}</Card.Title>
-			</Card.Header>
 			<Card.Content className="flex flex-col p-4 gap-4">
+				<Heading level={3}>{pocketTitle}</Heading>
 				{!totalBudget && <p>{statisticsData.totalSpent} Euro</p>}
 				{totalBudget && (
 					<Grid
