@@ -18,7 +18,6 @@ function HomeComponent() {
 	const [editingPocket, setEditingPocket] = useState<Pocket>();
 
 	if (!pockets || pockets.length === 0) {
-		console.log("no pockets");
 		return (
 			<div className="h-full flex flex-col justify-center items-center gap-3">
 				<p>Seems like you don't have any pockets yet.</p>
