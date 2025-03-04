@@ -3,6 +3,7 @@ import { db } from "../db";
 import { table } from "../db/schema";
 import { eq } from "drizzle-orm";
 import { insertTransactionSchema } from "../db/types";
+import { desc } from "drizzle-orm";
 
 export const transactionsRoute = new Elysia({ prefix: "/transactions" })
 	.get("/pocket/:pocketId", async ({ params }) => {
@@ -10,7 +11,7 @@ export const transactionsRoute = new Elysia({ prefix: "/transactions" })
 			.select()
 			.from(table.transactionSchema)
 			.where(eq(table.transactionSchema.pocketId, params.pocketId))
-			.orderBy(table.transactionSchema.createdAt);
+			.orderBy(desc(table.transactionSchema.createdAt));
 	})
 	.post(
 		"",
