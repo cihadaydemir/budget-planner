@@ -18,7 +18,7 @@ export const auth = betterAuth({
 			account,
 		},
 	}),
-	trustedOrigins: ["http://localhost:3001"],
+	trustedOrigins: [process.env.CLIENT_BASE_URL as string],
 	emailAndPassword: {
 		enabled: true, // If you want to use email and password auth
 	},

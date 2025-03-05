@@ -8,7 +8,7 @@ import { transactionsRoute } from "./routes/transactions";
 const app = new Elysia()
 	.use(
 		cors({
-			origin: "http://localhost:3001",
+			origin: process.env.CLIENT_BASE_URL as string,
 			methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 			credentials: true,
 			allowedHeaders: ["Content-Type", "Authorization"],
@@ -22,5 +22,5 @@ const app = new Elysia()
 console.log(
 	`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
 );
-
+console.log(process.env.CLIENT_BASE_URL);
 export type App = typeof app;
