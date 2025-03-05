@@ -1,4 +1,4 @@
-import { api } from "@/lib/eden-client";
+import { api } from "@/lib/auth/eden-client";
 import { useMutation } from "@tanstack/react-query";
 
 export const useDeleteTransaction = () =>

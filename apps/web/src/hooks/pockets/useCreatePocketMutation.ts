@@ -1,4 +1,4 @@
-import { api } from "@/lib/eden-client";
+import { api } from "@/lib/auth/eden-client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { InsertPocketSchemaType } from "@api/db/types/pocket";
 

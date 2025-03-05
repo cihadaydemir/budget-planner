@@ -1,7 +1,7 @@
 "use client";
 
 import { usePockets } from "@/hooks/pockets/usePockets";
-import { authClient, signOut } from "@/lib/auth-client";
+import { authClient, signOut } from "@/lib/auth/auth-client";
 import { useLocation, useNavigate, useRouter } from "@tanstack/react-router";
 import {
 	IconChevronLgDown,

@@ -8,7 +8,7 @@ import {
 
 import { useNavigate } from "@tanstack/react-router";
 
-import { authClient, signOut } from "@/lib/auth-client";
+import { authClient, signOut } from "@/lib/auth/auth-client";
 import { useTheme } from "../theme-provider";
 import { Avatar, Menu } from "../ui";
 

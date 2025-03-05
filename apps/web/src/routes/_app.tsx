@@ -3,7 +3,7 @@ import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
 
 import AppSidebar from "@/components/sidebar/app-sidebar";
 import AppSidebarNav from "@/components/sidebar/app-sidebar-nav";
-import { authQueryOptions } from "@/lib/use-auth";
+import { authQueryOptions } from "@/lib/auth/use-auth";
 
 export const Route = createFileRoute("/_app")({
 	component: AppLayout,

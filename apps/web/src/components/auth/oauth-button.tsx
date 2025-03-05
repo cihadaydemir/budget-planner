@@ -1,13 +1,19 @@
-import { signIn } from "@/lib/auth-client";
-import { IconBrandGithub } from "justd-icons";
+import { signIn } from "@/lib/auth/auth-client";
+import { IconBrandGithub, IconBrandGoogle } from "justd-icons";
 import { Button } from "../ui";
+import type { oauthProviders } from "@/lib/auth/constants";
 
-export const OAuthButton = () => {
+interface OAuthButtonProps {
+	provider: (typeof oauthProviders)[number];
+}
+
+//TODO: add pattern matcher for icon and text
+export const OAuthButton = ({ provider }: OAuthButtonProps) => {
 	return (
 		<Button
 			onPress={async () => {
 				await signIn.social({
-					provider: "github",
+					provider: provider,
 					fetchOptions: {
 						onError: (ctx) => {
 							console.error(ctx.error);
@@ -17,8 +23,9 @@ export const OAuthButton = () => {
 				});
 			}}
 		>
-			<IconBrandGithub />
-			Github
+			{provider === "github" && <IconBrandGithub />}
+			{provider === "google" && <IconBrandGoogle />}
+			{provider.slice(0, 1).toUpperCase() + provider.slice(1)}
 		</Button>
 	);
 };

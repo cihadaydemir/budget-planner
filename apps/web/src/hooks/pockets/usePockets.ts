@@ -1,4 +1,4 @@
-import { api } from "@/lib/eden-client";
+import { api } from "@/lib/auth/eden-client";
 import { extractData } from "@/utils/extract-data";
 
 import { useQuery } from "@tanstack/react-query";
