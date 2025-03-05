@@ -4,7 +4,7 @@ import { Heading, ShowMore } from "@/components/ui";
 import { oauthProviders } from "@/lib/auth/constants";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/auth/sign-in")({
+export const Route = createFileRoute("/auth/_layout/sign-in")({
 	component: RouteComponent,
 });
 
