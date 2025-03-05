@@ -23,40 +23,49 @@ export const BudgetOverviewCard = ({
 		<Card className="bg-navbar">
 			<Card.Content className="flex flex-col p-4 gap-4">
 				<Heading level={3}>{pocketTitle}</Heading>
-				{!totalBudget && <p>{statisticsData.totalSpent} Euro</p>}
-				{totalBudget && (
-					<Grid
-						columns={{
-							initial: 2,
-							xs: 2,
-							sm: 2,
-							md: 4,
-							lg: 4,
-							xl: 4,
-						}}
-						gap={{
-							initial: 2,
-						}}
-						autoRows="fr"
-					>
-						<Grid.Item className="flex flex-col gap-1">
-							<p className="text-muted-fg">Total Budget</p>
-							<p className="font-bold">{`${totalBudget}€`}</p>
-						</Grid.Item>
-						<Grid.Item className="flex flex-col gap-1">
-							<p className="text-muted-fg">Remaining</p>
-							<p className="font-bold">{`${totalBudget - statisticsData.totalSpent}€`}</p>
-						</Grid.Item>
-						<Grid.Item className="flex flex-col gap-1">
-							<p className="text-muted-fg">Paid</p>
-							<p className="font-bold">{`${statisticsData.totalPaid}€`}</p>
-						</Grid.Item>
-						<Grid.Item className="flex flex-col gap-1">
-							<p className="text-muted-fg">Not Paid</p>
-							<p className="font-bold">{`${statisticsData.totalNotPaid}€`}</p>
-						</Grid.Item>
-					</Grid>
-				)}
+
+				<Grid
+					columns={{
+						initial: 2,
+						xs: 2,
+						sm: 2,
+						md: 4,
+						lg: 4,
+						xl: 4,
+					}}
+					gap={{
+						initial: 2,
+					}}
+					autoRows="fr"
+				>
+					{totalBudget ? (
+						<>
+							<Grid.Item className="flex flex-col gap-1">
+								<p className="text-muted-fg">Total Budget</p>
+								<p className="font-bold">{`${totalBudget}€`}</p>
+							</Grid.Item>
+							<Grid.Item className="flex flex-col gap-1">
+								<p className="text-muted-fg">Remaining</p>
+								<p className="font-bold">{`${totalBudget - statisticsData.totalSpent}€`}</p>
+							</Grid.Item>
+						</>
+					) : (
+						<>
+							<Grid.Item className="flex flex-col gap-1" colSpan={2}>
+								<p className="text-muted-fg">Total Spent</p>
+								<p className="font-bold">{`${statisticsData.totalSpent}€`}</p>
+							</Grid.Item>
+						</>
+					)}
+					<Grid.Item className="flex flex-col gap-1">
+						<p className="text-muted-fg">Paid</p>
+						<p className="font-bold">{`${statisticsData.totalPaid}€`}</p>
+					</Grid.Item>
+					<Grid.Item className="flex flex-col gap-1">
+						<p className="text-muted-fg">Not Paid</p>
+						<p className="font-bold">{`${statisticsData.totalNotPaid}€`}</p>
+					</Grid.Item>
+				</Grid>
 
 				<Meter
 					label="Spent"

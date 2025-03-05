@@ -94,7 +94,7 @@ function RouteComponent() {
 					<CreateTransactionModal />
 				</div>
 			</div>
-			{pocket?.budget && calculateStatistics && (
+			{pocket && calculateStatistics && (
 				<BudgetOverviewCard
 					pocketTitle={pocket?.name}
 					totalBudget={pocket.budget}
