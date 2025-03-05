@@ -11,6 +11,7 @@ interface OAuthButtonProps {
 export const OAuthButton = ({ provider }: OAuthButtonProps) => {
 	return (
 		<Button
+			appearance="outline"
 			onPress={async () => {
 				await signIn.social({
 					provider: provider,
