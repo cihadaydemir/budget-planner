@@ -13,7 +13,7 @@ export const OAuthButton = () => {
 							console.error(ctx.error);
 						},
 					},
-					callbackURL: "http://localhost:3001",
+					callbackURL: window.location.origin,
 				});
 			}}
 		>
