@@ -14,9 +14,9 @@ export const BudgetOverviewCard = ({
 }: BudgetOverviewCardProps) => {
 	const getValueLabelText = () => {
 		if (totalBudget) {
-			return `${statisticsData.totalSpent} of ${totalBudget}€`;
+			return `${statisticsData.totalSpent.toLocaleString("DE-de")} of ${totalBudget.toLocaleString("DE-de")}€`;
 		}
-		return `${statisticsData.totalSpent} Euro`;
+		return `${statisticsData.totalSpent.toLocaleString("DE-de")} Euro`;
 	};
 
 	return (
@@ -42,28 +42,28 @@ export const BudgetOverviewCard = ({
 						<>
 							<Grid.Item className="flex flex-col gap-1">
 								<p className="text-muted-fg">Total Budget</p>
-								<p className="font-bold">{`${totalBudget}€`}</p>
+								<p className="font-bold">{`${totalBudget.toLocaleString()}€`}</p>
 							</Grid.Item>
 							<Grid.Item className="flex flex-col gap-1">
 								<p className="text-muted-fg">Remaining</p>
-								<p className="font-bold">{`${totalBudget - statisticsData.totalSpent}€`}</p>
+								<p className="font-bold">{`${(totalBudget - statisticsData.totalSpent).toLocaleString("DE-de")}€`}</p>
 							</Grid.Item>
 						</>
 					) : (
 						<>
 							<Grid.Item className="flex flex-col gap-1" colSpan={2}>
 								<p className="text-muted-fg">Total Spent</p>
-								<p className="font-bold">{`${statisticsData.totalSpent}€`}</p>
+								<p className="font-bold">{`${statisticsData.totalSpent.toLocaleString("DE-de")}€`}</p>
 							</Grid.Item>
 						</>
 					)}
 					<Grid.Item className="flex flex-col gap-1">
 						<p className="text-muted-fg">Paid</p>
-						<p className="font-bold">{`${statisticsData.totalPaid}€`}</p>
+						<p className="font-bold">{`${statisticsData.totalPaid.toLocaleString("DE-de")}€`}</p>
 					</Grid.Item>
 					<Grid.Item className="flex flex-col gap-1">
 						<p className="text-muted-fg">Not Paid</p>
-						<p className="font-bold">{`${statisticsData.totalNotPaid}€`}</p>
+						<p className="font-bold">{`${statisticsData.totalNotPaid.toLocaleString("DE-de")}€`}</p>
 					</Grid.Item>
 				</Grid>
 
