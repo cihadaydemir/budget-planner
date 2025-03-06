@@ -40,7 +40,7 @@ export const PocketsCard = ({
 						<p className="font-bold">{pocket.name}</p>
 					</Card.Title>
 					<Menu>
-						<Button size="square-petite" appearance="plain">
+						<Button size="square-petite" intent="plain">
 							<IconDotsVertical className="size-4" />
 						</Button>
 

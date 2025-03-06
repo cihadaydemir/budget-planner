@@ -85,8 +85,10 @@ export const CreatePocketModal = ({
 				isOpen={isOpen}
 				onOpenChange={(val) => {
 					setIsOpen(val);
-					setEditingPocket?.(undefined);
-					reset();
+					setTimeout(() => {
+						setEditingPocket?.(undefined);
+						reset();
+					}, 200);
 				}}
 			>
 				<Modal.Header>

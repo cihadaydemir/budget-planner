@@ -41,7 +41,7 @@ export const ExpenseList = ({ transactions }: ExpenseListProps) => {
 					<div className="flex gap-4">
 						{!transaction.isPaid && (
 							<Button
-								appearance="outline"
+								intent="outline"
 								onPress={() => {
 									editTransactionMutation.mutate(
 										{
