@@ -14,7 +14,6 @@ import { toast } from "sonner";
 import { Button, Form, Modal, NumberField, TextField } from "./ui";
 
 interface CreatePocketModalProps {
-	// isEdit: boolean;
 	isOpen: boolean;
 	setIsOpen: (isOpen: boolean) => void;
 	editingPocket?: Pocket;
@@ -47,19 +46,26 @@ export const CreatePocketModal = ({
 						queryClient.invalidateQueries({
 							queryKey: ["pockets"],
 						});
-						setEditingPocket?.(undefined);
 						toast(`Pocket ${data.data?.[0].name} updated successfully`);
+						setTimeout(() => {
+							setEditingPocket?.(undefined);
+							reset();
+						}, 200);
 					},
 				},
 			);
 		} else {
 			createPocketMutation.mutate(data, {
 				onSuccess(data, variables, context) {
-					setIsOpen(false);
 					queryClient.invalidateQueries({
 						queryKey: ["pockets"],
 					});
+					setIsOpen(false);
 					toast(`Pocket ${data.data?.[0].name} created successfully`);
+					setTimeout(() => {
+						setEditingPocket?.(undefined);
+						reset();
+					}, 200);
 				},
 			});
 		}
@@ -116,14 +122,19 @@ export const CreatePocketModal = ({
 							control={control}
 							name="budget"
 							render={({ field }) => (
-								<NumberField {...field} name="budget" label="Budget" />
+								<NumberField
+									{...field}
+									name="budget"
+									label="Budget"
+									value={field.value}
+								/>
 							)}
 						/>
 					</Modal.Body>
 					<Modal.Footer>
 						<Modal.Close>Close</Modal.Close>
 
-						<Button type="submit">Create</Button>
+						<Button type="submit">{`${editingPocket ? "Update" : "Create"}`}</Button>
 					</Modal.Footer>
 				</Form>
 			</Modal.Content>
