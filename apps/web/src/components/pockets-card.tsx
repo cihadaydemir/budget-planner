@@ -78,7 +78,7 @@ export const PocketsCard = ({
 				</Card.Header>
 				<Card.Content>
 					<p>{pocket.description}</p>
-					{pocket.budget && <p>{pocket.budget} EUR</p>}
+					{pocket.budget && <p>{pocket.budget.toLocaleString("DE-de")} EUR</p>}
 				</Card.Content>
 			</Card>
 		</>
