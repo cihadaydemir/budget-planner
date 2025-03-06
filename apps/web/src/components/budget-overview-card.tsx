@@ -42,7 +42,7 @@ export const BudgetOverviewCard = ({
 						<>
 							<Grid.Item className="flex flex-col gap-1">
 								<p className="text-muted-fg">Total Budget</p>
-								<p className="font-bold">{`${totalBudget.toLocaleString()}€`}</p>
+								<p className="font-bold">{`${totalBudget.toLocaleString("DE-de")}€`}</p>
 							</Grid.Item>
 							<Grid.Item className="flex flex-col gap-1">
 								<p className="text-muted-fg">Remaining</p>
