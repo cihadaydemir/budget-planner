@@ -81,7 +81,7 @@ function RouteComponent() {
 		<div className="flex flex-col w-full h-full py-4 gap-4">
 			<div className="flex gap-2 items-center">
 				<Button
-					appearance="plain"
+					intent="plain"
 					onPress={() => {
 						router.history.back();
 					}}
