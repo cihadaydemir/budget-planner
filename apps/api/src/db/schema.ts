@@ -19,7 +19,7 @@ export const pocketSchema = sqliteTable("pockets", {
 	name: text("name").notNull(),
 	description: text("description"),
 	budget: integer("budget"),
-	userId: text("user_id").references(() => user.id),
+	userId: text("user_id").references(() => user.id, { onDelete: "cascade" }),
 });
 
 export const transactionSchema = sqliteTable("transactions", {
@@ -31,8 +31,8 @@ export const transactionSchema = sqliteTable("transactions", {
 	categoryId: text("category").references(() => expenseCategorySchema.id),
 	pocketId: text("pocket_id")
 		.notNull()
-		.references(() => pocketSchema.id),
-	userId: text("user_id").references(() => user.id),
+		.references(() => pocketSchema.id, { onDelete: "cascade" }),
+	userId: text("user_id").references(() => user.id, { onDelete: "cascade" }),
 });
 
 export const expenseCategorySchema = sqliteTable("expense_category", {
