@@ -33,7 +33,7 @@ export const PocketsCard = ({
 						params: { pocketId: pocket.id },
 					})
 				}
-				className="cursor-pointer min-w-[250px]"
+				className="cursor-pointer min-w-[250px] w-full"
 			>
 				<Card.Header className=" w-full flex flex-row justify-between items-center">
 					<Card.Title>
