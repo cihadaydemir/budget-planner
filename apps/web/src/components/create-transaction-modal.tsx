@@ -12,6 +12,7 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import {
 	Button,
+	Checkbox,
 	Form,
 	Label,
 	Modal,
@@ -24,13 +25,14 @@ export const CreateTransactionModal = () => {
 	const params = useParams({ from: "/_app/pocket/$pocketId" });
 	const queryClient = useQueryClient();
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const { control, handleSubmit, formState, reset } = useForm({
+	const { control, handleSubmit, reset, setValue } = useForm({
 		resolver: typeboxResolver(insertTransactionSchema),
 		defaultValues: {
 			pocketId: params.pocketId,
 			isPaid: false,
 		},
 	});
+	const [isPaid, setIsPaid] = useState(false);
 	const createTransactionMutation = useCreateTransactionMutation();
 
 	const onSubmit = (data: InsertTransactionSchemaType) => {
@@ -38,11 +40,11 @@ export const CreateTransactionModal = () => {
 			{ ...data, pocketId: params.pocketId },
 			{
 				onSuccess: (data, variables, context) => {
-					setIsModalOpen(false);
-					reset();
 					queryClient.invalidateQueries({
 						queryKey: ["transactions", params.pocketId],
 					});
+					setIsModalOpen(false);
+					reset();
 					toast(`Transaction ${data.data?.[0].name} created successfully`);
 				},
 			},
@@ -102,19 +104,32 @@ export const CreateTransactionModal = () => {
 								/>
 							)}
 						/>
+						{/* 
+						TODO: replaced with checkbox until switch is fixed
 						<Controller
 							control={control}
 							name="isPaid"
-							render={({ field }) => (
+							render={({ field, formState }) => (
 								<div className="flex w-max gap-3 border-input border p-2 rounded-lg">
 									<Label>Is Paid</Label>
 									<Switch
-										// {...field}
-										onChange={field.onChange}
+										onChange={(value) => {
+											field.onChange(value);
+										}}
+										isSelected={isPaid}
+									/>
+								</div>
+							)}
+						/> */}
+						<Controller
+							control={control}
+							name="isPaid"
+							render={({ field, formState }) => (
+								<div className="flex w-max gap-3 border-input border p-2 rounded-lg">
+									<Label>Is Paid</Label>
+									<Checkbox
 										isSelected={field.value}
-										value="paid"
-										name="isPaid"
-										defaultSelected={false}
+										onChange={field.onChange}
 									/>
 								</div>
 							)}
