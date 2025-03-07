@@ -1,9 +1,17 @@
 import { Controller, useForm } from "react-hook-form";
 
+import { signIn, signUp } from "@/lib/auth/auth-client";
 import { type Static, Type } from "@sinclair/typebox";
+import { useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
 import { Button, Form, TextField } from "../ui";
 
-const credentialsSchema = Type.Object({
+export const credentialsSchema = Type.Object({
+	name: Type.Optional(
+		Type.String({
+			errorMessage: { format: "Username is required" },
+		}),
+	),
 	email: Type.String({
 		format: "email",
 		errorMessage: { format: "Invalid email" },
@@ -14,13 +22,38 @@ const credentialsSchema = Type.Object({
 	}),
 });
 
-type CredentialsSchemaType = Static<typeof credentialsSchema>;
+export type CredentialsSchemaType = Static<typeof credentialsSchema>;
 
-export const CredentialLoginForm = () => {
-	const { handleSubmit, control } = useForm<CredentialsSchemaType>();
+interface CredentialLoginFormProps {
+	isSignUp?: boolean;
+}
 
-	const onSubmit = (data: CredentialsSchemaType) => {
-		console.log(data);
+export const CredentialLoginForm = ({
+	isSignUp = false,
+}: CredentialLoginFormProps) => {
+	const { handleSubmit, control, setError, formState } =
+		useForm<CredentialsSchemaType>();
+	const navigate = useNavigate();
+
+	const onSubmit = async (data: CredentialsSchemaType) => {
+		await signIn.email({
+			...data,
+		});
+		if (isSignUp && data.name) {
+			const { error } = await signUp.email({
+				...data,
+				name: data.name,
+			});
+
+			if (error) {
+				setError("email", { message: error.message });
+				toast.error(error.message);
+			} else {
+				navigate({
+					to: "/",
+				});
+			}
+		}
 	};
 
 	return (
@@ -28,10 +61,19 @@ export const CredentialLoginForm = () => {
 			onSubmit={handleSubmit(onSubmit)}
 			className="flex flex-col gap-3 w-full"
 		>
+			{isSignUp && (
+				<Controller
+					control={control}
+					name={"name"}
+					render={({ field }) => (
+						<TextField {...field} isRequired label="Username" type="text" />
+					)}
+				/>
+			)}
 			<Controller
 				control={control}
 				name={"email"}
-				render={({ field }) => (
+				render={({ field, fieldState }) => (
 					<TextField {...field} isRequired label="E-Mail" type="email" />
 				)}
 			/>
@@ -42,7 +84,7 @@ export const CredentialLoginForm = () => {
 					<TextField {...field} label="Password" isRequired type="password" />
 				)}
 			/>
-			<Button type="submit">Sign In</Button>
+			<Button type="submit">{isSignUp ? "Sign Up" : "Sign In"}</Button>
 		</Form>
 	);
 };
