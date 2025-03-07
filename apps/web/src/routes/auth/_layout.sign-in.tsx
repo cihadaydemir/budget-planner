@@ -10,7 +10,7 @@ export const Route = createFileRoute("/auth/_layout/sign-in")({
 
 function RouteComponent() {
 	return (
-		<div className="flex flex-col gap-3 w-full h-full md:max-w-lg justify-center">
+		<div className="flex flex-col gap-3 w-full h-full md:max-w-lg">
 			<Heading className="mb-3">Sign In</Heading>
 			<CredentialLoginForm />
 			<p className="text-center text-muted-fg text-sm">

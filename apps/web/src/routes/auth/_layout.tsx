@@ -7,7 +7,10 @@ export const Route = createFileRoute("/auth/_layout")({
 
 function RouteComponent() {
 	return (
-		<Container intent="padded-content" className="h-full w-full py-4">
+		<Container
+			intent="padded-content"
+			className="h-full w-full py-4 justify-items-center"
+		>
 			<Outlet />
 		</Container>
 	);
