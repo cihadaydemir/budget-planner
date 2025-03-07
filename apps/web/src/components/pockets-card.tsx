@@ -3,11 +3,11 @@ import type { Pocket } from "@api/db/types";
 import { useNavigate } from "@tanstack/react-router";
 import { IconDotsVertical, IconHighlight, IconTrash } from "justd-icons";
 import { toast } from "sonner";
-import { Button, Card, Menu } from "./ui";
+import { Button, Card, Menu, Meter } from "./ui";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface PocketsCardProps {
-	pocket: Pocket;
+	pocket: Pocket & { totalSpent: number };
 	isOpen: boolean;
 	setIsOpen: (isOpen: boolean) => void;
 	setEditingPocket: (pocket: Pocket) => void;
@@ -76,9 +76,16 @@ export const PocketsCard = ({
 						</Menu.Content>
 					</Menu>
 				</Card.Header>
-				<Card.Content>
+				<Card.Content className="flex flex-col gap-2">
 					<p>{pocket.description}</p>
 					{pocket.budget && <p>{pocket.budget.toLocaleString("DE-de")} EUR</p>}
+					<Meter
+						label="Spent"
+						value={pocket.totalSpent}
+						maxValue={pocket.budget ?? undefined}
+						formatOptions={{ style: "currency", currency: "EUR" }}
+						// valueLabel={getValueLabelText()}
+					/>
 				</Card.Content>
 			</Card>
 		</>
