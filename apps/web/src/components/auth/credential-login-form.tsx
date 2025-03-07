@@ -2,7 +2,7 @@ import { Controller, useForm } from "react-hook-form";
 
 import { signIn, signUp } from "@/lib/auth/auth-client";
 import { type Static, Type } from "@sinclair/typebox";
-import { useNavigate } from "@tanstack/react-router";
+import { useLocation, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { Button, Form, TextField } from "../ui";
 
@@ -33,25 +33,25 @@ export const CredentialLoginForm = ({
 }: CredentialLoginFormProps) => {
 	const { handleSubmit, control, setError, formState } =
 		useForm<CredentialsSchemaType>();
-	const navigate = useNavigate();
 
 	const onSubmit = async (data: CredentialsSchemaType) => {
-		await signIn.email({
+		const { error } = await signIn.email({
 			...data,
+			callbackURL: window.location.origin,
 		});
+		if (error) {
+			toast.error(error.message);
+		}
+
 		if (isSignUp && data.name) {
 			const { error } = await signUp.email({
 				...data,
 				name: data.name,
+				callbackURL: window.location.origin,
 			});
 
 			if (error) {
-				setError("email", { message: error.message });
 				toast.error(error.message);
-			} else {
-				navigate({
-					to: "/",
-				});
 			}
 		}
 	};
