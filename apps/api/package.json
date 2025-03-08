@@ -7,7 +7,8 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "deploy": "wrangler deploy --minify src/index.ts"
   },
   "dependencies": {
     "@elysiajs/cors": "^1.2.0",
@@ -21,8 +22,10 @@
     "superjson": "^2.2.2"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250303.0",
     "bun-types": "latest",
-    "drizzle-kit": "^0.30.5"
+    "drizzle-kit": "^0.30.5",
+    "wrangler": "^3.114.0"
   },
   "override": {
     "@sinclair/typebox": "0.34.0"

@@ -22,10 +22,10 @@
     "tailwind-variants": "^0.3.1",
     "tailwindcss-animate": "^1.0.7",
     "vite": "^6.0.3",
-    "vite-plugin-pwa": "^0.21.1"
+    "vite-plugin-pwa": "^0.21.1",
+    "@budget-planner/api": "workspace:*"
   },
   "dependencies": {
-    "@budget-planner/api": "workspace:*",
     "@elysiajs/eden": "^1.2.0",
     "@hookform/resolvers": "^4.1.1",
     "@tailwindcss/vite": "^4.0.7",
