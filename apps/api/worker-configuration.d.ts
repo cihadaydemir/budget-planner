@@ -2,8 +2,10 @@
 
 interface Env {
 	API_BASE_URL: "https://budget-planner-api.cihadaydemir.workers.dev/";
-	BETTER_AUTH_SECRET: "VZ6oyPCwSJ45ehg9u9IEDUhLyAobl4Km";
-	GITHUB_CLIENT_ID: "Ov23lir0l0oEf4gYnCZq";
-	GITHUB_CLIENT_SECRET: "0466ea43aa30e7df6763eaea79b571fdde3f1807";
+	CLIENT_BASE_URL: "https://budget-planner-bwm.pages.dev/";
+	GITHUB_CLIENT_ID: string;
+	GITHUB_CLIENT_SECRET: string;
+	GOOGLE_CLIENT_ID: string;
+	GOOGLE_CLIENT_SECRET: string;
 	devDB: D1Database;
 }
