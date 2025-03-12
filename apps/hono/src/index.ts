@@ -19,5 +19,8 @@ app.get('/', async (c) => {
   return c.json(users)
 })
 
-export default app
 
+export default {  
+  port: 3000, 
+  fetch: app.fetch, 
+} 

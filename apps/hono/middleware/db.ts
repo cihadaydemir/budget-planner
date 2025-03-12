@@ -9,6 +9,6 @@ export const db = new Hono<AppContext>();
 
 db.use('*', async (c, next) => {
   // Drizzle-Instanz erstellen und zum Context hinzufügen
-  c.set('db', drizzle(c.env.devDB, { schema }));
+  c.set('db', drizzle(c.env.DB, { schema }));
   await next();
 });

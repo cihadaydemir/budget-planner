@@ -11,5 +11,5 @@ interface Env {
 	CLOUDFLARE_ACCOUNT_ID: string;
 	CLOUDFLARE_DATABASE_ID: string;
 	CLOUDFLARE_D1_TOKEN: string;
-	devDB: D1Database;
+	DB: D1Database;
 }
