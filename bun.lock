@@ -34,11 +34,13 @@
       "name": "@budget-planner/hono",
       "dependencies": {
         "@hono/zod-validator": "^0.4.3",
+        "drizzle-orm": "^0.40.0",
         "hono": "^4.7.4",
         "zod": "^3.24.2",
       },
       "devDependencies": {
         "@cloudflare/workers-types": "^4.20250214.0",
+        "drizzle-kit": "^0.30.5",
         "wrangler": "^3.109.2",
       },
     },

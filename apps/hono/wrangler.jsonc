@@ -13,7 +13,6 @@
       "binding": "devDB",
       "database_name": "budget-planner-dev",
       "database_id": "a5cbff0c-a9c9-4b7b-96ab-29c51aa4a3ae",
-      //TODO: add drizzle migrations folder
       "migrations_dir": "./drizzle/migrations/",
     },
   ],
