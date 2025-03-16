@@ -53,7 +53,7 @@
 }
 
 @layer base {
-	:root {
+	/* :root {
 		--bg: var(--color-white);
 		--fg: var(--color-slate-950);
 
@@ -105,9 +105,9 @@
 		--radius-2xl: calc(var(--radius-lg) * 1.5);
 		--radius-3xl: calc(var(--radius-lg) * 2);
 		--radius-4xl: calc(var(--radius-lg) * 3);
-	}
+	} */
 
-	.dark {
+	:root {
 		--bg: var(--color-slate-950);
 		--fg: var(--color-slate-50);
 
