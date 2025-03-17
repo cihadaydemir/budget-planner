@@ -3,14 +3,7 @@
 import { usePockets } from "@/hooks/pockets/usePockets";
 import { authClient, signOut } from "@/lib/auth/auth-client";
 import { useLocation, useNavigate, useRouter } from "@tanstack/react-router";
-import {
-	IconChevronLgDown,
-	IconDashboard,
-	IconHeadphones,
-	IconLogout,
-	IconPlus,
-	IconSettings,
-} from "justd-icons";
+import { IconChevronLgDown, IconDashboard, IconHeadphones, IconLogout, IconPlus, IconSettings } from "justd-icons";
 import {
 	Avatar,
 	Button,
@@ -29,9 +22,7 @@ import {
 import { CreatePocketModal } from "../create-pocket-modal";
 import { useState } from "react";
 
-export default function AppSidebar(
-	props: React.ComponentProps<typeof Sidebar>,
-) {
+export default function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
 	const { setIsOpenOnMobile } = useSidebar();
 	const location = useLocation();
 	const currentPath = location.pathname;
@@ -80,27 +71,18 @@ export default function AppSidebar(
 
 			<SidebarFooter>
 				<Menu>
-					<Menu.Trigger
-						className="group"
-						aria-label="Profile"
-						data-slot="menu-trigger"
-					>
+					<Menu.Trigger className="group" aria-label="Profile" data-slot="menu-trigger">
 						<Avatar shape="square" src={session?.user.image} />
 						<div className="in-data-[sidebar-collapsible=dock]:hidden text-sm">
 							<SidebarLabel>{session?.user.name}</SidebarLabel>
-							<span className="-mt-0.5 block text-muted-fg">
-								{session?.user.email}
-							</span>
+							<span className="-mt-0.5 block text-muted-fg">{session?.user.email}</span>
 						</div>
 						<IconChevronLgDown
 							data-slot="chevron"
 							className="absolute right-3 size-4 transition-transform group-pressed:rotate-180"
 						/>
 					</Menu.Trigger>
-					<Menu.Content
-						placement="bottom right"
-						className="sm:min-w-(--trigger-width)"
-					>
+					<Menu.Content placement="bottom right" className="sm:min-w-(--trigger-width)">
 						<Menu.Section>
 							<Menu.Header separator>
 								<span className="block">{session?.user.name}</span>

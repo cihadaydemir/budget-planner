@@ -21,8 +21,7 @@ export const getTransactionsStatistics = (transactions: Transaction[]) => {
 		return {
 			totalSpent: acc.totalSpent + transaction.amount,
 			totalPaid: acc.totalPaid + (transaction.isPaid ? transaction.amount : 0),
-			totalNotPaid:
-				acc.totalNotPaid + (transaction.isPaid ? 0 : transaction.amount),
+			totalNotPaid: acc.totalNotPaid + (transaction.isPaid ? 0 : transaction.amount),
 		};
 	}, defaultStatistics);
 };

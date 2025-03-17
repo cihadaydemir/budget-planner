@@ -1,7 +1,8 @@
-import { signIn } from "@/lib/auth/auth-client";
 import { IconBrandGithub, IconBrandGoogle } from "justd-icons";
+
 import { Button } from "../ui";
 import type { oauthProviders } from "@/lib/auth/constants";
+import { signIn } from "@/lib/auth/auth-client";
 
 interface OAuthButtonProps {
 	provider: (typeof oauthProviders)[number];

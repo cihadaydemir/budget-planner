@@ -56,24 +56,12 @@ function RouteComponent() {
 		{
 			id: 2,
 			title: "Paid",
-			content: (
-				<ExpenseList
-					transactions={transactions.filter(
-						(transaction) => transaction.isPaid === true,
-					)}
-				/>
-			),
+			content: <ExpenseList transactions={transactions.filter((transaction) => transaction.isPaid === true)} />,
 		},
 		{
 			id: 3,
 			title: "Unpaid",
-			content: (
-				<ExpenseList
-					transactions={transactions.filter(
-						(transaction) => transaction.isPaid === false,
-					)}
-				/>
-			),
+			content: <ExpenseList transactions={transactions.filter((transaction) => transaction.isPaid === false)} />,
 		},
 	];
 
@@ -107,9 +95,7 @@ function RouteComponent() {
 					{(item) => <Tabs.Tab>{item.title}</Tabs.Tab>}
 				</Tabs.List>
 
-				<Collection items={tabs}>
-					{(item) => <Tabs.Panel key={item.id}>{item.content}</Tabs.Panel>}
-				</Collection>
+				<Collection items={tabs}>{(item) => <Tabs.Panel key={item.id}>{item.content}</Tabs.Panel>}</Collection>
 			</Tabs>
 			<div className="self-center md:hidden mt-auto z-10 fixed bottom-10">
 				<CreateTransactionModal />

@@ -1,10 +1,4 @@
-import {
-	IconDashboard,
-	IconDeviceDesktop,
-	IconLogout,
-	IconMoon,
-	IconSun,
-} from "justd-icons";
+import { IconDashboard, IconDeviceDesktop, IconLogout, IconMoon, IconSun } from "justd-icons";
 
 import { useNavigate } from "@tanstack/react-router";
 
@@ -41,13 +35,7 @@ export default function UserMenu() {
 
 				<Menu.Submenu>
 					<Menu.Item>
-						{theme === "light" ? (
-							<IconSun />
-						) : theme === "dark" ? (
-							<IconMoon />
-						) : (
-							<IconDeviceDesktop />
-						)}
+						{theme === "light" ? <IconSun /> : theme === "dark" ? <IconMoon /> : <IconDeviceDesktop />}
 						<Menu.Label>Switch theme</Menu.Label>
 					</Menu.Item>
 					<Menu.Content>

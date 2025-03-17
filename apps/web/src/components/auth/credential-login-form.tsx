@@ -28,11 +28,8 @@ interface CredentialLoginFormProps {
 	isSignUp?: boolean;
 }
 
-export const CredentialLoginForm = ({
-	isSignUp = false,
-}: CredentialLoginFormProps) => {
-	const { handleSubmit, control, setError, formState } =
-		useForm<CredentialsSchemaType>();
+export const CredentialLoginForm = ({ isSignUp = false }: CredentialLoginFormProps) => {
+	const { handleSubmit, control, setError, formState } = useForm<CredentialsSchemaType>();
 
 	const onSubmit = async (data: CredentialsSchemaType) => {
 		const { error } = await signIn.email({
@@ -57,32 +54,23 @@ export const CredentialLoginForm = ({
 	};
 
 	return (
-		<Form
-			onSubmit={handleSubmit(onSubmit)}
-			className="flex flex-col gap-3 w-full"
-		>
+		<Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3 w-full">
 			{isSignUp && (
 				<Controller
 					control={control}
 					name={"name"}
-					render={({ field }) => (
-						<TextField {...field} isRequired label="Username" type="text" />
-					)}
+					render={({ field }) => <TextField {...field} isRequired label="Username" type="text" />}
 				/>
 			)}
 			<Controller
 				control={control}
 				name={"email"}
-				render={({ field, fieldState }) => (
-					<TextField {...field} isRequired label="E-Mail" type="email" />
-				)}
+				render={({ field, fieldState }) => <TextField {...field} isRequired label="E-Mail" type="email" />}
 			/>
 			<Controller
 				control={control}
 				name={"password"}
-				render={({ field }) => (
-					<TextField {...field} label="Password" isRequired type="password" />
-				)}
+				render={({ field }) => <TextField {...field} label="Password" isRequired type="password" />}
 			/>
 			<Button type="submit">{isSignUp ? "Sign Up" : "Sign In"}</Button>
 		</Form>

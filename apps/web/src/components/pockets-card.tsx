@@ -13,12 +13,7 @@ interface PocketsCardProps {
 	setEditingPocket: (pocket: Pocket) => void;
 }
 
-export const PocketsCard = ({
-	pocket,
-	isOpen,
-	setIsOpen,
-	setEditingPocket,
-}: PocketsCardProps) => {
+export const PocketsCard = ({ pocket, isOpen, setIsOpen, setEditingPocket }: PocketsCardProps) => {
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 	const deletePocketMutation = useDeletePocket();
@@ -60,9 +55,7 @@ export const PocketsCard = ({
 								onAction={() =>
 									deletePocketMutation.mutate(pocket.id, {
 										onSuccess: () => {
-											toast.success(
-												`Pocket ${pocket.name} deleted successfully`,
-											);
+											toast.success(`Pocket ${pocket.name} deleted successfully`);
 											queryClient.invalidateQueries({
 												queryKey: ["pockets"],
 											});

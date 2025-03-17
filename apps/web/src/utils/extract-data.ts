@@ -13,9 +13,7 @@ type EdenResponse<T> = {
 	headers: HeadersInit | undefined;
 };
 // Updated extract function to handle Eden's response type
-export const extractData = async <T>(
-	promise: Promise<EdenResponse<T>>,
-): Promise<T> => {
+export const extractData = async <T>(promise: Promise<EdenResponse<T>>): Promise<T> => {
 	const response = await promise;
 	if (response.error) {
 		throw new Error(response.error.toString());

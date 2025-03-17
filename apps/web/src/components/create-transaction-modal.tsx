@@ -1,8 +1,5 @@
 import { useCreateTransactionMutation } from "@/hooks/transactions/useCreateTransactionMutation";
-import {
-	insertTransactionSchema,
-	type InsertTransactionSchemaType,
-} from "@api/db/types/transaction";
+import { insertTransactionSchema, type InsertTransactionSchemaType } from "@api/db/types/transaction";
 import { typeboxResolver } from "@hookform/resolvers/typebox";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "@tanstack/react-router";
@@ -10,16 +7,7 @@ import { IconPlus } from "justd-icons";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import {
-	Button,
-	Checkbox,
-	Form,
-	Label,
-	Modal,
-	NumberField,
-	Switch,
-	TextField,
-} from "./ui";
+import { Button, Checkbox, Form, Label, Modal, NumberField, Switch, TextField } from "./ui";
 
 export const CreateTransactionModal = () => {
 	const params = useParams({ from: "/_app/pocket/$pocketId" });
@@ -127,10 +115,7 @@ export const CreateTransactionModal = () => {
 							render={({ field, formState }) => (
 								<div className="flex w-max gap-3 border-input border p-2 rounded-lg">
 									<Label>Is Paid</Label>
-									<Checkbox
-										isSelected={field.value}
-										onChange={field.onChange}
-									/>
+									<Checkbox isSelected={field.value} onChange={field.onChange} />
 								</div>
 							)}
 						/>

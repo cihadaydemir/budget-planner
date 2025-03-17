@@ -1,8 +1,4 @@
-import {
-	type NavigateOptions,
-	type ToOptions,
-	useRouter,
-} from "@tanstack/react-router";
+import { type NavigateOptions, type ToOptions, useRouter } from "@tanstack/react-router";
 import type React from "react";
 import { RouterProvider } from "react-aria-components";
 import { ThemeProvider } from "./theme-provider";

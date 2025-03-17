@@ -1,11 +1,6 @@
 import type { Transaction } from "@api/db/types";
 import { Button, Card, Menu } from "./ui";
-import {
-	IconCheck,
-	IconDotsVertical,
-	IconHighlight,
-	IconTrash,
-} from "justd-icons";
+import { IconCheck, IconDotsVertical, IconHighlight, IconTrash } from "justd-icons";
 import { useDeleteTransaction } from "@/hooks/transactions/useDeleteTransaction";
 import { toast } from "sonner";
 import { useEditTransaction } from "@/hooks/transactions/useEditTransaction";
@@ -30,10 +25,7 @@ export const ExpenseList = ({ transactions }: ExpenseListProps) => {
 	return (
 		<div className="flex flex-col gap-2 overflow-y-scroll flex-1">
 			{transactions.map((transaction) => (
-				<Card
-					key={transaction.id}
-					className="flex items-center p-2 justify-between bg-navbar"
-				>
+				<Card key={transaction.id} className="flex items-center p-2 justify-between bg-navbar">
 					<div className="flex flex-col gap-1">
 						<p className="font-bold">{transaction.amount}€</p>
 						<p className="text-muted-fg">{transaction.name}</p>
@@ -79,9 +71,7 @@ export const ExpenseList = ({ transactions }: ExpenseListProps) => {
 										onAction={() => {
 											deleteExpenseMutation.mutate(transaction.id, {
 												onSuccess: () => {
-													toast.success(
-														`Expense ${transaction.name} deleted successfully`,
-													);
+													toast.success(`Expense ${transaction.name} deleted successfully`);
 												},
 											});
 										}}

@@ -1,11 +1,7 @@
 import { useCreatePocketMutation } from "@/hooks/pockets/useCreatePocketMutation";
 import { useEditPocket } from "@/hooks/pockets/useEditPocket";
 import { usePockets } from "@/hooks/pockets/usePockets";
-import {
-	insertPocketSchema,
-	type InsertPocketSchemaType,
-	type Pocket,
-} from "@api/db/types/pocket";
+import { insertPocketSchema, type InsertPocketSchemaType, type Pocket } from "@api/db/types/pocket";
 import { typeboxResolver } from "@hookform/resolvers/typebox";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
@@ -20,12 +16,7 @@ interface CreatePocketModalProps {
 	setEditingPocket?: (editingPocket: Pocket | undefined) => void;
 }
 
-export const CreatePocketModal = ({
-	editingPocket,
-	setEditingPocket,
-	isOpen,
-	setIsOpen,
-}: CreatePocketModalProps) => {
+export const CreatePocketModal = ({ editingPocket, setEditingPocket, isOpen, setIsOpen }: CreatePocketModalProps) => {
 	const queryClient = useQueryClient();
 	const { control, handleSubmit, reset } = useForm({
 		resolver: typeboxResolver(insertPocketSchema),
@@ -116,20 +107,13 @@ export const CreatePocketModal = ({
 						<Controller
 							control={control}
 							name="description"
-							render={({ field }) => (
-								<TextField {...field} label="Description" />
-							)}
+							render={({ field }) => <TextField {...field} label="Description" />}
 						/>
 						<Controller
 							control={control}
 							name="budget"
 							render={({ field }) => (
-								<NumberField
-									{...field}
-									name="budget"
-									label="Budget"
-									value={field.value}
-								/>
+								<NumberField {...field} name="budget" label="Budget" value={field.value} />
 							)}
 						/>
 					</Modal.Body>

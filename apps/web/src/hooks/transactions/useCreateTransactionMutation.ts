@@ -4,6 +4,5 @@ import { useMutation } from "@tanstack/react-query";
 
 export const useCreateTransactionMutation = () =>
 	useMutation({
-		mutationFn: (data: InsertTransactionSchemaType) =>
-			api.transactions.post(data),
+		mutationFn: (data: InsertTransactionSchemaType) => api.transactions.post(data),
 	});

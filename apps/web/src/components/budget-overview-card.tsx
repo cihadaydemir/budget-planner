@@ -7,11 +7,7 @@ interface BudgetOverviewCardProps {
 	statisticsData: StatisticsDataType;
 }
 
-export const BudgetOverviewCard = ({
-	pocketTitle,
-	statisticsData,
-	totalBudget,
-}: BudgetOverviewCardProps) => {
+export const BudgetOverviewCard = ({ pocketTitle, statisticsData, totalBudget }: BudgetOverviewCardProps) => {
 	const getValueLabelText = () => {
 		if (totalBudget) {
 			return `${statisticsData.totalSpent.toLocaleString("DE-de")} of ${totalBudget.toLocaleString("DE-de")}€`;

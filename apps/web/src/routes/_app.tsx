@@ -8,8 +8,7 @@ import { authQueryOptions } from "@/lib/auth/use-auth";
 export const Route = createFileRoute("/_app")({
 	component: AppLayout,
 	beforeLoad: async ({ context }) => {
-		const authData =
-			await context.queryClient.ensureQueryData(authQueryOptions);
+		const authData = await context.queryClient.ensureQueryData(authQueryOptions);
 
 		if (!authData) {
 			throw redirect({
