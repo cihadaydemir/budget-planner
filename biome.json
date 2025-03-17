@@ -14,7 +14,14 @@
     "indentStyle": "tab",
     "indentWidth": 4,
     "lineWidth": 120,
-    "ignore": ["node_modules", "dist", "dev-dist", ".wrangler", "drizzle/**/*"]
+    "ignore": [
+      "node_modules",
+      "dist",
+      "dev-dist",
+      ".wrangler",
+      "drizzle/**/*",
+      "*.d.ts"
+    ]
   },
   "javascript": {
     "formatter": {
