@@ -1,16 +1,13 @@
+import { account, session, user, verification } from "../../db/schema";
+
+import { DrizzleD1Database } from "drizzle-orm/d1";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 
-import { db } from "../../db";
-import { user, session, verification, account } from "../../db/schema";
 export const auth = betterAuth({
 	appName: "Budget-Planner",
-	database: drizzleAdapter(db, {
-		// We're using Drizzle as our database
+	database: drizzleAdapter(DrizzleD1Database, {
 		provider: "sqlite",
-		/*
-		 * Map your schema into a better-auth schema
-		 */
 		schema: {
 			user,
 			session,
@@ -34,6 +31,11 @@ export const auth = betterAuth({
 		google: {
 			clientId: process.env.GOOGLE_CLIENT_ID as string,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+		},
+	},
+	advanced: {
+		crossSubDomainCookies: {
+			enabled: true,
 		},
 	},
 });

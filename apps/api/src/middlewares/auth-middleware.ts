@@ -18,7 +18,7 @@ export const authMiddleware = new Elysia()
 		};
 	})
 	.onError(({ error }) => {
-		return new Response(error.message, { status: 401 }); //TODO figure out if this is the right way to do it
+		return new Response(error, { status: 401 }); //TODO figure out if this is the right way to do it
 	});
 
 export const userMiddleware = async (c: Context) => {

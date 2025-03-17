@@ -3,9 +3,10 @@
 interface Env {
 	API_BASE_URL: "https://budget-planner-api.cihadaydemir.workers.dev/";
 	CLIENT_BASE_URL: "https://budget-planner-bwm.pages.dev/";
+	BETTER_AUTH_SECRET: string;
 	GITHUB_CLIENT_ID: string;
 	GITHUB_CLIENT_SECRET: string;
 	GOOGLE_CLIENT_ID: string;
 	GOOGLE_CLIENT_SECRET: string;
-	devDB: D1Database;
+	DB: D1Database;
 }

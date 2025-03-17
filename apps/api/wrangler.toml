@@ -3,6 +3,8 @@ main = "src/index.ts"
 compatibility_date = "2024-11-06"
 compatibility_flags = ["nodejs_compat"]
 
+[dev]
+port = 3000
 
 [vars]
 API_BASE_URL = "https://budget-planner-api.cihadaydemir.workers.dev/"
@@ -14,6 +16,8 @@ CLIENT_BASE_URL="https://budget-planner-bwm.pages.dev/"
 # id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 [[d1_databases]]
-binding = "devDB" # available in your Worker on env.DB
+binding = "DB" # available in your Worker on env.DB
 database_name = "budget-planner-dev"
 database_id = "a5cbff0c-a9c9-4b7b-96ab-29c51aa4a3ae"
+migrations_dir = "./drizzle/"
+
