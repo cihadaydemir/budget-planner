@@ -14,7 +14,7 @@ export const defaultFields = (idPrefix: IdPrefix) => ({
 	deletedAt: text("deleted_at"),
 });
 
-export const pocketSchema = sqliteTable("pockets", {
+export const pocket = sqliteTable("pockets", {
 	...defaultFields("pocket"),
 	name: text("name").notNull(),
 	description: text("description"),
@@ -22,20 +22,20 @@ export const pocketSchema = sqliteTable("pockets", {
 	userId: text("user_id").references(() => user.id, { onDelete: "cascade" }),
 });
 
-export const transactionSchema = sqliteTable("transactions", {
+export const transaction = sqliteTable("transactions", {
 	...defaultFields("transaction"),
 	name: text("name").notNull(),
 	description: text("description"),
 	amount: integer("amount").notNull(),
 	isPaid: integer("is_paid", { mode: "boolean" }).notNull().default(false),
-	categoryId: text("category").references(() => expenseCategorySchema.id),
+	categoryId: text("category").references(() => expenseCategory.id),
 	pocketId: text("pocket_id")
 		.notNull()
-		.references(() => pocketSchema.id, { onDelete: "cascade" }),
+		.references(() => pocket.id, { onDelete: "cascade" }),
 	userId: text("user_id").references(() => user.id, { onDelete: "cascade" }),
 });
 
-export const expenseCategorySchema = sqliteTable("expense_category", {
+export const expenseCategory = sqliteTable("expense_category", {
 	...defaultFields("category"),
 	name: text("name").notNull(),
 });
@@ -94,14 +94,3 @@ export const verification = sqliteTable("verification", {
 	updatedAt: integer("updated_at", { mode: "timestamp" }),
 });
 
-export const table = {
-	pocketSchema,
-	transactionSchema,
-	expenseCategorySchema,
-	user,
-	session,
-	verification,
-	account,
-} as const;
-
-export type Table = typeof table;

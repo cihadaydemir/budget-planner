@@ -14,7 +14,8 @@
     "@better-fetch/fetch": "^1.1.15",
     "@hono/zod-validator": "^0.4.3",
     "better-auth": "^1.2.4",
-    "drizzle-orm": "^0.40.0",
+    "drizzle-orm": "^0.40.1",
+    "drizzle-zod": "^0.7.0",
     "hono": "^4.7.4",
     "wangler": "^0.0.7",
     "zod": "^3.24.2"
