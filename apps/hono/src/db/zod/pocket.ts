@@ -1,7 +1,7 @@
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod"
 
-import { pocket } from "../schema";
-import { z } from "zod";
+import { pocket } from "../schema"
+import type { z } from "zod"
 
 const insertPocketSchema = createInsertSchema(pocket).omit({
 	id: true,
@@ -10,8 +10,8 @@ const insertPocketSchema = createInsertSchema(pocket).omit({
 	createdAt: true,
 	updatedAt: true,
 	deletedAt: true,
-});
-const selectPocketSchema = createSelectSchema(pocket).omit({ serialId: true });
-export type InsertPocketSchemaType = z.infer<typeof insertPocketSchema>;
+})
+const selectPocketSchema = createSelectSchema(pocket).omit({ serialId: true })
+export type InsertPocketSchemaType = z.infer<typeof insertPocketSchema>
 
-export type Pocket = z.infer<typeof selectPocketSchema>;
+export type Pocket = z.infer<typeof selectPocketSchema>
