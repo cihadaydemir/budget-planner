@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "budget-planner-api",
   "main": "src/index.ts",
-  "compatibility_date": "2025-03-12",
+  "compatibility_date": "2024-09-23",
   "compatibility_flags": ["nodejs_compat"],
   "dev": {
     "port": 3000,

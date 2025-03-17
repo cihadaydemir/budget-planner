@@ -1,6 +1,15 @@
 import "dotenv/config";
 
-import { drizzle } from "drizzle-orm/d1";
-import { getEnv } from "..";
+import * as schema from "./schema";
 
-// export const db = drizzle(getEnv().devDB);
+import { DrizzleD1Database, drizzle } from "drizzle-orm/d1";
+
+export type DrizzleDB = DrizzleD1Database<typeof schema>;
+
+export function createDb(DB: Env["DB"]) {
+  return drizzle(DB, {
+    schema: {
+      ...schema,
+    },
+  });
+}

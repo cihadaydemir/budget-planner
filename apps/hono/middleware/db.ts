@@ -1,9 +1,10 @@
 import * as schema from '../src/db/schema';
 
+// src/middleware/db.ts
+import { DrizzleD1Database, drizzle } from 'drizzle-orm/d1';
+
 import { AppContext } from '../src';
 import { Hono } from 'hono';
-// src/middleware/db.ts
-import { drizzle } from 'drizzle-orm/d1';
 
 export const db = new Hono<AppContext>();
 
@@ -12,3 +13,4 @@ db.use('*', async (c, next) => {
   c.set('db', drizzle(c.env.DB, { schema }));
   await next();
 });
+
