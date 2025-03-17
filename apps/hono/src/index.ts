@@ -9,7 +9,7 @@ import { pocketsRoute } from "./routes/pockets"
 type Variables = {
 	DrizzleDB: DrizzleDB
 	auth: ReturnType<typeof getAuth>
-	session: Session
+	session: Session | null
 }
 
 export type AppContext = {
@@ -39,7 +39,7 @@ app.on(["POST", "GET"], "/api/auth/**", async (c) => {
 		.get("auth")
 		.handler(c.req.raw)
 		.then(async (res) => {
-			c.var.auth.api.getSession
+			// c.var.auth.api.getSession
 
 			return res
 		})

@@ -18,6 +18,12 @@ export const contextMiddleware = createMiddleware<AppContext>(async (c, next) =>
 			GOOGLE_CLIENT_SECRET: c.env.GOOGLE_CLIENT_SECRET,
 		}),
 	)
+	const session = await c.get("auth").api.getSession({ headers: c.req.raw.headers })
 
+	if (!session) {
+		c.set("session", null)
+		return next()
+	}
+	c.set("session", session)
 	await next()
 })
