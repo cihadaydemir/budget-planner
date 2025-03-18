@@ -1,21 +1,20 @@
-import { IconDashboard, IconDeviceDesktop, IconLogout, IconMoon, IconSun } from "justd-icons";
+import { Avatar, Menu } from "../ui"
+import { IconDashboard, IconDeviceDesktop, IconLogout, IconMoon, IconSun } from "justd-icons"
+import { authClient, signOut } from "@/lib/auth/auth-client"
 
-import { useNavigate } from "@tanstack/react-router";
-
-import { authClient, signOut } from "@/lib/auth/auth-client";
-import { useTheme } from "../theme-provider";
-import { Avatar, Menu } from "../ui";
+import { useNavigate } from "@tanstack/react-router"
+import { useTheme } from "../theme-provider"
 
 export default function UserMenu() {
-	const { theme, setTheme } = useTheme();
+	const { theme, setTheme } = useTheme()
 
-	const navigate = useNavigate();
-	const { data: session } = authClient.useSession();
+	const navigate = useNavigate()
+	const { data: session } = authClient.useSession()
 
 	return (
 		<Menu>
 			<Menu.Trigger className="ml-auto md:hidden" aria-label="Open Menu">
-				<Avatar alt="User avatar" src={session?.user.image} />
+				<Avatar alt="User avatar" src={session?.user.image ?? ""} />
 			</Menu.Trigger>
 			<Menu.Content placement="bottom" showArrow className="sm:min-w-64">
 				<Menu.Section>
@@ -62,10 +61,10 @@ export default function UserMenu() {
 								onSuccess: () => {
 									navigate({
 										to: "/auth/sign-in",
-									});
+									})
 								},
 							},
-						});
+						})
 					}}
 				>
 					<IconLogout />
@@ -73,5 +72,5 @@ export default function UserMenu() {
 				</Menu.Item>
 			</Menu.Content>
 		</Menu>
-	);
+	)
 }
