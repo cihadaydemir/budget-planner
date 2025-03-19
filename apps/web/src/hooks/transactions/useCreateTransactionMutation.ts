@@ -1,8 +1,12 @@
-import { api } from "@/lib/auth/eden-client";
-import type { InsertTransactionSchemaType } from "@api/db/types";
-import { useMutation } from "@tanstack/react-query";
+import type { InsertTransactionSchemaType } from "@hono/db/zod"
+import { hono } from "@/lib/hono-client"
+import { useMutation } from "@tanstack/react-query"
 
 export const useCreateTransactionMutation = () =>
 	useMutation({
-		mutationFn: (data: InsertTransactionSchemaType) => api.transactions.post(data),
-	});
+		mutationFn: (data: InsertTransactionSchemaType) => hono.transactions.$post({ json: data }),
+	})
+// export const useCreateTransactionMutation = () =>
+// 	useMutation({
+// 		mutationFn: (data: InsertTransactionSchemaType) => api.transactions.post(data),
+// 	})

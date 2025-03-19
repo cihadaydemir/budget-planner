@@ -1,6 +1,6 @@
-import { api } from "@/lib/auth/eden-client";
-import type { InsertPocketSchemaType } from "@api/db/types";
-import { useMutation } from "@tanstack/react-query";
+import type { InsertPocketSchemaType } from "@hono/db/zod"
+import { hono } from "@/lib/hono-client"
+import { useMutation } from "@tanstack/react-query"
 
 export const useEditPocket = () =>
 	useMutation({
@@ -8,7 +8,18 @@ export const useEditPocket = () =>
 			pocketId,
 			data,
 		}: {
-			data: Partial<InsertPocketSchemaType>;
-			pocketId: string;
-		}) => api.pockets.edit({ pocketId }).post(data),
-	});
+			data: Partial<InsertPocketSchemaType>
+			pocketId: string
+		}) => hono.pockets[":id"].$post({ json: { ...data }, param: { id: pocketId } }),
+	})
+
+// export const useEditPocket = () =>
+// 	useMutation({
+// 		mutationFn: ({
+// 			pocketId,
+// 			data,
+// 		}: {
+// 			data: Partial<InsertPocketSchemaType>
+// 			pocketId: string
+// 		}) => api.pockets.edit({ pocketId }).post(data),
+// 	})

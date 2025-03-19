@@ -23,5 +23,8 @@
   "devDependencies": {
     "drizzle-kit": "^0.30.5",
     "wrangler": "^4.0.0"
+  },
+  "exports": {
+    ".": "./src/index.ts"
   }
 }

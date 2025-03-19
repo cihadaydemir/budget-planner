@@ -49,8 +49,7 @@ app.on(["POST", "GET"], "/api/auth/**", async (c) => {
 		})
 })
 
-app.route("/pockets", pocketsRoute)
-app.route("/transactions", transactionsRoute)
+const routes = app.route("/pockets", pocketsRoute).route("/transactions", transactionsRoute)
 
 app.get("/", async (c) => {
 	return c.text("Budget Planner Hono v1 🔥")
@@ -64,3 +63,5 @@ export default {
 	port: 3000,
 	fetch: app.fetch,
 }
+
+export type AppType = typeof routes

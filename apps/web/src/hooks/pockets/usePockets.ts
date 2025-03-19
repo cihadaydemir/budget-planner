@@ -1,10 +1,17 @@
-import { api } from "@/lib/auth/eden-client";
-import { extractData } from "@/utils/extract-data";
-
-import { useQuery } from "@tanstack/react-query";
+import { hono } from "@/lib/hono-client"
+import { useQuery } from "@tanstack/react-query"
 
 export const usePockets = () =>
 	useQuery({
 		queryKey: ["pockets"],
-		queryFn: () => extractData(api.pockets.get()),
-	});
+		queryFn: async () => {
+			const res = await hono.pockets.$get()
+			const data = await res.json()
+			return data
+		},
+	})
+// export const usePockets = () =>
+// 	useQuery({
+// 		queryKey: ["pockets"],
+// 		queryFn: () => extractData(api.pockets.get()),
+// 	})

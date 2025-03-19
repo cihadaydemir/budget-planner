@@ -1,9 +1,9 @@
-import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
-import { VitePWA } from "vite-plugin-pwa";
-import { defineConfig } from "vite";
-import path from "node:path";
-import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite";
+import { TanStackRouterVite } from "@tanstack/router-plugin/vite"
+import { VitePWA } from "vite-plugin-pwa"
+import { defineConfig } from "vite"
+import path from "node:path"
+import react from "@vitejs/plugin-react"
+import tailwindcss from "@tailwindcss/vite"
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -36,6 +36,7 @@ export default defineConfig({
 		alias: {
 			"@": path.resolve(__dirname, "./src"),
 			"@api": path.resolve(__dirname, "../api/src"),
+			"@hono": path.resolve(__dirname, "../hono/src"),
 		},
 	},
-});
+})
