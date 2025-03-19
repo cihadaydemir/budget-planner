@@ -24,7 +24,7 @@ export const pocketsRoute = new Hono<AppContext>()
 		"/",
 		zValidator("json", insertPocketSchema, (result, c) => {
 			if (!result.success) {
-				throw new HTTPException(401, { message: "Unauthorized" })
+				throw new HTTPException(400, { message: result.error.message })
 			}
 		}),
 		async (c) => {
@@ -44,7 +44,7 @@ export const pocketsRoute = new Hono<AppContext>()
 		"/:id",
 		zValidator("json", insertPocketSchema.partial(), (result, c) => {
 			if (!result.success) {
-				throw new HTTPException(401, { message: "Unauthorized" })
+				throw new HTTPException(400, { message: result.error.message })
 			}
 		}),
 		async (c) => {
@@ -55,7 +55,7 @@ export const pocketsRoute = new Hono<AppContext>()
 
 			if (!session) {
 				console.error("no session", session)
-				return c.json({ error: "Unauthorized" }, 401)
+				throw new HTTPException(401, { message: "Unauthorized" })
 			}
 
 			// Check if the pocket belongs to the user using and() function
@@ -66,12 +66,12 @@ export const pocketsRoute = new Hono<AppContext>()
 				.get()
 
 			if (!existingPocket) {
-				return c.json({ error: "Pocket not found or unauthorized" }, 404)
+				throw new HTTPException(404, { message: "Pocket not found or unauthorized" })
 			}
 
 			const updatedPocket = await db.update(pocket).set(data).where(eq(pocket.id, id)).returning()
 
-			return c.json(updatedPocket)
+			return c.json(updatedPocket[0])
 		},
 	)
 	.delete("/:id", async (c) => {
@@ -92,7 +92,7 @@ export const pocketsRoute = new Hono<AppContext>()
 			.get()
 
 		if (!existingPocket) {
-			return c.json({ error: "Pocket not found or unauthorized" }, 404)
+			throw new HTTPException(404, { message: "Pocket not found or unauthorized" })
 		}
 
 		await db.delete(pocket).where(eq(pocket.id, id))

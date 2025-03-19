@@ -1,22 +1,23 @@
-import { useDeletePocket } from "@/hooks/pockets/useDeletePocket";
-import type { Pocket } from "@api/db/types";
-import { useNavigate } from "@tanstack/react-router";
-import { IconDotsVertical, IconHighlight, IconTrash } from "justd-icons";
-import { toast } from "sonner";
-import { Button, Card, Menu, Meter } from "./ui";
-import { useQueryClient } from "@tanstack/react-query";
+import { Button, Card, Menu, Meter } from "./ui"
+import { IconDotsVertical, IconHighlight, IconTrash } from "justd-icons"
+
+import type { Pocket } from "@hono/db/zod"
+import { toast } from "sonner"
+import { useDeletePocket } from "@/hooks/pockets/useDeletePocket"
+import { useNavigate } from "@tanstack/react-router"
+import { useQueryClient } from "@tanstack/react-query"
 
 interface PocketsCardProps {
-	pocket: Pocket & { totalSpent: number };
-	isOpen: boolean;
-	setIsOpen: (isOpen: boolean) => void;
-	setEditingPocket: (pocket: Pocket) => void;
+	pocket: Pocket & { totalSpent: number }
+	isOpen: boolean
+	setIsOpen: (isOpen: boolean) => void
+	setEditingPocket: (pocket: Pocket) => void
 }
 
 export const PocketsCard = ({ pocket, isOpen, setIsOpen, setEditingPocket }: PocketsCardProps) => {
-	const navigate = useNavigate();
-	const queryClient = useQueryClient();
-	const deletePocketMutation = useDeletePocket();
+	const navigate = useNavigate()
+	const queryClient = useQueryClient()
+	const deletePocketMutation = useDeletePocket()
 
 	return (
 		<>
@@ -28,9 +29,9 @@ export const PocketsCard = ({ pocket, isOpen, setIsOpen, setEditingPocket }: Poc
 						params: { pocketId: pocket.id },
 					})
 				}
-				className="cursor-pointer min-w-[250px] w-full"
+				className="w-full min-w-[250px] cursor-pointer"
 			>
-				<Card.Header className=" w-full flex flex-row justify-between items-center">
+				<Card.Header className=" flex w-full flex-row items-center justify-between">
 					<Card.Title>
 						<p className="font-bold">{pocket.name}</p>
 					</Card.Title>
@@ -42,8 +43,8 @@ export const PocketsCard = ({ pocket, isOpen, setIsOpen, setEditingPocket }: Poc
 						<Menu.Content>
 							<Menu.Item
 								onAction={() => {
-									setEditingPocket(pocket);
-									setIsOpen(true);
+									setEditingPocket(pocket)
+									setIsOpen(true)
 								}}
 							>
 								<IconHighlight />
@@ -55,10 +56,10 @@ export const PocketsCard = ({ pocket, isOpen, setIsOpen, setEditingPocket }: Poc
 								onAction={() =>
 									deletePocketMutation.mutate(pocket.id, {
 										onSuccess: () => {
-											toast.success(`Pocket ${pocket.name} deleted successfully`);
+											toast.success(`Pocket ${pocket.name} deleted successfully`)
 											queryClient.invalidateQueries({
 												queryKey: ["pockets"],
-											});
+											})
 										},
 									})
 								}
@@ -82,5 +83,5 @@ export const PocketsCard = ({ pocket, isOpen, setIsOpen, setEditingPocket }: Poc
 				</Card.Content>
 			</Card>
 		</>
-	);
-};
+	)
+}

@@ -1,31 +1,32 @@
-import type { Transaction } from "@api/db/types";
-import { Button, Card, Menu } from "./ui";
-import { IconCheck, IconDotsVertical, IconHighlight, IconTrash } from "justd-icons";
-import { useDeleteTransaction } from "@/hooks/transactions/useDeleteTransaction";
-import { toast } from "sonner";
-import { useEditTransaction } from "@/hooks/transactions/useEditTransaction";
-import { useQueryClient } from "@tanstack/react-query";
+import { Button, Card, Menu } from "./ui"
+import { IconCheck, IconDotsVertical, IconHighlight, IconTrash } from "justd-icons"
+
+import type { Transaction } from "@hono/db/zod"
+import { toast } from "sonner"
+import { useDeleteTransaction } from "@/hooks/transactions/useDeleteTransaction"
+import { useEditTransaction } from "@/hooks/transactions/useEditTransaction"
+import { useQueryClient } from "@tanstack/react-query"
 
 interface ExpenseListProps {
-	transactions: Transaction[];
+	transactions: Transaction[]
 }
 
 export const ExpenseList = ({ transactions }: ExpenseListProps) => {
-	const deleteExpenseMutation = useDeleteTransaction();
-	const editTransactionMutation = useEditTransaction();
-	const queryClient = useQueryClient();
+	const deleteExpenseMutation = useDeleteTransaction()
+	const editTransactionMutation = useEditTransaction()
+	const queryClient = useQueryClient()
 	if (transactions.length === 0) {
 		return (
 			<div className="mt-auto mb-auto">
 				<p>It seems like you don't have any expenses yet.</p>
 			</div>
-		);
+		)
 	}
 
 	return (
-		<div className="flex flex-col gap-2 overflow-y-scroll flex-1">
+		<div className="flex flex-1 flex-col gap-2 overflow-y-scroll">
 			{transactions.map((transaction) => (
-				<Card key={transaction.id} className="flex items-center p-2 justify-between bg-navbar">
+				<Card key={transaction.id} className="flex items-center justify-between bg-navbar p-2">
 					<div className="flex flex-col gap-1">
 						<p className="font-bold">{transaction.amount}€</p>
 						<p className="text-muted-fg">{transaction.name}</p>
@@ -44,13 +45,13 @@ export const ExpenseList = ({ transactions }: ExpenseListProps) => {
 											onSuccess: () => {
 												queryClient.invalidateQueries({
 													queryKey: ["transactions", transaction.pocketId],
-												});
+												})
 												toast.success(
 													`Transaction ${transaction.name} marked as paid successfully`,
-												);
+												)
 											},
 										},
-									);
+									)
 								}}
 							>
 								<IconCheck />
@@ -71,9 +72,9 @@ export const ExpenseList = ({ transactions }: ExpenseListProps) => {
 										onAction={() => {
 											deleteExpenseMutation.mutate(transaction.id, {
 												onSuccess: () => {
-													toast.success(`Expense ${transaction.name} deleted successfully`);
+													toast.success(`Expense ${transaction.name} deleted successfully`)
 												},
-											});
+											})
 										}}
 									>
 										<IconTrash />
@@ -86,5 +87,5 @@ export const ExpenseList = ({ transactions }: ExpenseListProps) => {
 				</Card>
 			))}
 		</div>
-	);
-};
+	)
+}

@@ -1,6 +1,7 @@
 import { and, eq } from "drizzle-orm"
 
 import type { AppContext } from ".."
+import { HTTPException } from "hono/http-exception"
 import { Hono } from "hono"
 import { insertTransactionSchema } from "../db/zod/transaction"
 import { transaction } from "../db/schema"
@@ -13,7 +14,7 @@ export const transactionsRoute = new Hono<AppContext>()
 		const session = c.var.session
 		if (!session) {
 			console.error("no session", session)
-			return c.json({ error: "Unauthorized" }, 401)
+			throw new HTTPException(401, { message: "Unauthorized" })
 		}
 
 		return c.json(await db?.select().from(transaction).where(eq(transaction.userId, session.user.id)))
@@ -25,7 +26,7 @@ export const transactionsRoute = new Hono<AppContext>()
 		const session = c.var.session
 		if (!session) {
 			console.error("no session", session)
-			return c.json({ error: "Unauthorized" }, 401)
+			throw new HTTPException(401, { message: "Unauthorized" })
 		}
 
 		return c.json(
@@ -39,7 +40,7 @@ export const transactionsRoute = new Hono<AppContext>()
 		"/",
 		zValidator("json", insertTransactionSchema, (result, c) => {
 			if (!result.success) {
-				return c.json({ error: result.error.message }, 400)
+				throw new HTTPException(400, { message: result.error.message })
 			}
 		}),
 		async (c) => {
@@ -48,7 +49,7 @@ export const transactionsRoute = new Hono<AppContext>()
 			const session = c.var.session
 			if (!session) {
 				console.error("no session", session)
-				return c.json({ error: "Unauthorized" }, 401)
+				throw new HTTPException(401, { message: "Transaction not found or unauthorized" })
 			}
 
 			// Add the userId to the transaction
@@ -65,7 +66,7 @@ export const transactionsRoute = new Hono<AppContext>()
 		"/:id",
 		zValidator("json", insertTransactionSchema.partial(), (result, c) => {
 			if (!result.success) {
-				return c.json({ error: result.error.message }, 400)
+				throw new HTTPException(400, { message: result.error.message })
 			}
 		}),
 		async (c) => {
@@ -76,7 +77,7 @@ export const transactionsRoute = new Hono<AppContext>()
 
 			if (!session) {
 				console.error("no session", session)
-				return c.json({ error: "Unauthorized" }, 401)
+				throw new HTTPException(401, { message: "Unauthorized" })
 			}
 
 			// Check if the transaction belongs to the user
@@ -87,7 +88,7 @@ export const transactionsRoute = new Hono<AppContext>()
 				.get()
 
 			if (!existingTransaction) {
-				return c.json({ error: "Transaction not found or unauthorized" }, 400)
+				throw new HTTPException(404, { message: "Transaction not found or unauthorized" })
 			}
 
 			const updatedTransaction = await db.update(transaction).set(data).where(eq(transaction.id, id)).returning()
@@ -102,7 +103,7 @@ export const transactionsRoute = new Hono<AppContext>()
 
 		if (!session) {
 			console.error("no session", session)
-			return c.json({ error: "Unauthorized" }, 401)
+			throw new HTTPException(400, { message: "Transaction not found or unauthorized" })
 		}
 
 		// Check if the transaction belongs to the user
@@ -113,10 +114,10 @@ export const transactionsRoute = new Hono<AppContext>()
 			.get()
 
 		if (!existingTransaction) {
-			return c.json({ error: "Transaction not found or unauthorized" }, 400)
+			throw new HTTPException(400, { message: "Transaction not found or unauthorized" })
 		}
 
-		await db.delete(transaction).where(eq(transaction.id, id))
+		const deletedTransaction = await db.delete(transaction).where(eq(transaction.id, id))
 
-		return c.json({ success: true, message: "Transaction deleted successfully" })
+		return c.json({ success: true, deletedTransaction })
 	})

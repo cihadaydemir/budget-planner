@@ -1,9 +1,12 @@
 import { createInsertSchema, createSelectSchema } from "drizzle-zod"
 
 import { pocket } from "../schema"
-import type { z } from "zod"
+import { z } from "zod"
 
-export const insertPocketSchema = createInsertSchema(pocket).omit({
+export const insertPocketSchema = createInsertSchema(pocket, {
+	budget: z.number().min(1).optional(),
+	description: z.string().optional(),
+}).omit({
 	id: true,
 	serialId: true,
 	userId: true,

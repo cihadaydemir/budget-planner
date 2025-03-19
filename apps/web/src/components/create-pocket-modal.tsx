@@ -1,28 +1,29 @@
-import { useCreatePocketMutation } from "@/hooks/pockets/useCreatePocketMutation";
-import { useEditPocket } from "@/hooks/pockets/useEditPocket";
-import { usePockets } from "@/hooks/pockets/usePockets";
-import { insertPocketSchema, type InsertPocketSchemaType, type Pocket } from "@api/db/types/pocket";
-import { typeboxResolver } from "@hookform/resolvers/typebox";
-import { useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { Button, Form, Modal, NumberField, TextField } from "./ui";
+import { Button, Form, Modal, NumberField, TextField } from "./ui"
+import { Controller, useForm } from "react-hook-form"
+
+import { insertPocketSchema, type InsertPocketSchemaType, type Pocket } from "@hono/db/zod"
+import { toast } from "sonner"
+import { useCreatePocketMutation } from "@/hooks/pockets/useCreatePocketMutation"
+import { useEditPocket } from "@/hooks/pockets/useEditPocket"
+import { useEffect } from "react"
+
+import { useQueryClient } from "@tanstack/react-query"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 interface CreatePocketModalProps {
-	isOpen: boolean;
-	setIsOpen: (isOpen: boolean) => void;
-	editingPocket?: Pocket;
-	setEditingPocket?: (editingPocket: Pocket | undefined) => void;
+	isOpen: boolean
+	setIsOpen: (isOpen: boolean) => void
+	editingPocket?: Pocket
+	setEditingPocket?: (editingPocket: Pocket | undefined) => void
 }
 
 export const CreatePocketModal = ({ editingPocket, setEditingPocket, isOpen, setIsOpen }: CreatePocketModalProps) => {
-	const queryClient = useQueryClient();
+	const queryClient = useQueryClient()
 	const { control, handleSubmit, reset } = useForm({
-		resolver: typeboxResolver(insertPocketSchema),
-	});
-	const createPocketMutation = useCreatePocketMutation();
-	const editPocketMutation = useEditPocket();
+		resolver: zodResolver(insertPocketSchema),
+	})
+	const createPocketMutation = useCreatePocketMutation()
+	const editPocketMutation = useEditPocket()
 
 	const onSubmit = (data: InsertPocketSchemaType) => {
 		if (editingPocket) {
@@ -32,42 +33,44 @@ export const CreatePocketModal = ({ editingPocket, setEditingPocket, isOpen, set
 					pocketId: editingPocket.id,
 				},
 				{
-					onSuccess(data, variables, context) {
-						setIsOpen(false);
+					async onSuccess(data, variables, context) {
+						setIsOpen(false)
 						queryClient.invalidateQueries({
 							queryKey: ["pockets"],
-						});
-						toast(`Pocket ${data.data?.[0].name} updated successfully`);
+						})
+						const res = await data.json()
+						toast(`Pocket ${res.name} updated successfully`)
 						setTimeout(() => {
-							setEditingPocket?.(undefined);
-							reset();
-						}, 200);
+							setEditingPocket?.(undefined)
+							reset()
+						}, 200)
 					},
 				},
-			);
+			)
 		} else {
 			createPocketMutation.mutate(data, {
-				onSuccess(data, variables, context) {
+				async onSuccess(data, variables, context) {
 					queryClient.invalidateQueries({
 						queryKey: ["pockets"],
-					});
-					setIsOpen(false);
-					toast(`Pocket ${data.data?.[0].name} created successfully`);
+					})
+					setIsOpen(false)
+					const res = await data.json()
+					toast(`Pocket ${res?.[0].name} created successfully`)
 					setTimeout(() => {
-						setEditingPocket?.(undefined);
-						reset();
-					}, 200);
+						setEditingPocket?.(undefined)
+						reset()
+					}, 200)
 				},
-			});
+			})
 		}
-	};
+	}
 	useEffect(() => {
 		reset({
 			name: editingPocket?.name ?? "",
 			description: editingPocket?.description ?? "",
 			budget: editingPocket?.budget ?? undefined,
-		});
-	}, [editingPocket, reset]);
+		})
+	}, [editingPocket, reset])
 
 	return (
 		<>
@@ -75,11 +78,11 @@ export const CreatePocketModal = ({ editingPocket, setEditingPocket, isOpen, set
 				isBlurred
 				isOpen={isOpen}
 				onOpenChange={(val) => {
-					setIsOpen(val);
+					setIsOpen(val)
 					setTimeout(() => {
-						setEditingPocket?.(undefined);
-						reset();
-					}, 200);
+						setEditingPocket?.(undefined)
+						reset()
+					}, 200)
 				}}
 			>
 				<Modal.Header>
@@ -125,5 +128,5 @@ export const CreatePocketModal = ({ editingPocket, setEditingPocket, isOpen, set
 				</Form>
 			</Modal.Content>
 		</>
-	);
-};
+	)
+}

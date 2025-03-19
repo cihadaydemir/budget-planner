@@ -1,6 +1,6 @@
-import type { App } from "@api/index";
-import { treaty } from "@elysiajs/eden";
+// import type { App } from "@api/index";
+// import { treaty } from "@elysiajs/eden";
 
-export const api = treaty<App>("localhost:3000", {
-	fetch: { credentials: "include" },
-});
+// export const api = treaty<App>("localhost:3000", {
+// 	fetch: { credentials: "include" },
+// });
