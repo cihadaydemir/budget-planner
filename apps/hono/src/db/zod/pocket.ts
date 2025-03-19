@@ -3,7 +3,7 @@ import { createInsertSchema, createSelectSchema } from "drizzle-zod"
 import { pocket } from "../schema"
 import type { z } from "zod"
 
-const insertPocketSchema = createInsertSchema(pocket).omit({
+export const insertPocketSchema = createInsertSchema(pocket).omit({
 	id: true,
 	serialId: true,
 	userId: true,
@@ -11,7 +11,6 @@ const insertPocketSchema = createInsertSchema(pocket).omit({
 	updatedAt: true,
 	deletedAt: true,
 })
-const selectPocketSchema = createSelectSchema(pocket).omit({ serialId: true })
+export const selectPocketSchema = createSelectSchema(pocket).omit({ serialId: true })
 export type InsertPocketSchemaType = z.infer<typeof insertPocketSchema>
-
 export type Pocket = z.infer<typeof selectPocketSchema>

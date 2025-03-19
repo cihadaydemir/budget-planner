@@ -1,6 +1,8 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core"
 import { type IdPrefix, newId } from "../utils/id"
 import { sql } from "drizzle-orm"
+import { pgTable, varchar } from "drizzle-orm/pg-core"
+import { createInsertSchema } from "drizzle-zod"
 
 export const defaultFields = (idPrefix: IdPrefix) => ({
 	serialId: integer("serial_id").primaryKey({ autoIncrement: true }),
