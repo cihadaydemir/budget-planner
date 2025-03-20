@@ -20,17 +20,17 @@ export type AppContext = {
 
 const app = new Hono<AppContext>()
 
-app.use(
-	"*",
-	cors({
-		origin: "http://localhost:3001",
+app.use("*", async (c, next) => {
+	const corsMiddlewareHandler = cors({
+		origin: c.env.CLIENT_BASE_URL,
 		allowHeaders: ["Content-Type", "Authorization"],
 		allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 		exposeHeaders: ["Content-Length"],
 		maxAge: 600,
 		credentials: true,
-	}),
-)
+	})
+	return corsMiddlewareHandler(c, next)
+})
 
 // DB and Auth middleware
 app.use("*", contextMiddleware)
