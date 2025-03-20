@@ -39,8 +39,6 @@ export const pocketsRoute = new Hono<AppContext>()
 				.insert(pocket)
 				.values({ ...data, userId: session.user.id })
 				.returning()
-			console.log("Created pocket", insertedPocket)
-
 			return c.json(insertedPocket)
 		},
 	)
