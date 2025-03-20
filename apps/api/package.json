@@ -22,7 +22,7 @@
     "wangler": "^0.0.7"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250303.0",
+    "@cloudflare/workers-types": "^4.20250319.0",
     "bun-types": "latest",
     "drizzle-kit": "^0.30.5",
     "wrangler": "^3.114.0"
