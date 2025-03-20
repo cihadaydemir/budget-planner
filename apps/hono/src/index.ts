@@ -55,10 +55,6 @@ app.get("/", async (c) => {
 	return c.text("Budget Planner Hono v1 🔥")
 })
 
-app.onError((e, c) => {
-	return c.json({ error: e, header: c.req.raw.headers }, 500)
-})
-
 export default {
 	port: 3000,
 	fetch: app.fetch,
