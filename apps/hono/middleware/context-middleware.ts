@@ -9,7 +9,7 @@ export const contextMiddleware = createMiddleware<AppContext>(async (c, next) =>
 		"auth",
 		getAuth({
 			BETTER_AUTH_SECRET: c.env.BETTER_AUTH_SECRET,
-			BASE_BETTER_AUTH_URL: c.env.BASE_BETTER_AUTH_URL,
+			API_BASE_URL: c.env.API_BASE_URL,
 			drizzleDB: c.get("DrizzleDB"),
 			CLIENT_BASE_URL: c.env.CLIENT_BASE_URL,
 			GITHUB_CLIENT_ID: c.env.GITHUB_CLIENT_ID,

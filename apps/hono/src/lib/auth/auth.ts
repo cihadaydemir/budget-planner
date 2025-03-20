@@ -7,7 +7,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle"
 export const getAuth = ({
 	BETTER_AUTH_SECRET,
 	drizzleDB,
-	BASE_BETTER_AUTH_URL,
+	API_BASE_URL,
 	CLIENT_BASE_URL,
 	GITHUB_CLIENT_ID,
 	GITHUB_CLIENT_SECRET,
@@ -15,7 +15,7 @@ export const getAuth = ({
 	GOOGLE_CLIENT_SECRET,
 }: {
 	BETTER_AUTH_SECRET: string
-	BASE_BETTER_AUTH_URL: string
+	API_BASE_URL: string
 	CLIENT_BASE_URL: string
 	GITHUB_CLIENT_ID: string
 	GITHUB_CLIENT_SECRET: string
@@ -24,7 +24,7 @@ export const getAuth = ({
 	drizzleDB: DrizzleDB
 }) =>
 	betterAuth({
-		baseURL: BASE_BETTER_AUTH_URL,
+		baseURL: API_BASE_URL,
 		secret: BETTER_AUTH_SECRET,
 		trustedOrigins: ["http://localhost:3001/", CLIENT_BASE_URL],
 		database: drizzleAdapter(drizzleDB, {
