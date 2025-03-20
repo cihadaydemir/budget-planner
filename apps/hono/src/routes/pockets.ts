@@ -9,12 +9,12 @@ import { zValidator } from "@hono/zod-validator"
 
 //TODO: checek if zValidators are correct or there are better ways to do it
 export const pocketsRoute = new Hono<AppContext>()
-	.get("/", async (c) => {
+	.get("/", async (c, next) => {
 		const db = c.var.DrizzleDB
 
 		const session = c.var.session
 		if (!session) {
-			console.error("no session", session)
+			console.error("no session in api route", session)
 			throw new HTTPException(401, { message: "Unauthorized" })
 		}
 
@@ -35,11 +35,15 @@ export const pocketsRoute = new Hono<AppContext>()
 				console.error("no session", session)
 				throw new HTTPException(401, { message: "Unauthorized" })
 			}
-			const insertedPocket = await db.insert(pocket).values(data).returning()
+			const insertedPocket = await db
+				.insert(pocket)
+				.values({ ...data, userId: session.user.id })
+				.returning()
+			console.log("Created pocket", insertedPocket)
+
 			return c.json(insertedPocket)
 		},
 	)
-	// TODO: Check if put or post for update
 	.post(
 		"/:id",
 		zValidator("json", insertPocketSchema.partial(), (result, c) => {
