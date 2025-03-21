@@ -1,0 +1,47 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "budget-planner-app",
+  "compatibility_date": "2024-09-23",
+  "compatibility_flags": ["nodejs_compat"],
+  "dev": {
+    "port": 3001,
+  },
+
+  "vars": {
+    "VITE_BETTER_AUTH_URL": "https://hono.cihad.dev/",
+  },
+  "env": {
+    "production": {
+      "vars": {
+        "VITE_BETTER_AUTH_URL": "https://hono.cihad.dev/",
+      },
+    },
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+  },
+  //   "d1_databases": [
+  //     {
+  //       "binding": "DB",
+  //       "database_name": "budget-planner-dev",
+  //       "database_id": "a5cbff0c-a9c9-4b7b-96ab-29c51aa4a3ae",
+  //       "migrations_dir": "./drizzle/migrations/",
+  //     },
+  //   ],
+  // "kv_namespaces": [
+  //   {
+  //     "binding": "MY_KV_NAMESPACE",
+  //     "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  //   }
+  // ],
+  // "r2_buckets": [
+  //   {
+  //     "binding": "MY_BUCKET",
+  //     "bucket_name": "my-bucket"
+  //   }
+  // ],
+  // "ai": {
+  //   "binding": "AI"
+  // },
+}

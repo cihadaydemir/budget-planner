@@ -1,5 +1,6 @@
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite"
 import { VitePWA } from "vite-plugin-pwa"
+import { cloudflare } from "@cloudflare/vite-plugin"
 import { defineConfig } from "vite"
 import path from "node:path"
 import react from "@vitejs/plugin-react"
@@ -28,6 +29,7 @@ export default defineConfig({
 				start_url: "/",
 			},
 		}),
+		cloudflare(),
 		tailwindcss(),
 		TanStackRouterVite({}),
 		react(),

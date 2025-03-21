@@ -8,8 +8,8 @@
     "port": 3000,
   },
   "vars": {
-    "API_BASE_URL": "https://budget-planner-api.cihadaydemir.workers.dev",
-    "CLIENT_BASE_URL": "https://budget-planner-bwm.pages.dev/",
+    "API_BASE_URL": "https://hono.cihad.dev",
+    "CLIENT_BASE_URL": "https://funds.cihad.dev/",
   },
   "d1_databases": [
     {
