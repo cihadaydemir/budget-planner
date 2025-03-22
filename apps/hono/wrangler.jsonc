@@ -4,6 +4,13 @@
   "main": "src/index.ts",
   "compatibility_date": "2024-09-23",
   "compatibility_flags": ["nodejs_compat"],
+  "placement": {
+    "mode": "smart",
+  },
+  "route": {
+    "pattern": "hono.cihad.dev",
+    "custom_domain": true,
+  },
   "dev": {
     "port": 3000,
   },
