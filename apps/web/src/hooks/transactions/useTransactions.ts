@@ -4,7 +4,10 @@ import { useQuery } from "@tanstack/react-query"
 export const useTransactions = (pocketId: string) =>
 	useQuery({
 		queryKey: ["transactions", pocketId],
-		queryFn: () => hono.transactions.$get({ params: { pocketId } }),
+		queryFn: async () => {
+			const res = await hono.transactions.$get({ params: { pocketId } })
+			return res.json()
+		},
 	})
 // export const useTransactions = (pocketId: string) =>
 // 	useQuery({
