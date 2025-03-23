@@ -2,6 +2,7 @@ import { Avatar, Menu } from "../ui"
 import { IconDashboard, IconDeviceDesktop, IconLogout, IconMoon, IconSun } from "justd-icons"
 import { authClient, signOut } from "@/lib/auth/auth-client"
 
+import { useAuth } from "@/lib/auth/use-auth"
 import { useNavigate } from "@tanstack/react-router"
 import { useTheme } from "../theme-provider"
 
@@ -9,7 +10,7 @@ export default function UserMenu() {
 	const { theme, setTheme } = useTheme()
 
 	const navigate = useNavigate()
-	const { data: session } = authClient.useSession()
+	const { data: session } = useAuth()
 
 	return (
 		<Menu>

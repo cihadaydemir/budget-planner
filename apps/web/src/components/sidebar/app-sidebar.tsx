@@ -18,6 +18,7 @@ import { IconChevronLgDown, IconDashboard, IconHeadphones, IconLogout } from "ju
 import { authClient, signOut } from "@/lib/auth/auth-client"
 import { useLocation, useNavigate } from "@tanstack/react-router"
 
+import { useAuth } from "@/lib/auth/use-auth"
 import { usePockets } from "@/hooks/pockets/usePockets"
 import { useState } from "react"
 
@@ -26,7 +27,7 @@ export default function AppSidebar(props: React.ComponentProps<typeof Sidebar>) 
 	const location = useLocation()
 	const currentPath = location.pathname
 	const { data: pockets } = usePockets()
-	const { data: session } = authClient.useSession()
+	const { data: session } = useAuth()
 	const navigate = useNavigate()
 	const [isOpen, setIsOpen] = useState(false)
 
