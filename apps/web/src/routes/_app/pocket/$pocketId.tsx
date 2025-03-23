@@ -6,6 +6,7 @@ import { Collection } from "react-aria-components"
 import { CreateTransactionModal } from "@/components/create-transaction-modal"
 import { ExpenseList } from "@/components/expense-list"
 import { IconChevronLeft } from "justd-icons"
+import { LoadingScreen } from "@/components/loading-screen"
 import { getTransactionsStatistics } from "@/utils/statistics"
 import { useMemo } from "react"
 import { usePockets } from "@/hooks/pockets/usePockets"
@@ -19,6 +20,7 @@ function RouteComponent() {
 	const params = Route.useParams()
 	const { data: pockets } = usePockets()
 	const pocket = pockets?.find((pocket) => pocket.id === params.pocketId)
+
 	const {
 		data: transactions,
 		isLoading: transactionsIsLoading,
@@ -31,8 +33,8 @@ function RouteComponent() {
 		return getTransactionsStatistics(transactions)
 	}, [transactions])
 
-	if (transactionsIsLoading || transactionsError) {
-		return <div>Loading...</div>
+	if (transactionsIsLoading) {
+		return <LoadingScreen />
 	}
 
 	if (!transactions) {

@@ -1,7 +1,8 @@
-import { Button, Heading } from "@/components/ui"
+import { Button, Heading, Loader } from "@/components/ui"
 
 import { CreatePocketModal } from "@/components/create-pocket-modal"
 import { IconPlus } from "justd-icons"
+import { LoadingScreen } from "@/components/loading-screen"
 import type { Pocket } from "@hono/db/zod"
 import { PocketsCard } from "@/components/pockets-card"
 import { createFileRoute } from "@tanstack/react-router"
@@ -16,6 +17,10 @@ function HomeComponent() {
 	const { data: pockets, error, isLoading } = usePockets()
 	const [isOpen, setIsOpen] = useState(false)
 	const [editingPocket, setEditingPocket] = useState<Pocket>()
+
+	if (isLoading) {
+		return <LoadingScreen />
+	}
 
 	if (!pockets || pockets.length === 0) {
 		return (
