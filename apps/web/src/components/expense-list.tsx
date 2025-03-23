@@ -72,6 +72,9 @@ export const ExpenseList = ({ transactions }: ExpenseListProps) => {
 										onAction={() => {
 											deleteExpenseMutation.mutate(transaction.id, {
 												onSuccess: () => {
+													queryClient.invalidateQueries({
+														queryKey: ["transactions", transaction.pocketId],
+													})
 													toast.success(`Expense ${transaction.name} deleted successfully`)
 												},
 											})

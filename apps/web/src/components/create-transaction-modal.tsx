@@ -20,7 +20,7 @@ export const CreateTransactionModal = () => {
 			isPaid: false,
 		},
 	})
-	const [isPaid, setIsPaid] = useState(false)
+
 	const createTransactionMutation = useCreateTransactionMutation()
 
 	const onSubmit = (data: InsertTransactionSchemaType) => {
