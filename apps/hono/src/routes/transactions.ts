@@ -8,17 +8,6 @@ import { transaction } from "../db/schema"
 import { zValidator } from "@hono/zod-validator"
 
 export const transactionsRoute = new Hono<AppContext>()
-	.get("/", async (c) => {
-		const db = c.var.DrizzleDB
-
-		const session = c.var.session
-		if (!session) {
-			console.error("no session", session)
-			throw new HTTPException(401, { message: "Unauthorized" })
-		}
-
-		return c.json(await db?.select().from(transaction).where(eq(transaction.userId, session.user.id)))
-	})
 	.get("/:id", async (c) => {
 		const id = c.req.param("id")
 		const db = c.var.DrizzleDB
@@ -107,17 +96,14 @@ export const transactionsRoute = new Hono<AppContext>()
 		}
 
 		// Check if the transaction belongs to the user
-		const existingTransaction = await db
-			.select()
-			.from(transaction)
+		const deletedTransaction = await db
+			.delete(transaction)
 			.where(and(eq(transaction.id, id), eq(transaction.userId, session.user.id)))
-			.get()
+			.returning()
 
-		if (!existingTransaction) {
+		if (!deletedTransaction.length) {
 			throw new HTTPException(400, { message: "Transaction not found or unauthorized" })
 		}
-
-		const deletedTransaction = await db.delete(transaction).where(eq(transaction.id, id))
 
 		return c.json({ success: true, deletedTransaction })
 	})

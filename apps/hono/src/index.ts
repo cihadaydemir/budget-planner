@@ -22,7 +22,7 @@ const app = new Hono<AppContext>()
 
 app.use("*", async (c, next) => {
 	const corsMiddlewareHandler = cors({
-		origin: c.env.CLIENT_BASE_URL,
+		origin: [c.env.CLIENT_BASE_URL],
 		allowHeaders: ["Content-Type", "Authorization"],
 		allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 		exposeHeaders: ["Content-Length"],
@@ -53,6 +53,11 @@ const routes = app.route("/pockets", pocketsRoute).route("/transactions", transa
 
 app.get("/", async (c) => {
 	return c.text("Budget Planner Hono v1 🔥")
+})
+
+app.onError((error, c) => {
+	console.error(error)
+	return c.json({ error: `Internal Server Error: ${error.message}` }, 500)
 })
 
 export default {
