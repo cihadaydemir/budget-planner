@@ -40,7 +40,7 @@ export const getAuth = ({
 		},
 		onAPIError: {
 			throw: true,
-			onError: (error, ctx) => {
+			onError: (error) => {
 				// Custom error handling
 				console.error("Auth error:", error)
 			},
@@ -48,6 +48,11 @@ export const getAuth = ({
 		advanced: {
 			crossSubDomainCookies: {
 				enabled: true,
+			},
+			defaultCookieAttributes: {
+				httpOnly: true,
+				secure: true,
+				sameSite: "none",
 			},
 		},
 	})
