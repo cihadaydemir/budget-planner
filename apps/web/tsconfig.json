@@ -10,7 +10,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@api/*": ["../api/src/*"],
+      // "@api/*": ["../api/src/*"],
       "@hono/*": ["../hono/src/*"],
       "@hono": ["../hono/src/index.ts"],
       "ui": ["./src/components/ui/index.ts"]
