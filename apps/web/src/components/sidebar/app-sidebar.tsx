@@ -1,12 +1,7 @@
-"use client";
+"use client"
 
-import { usePockets } from "@/hooks/pockets/usePockets";
-import { authClient, signOut } from "@/lib/auth/auth-client";
-import { useLocation, useNavigate, useRouter } from "@tanstack/react-router";
-import { IconChevronLgDown, IconDashboard, IconHeadphones, IconLogout, IconPlus, IconSettings } from "justd-icons";
 import {
 	Avatar,
-	Button,
 	Menu,
 	Sidebar,
 	SidebarContent,
@@ -18,18 +13,22 @@ import {
 	SidebarSection,
 	SidebarSectionGroup,
 	useSidebar,
-} from "../ui";
-import { CreatePocketModal } from "../create-pocket-modal";
-import { useState } from "react";
+} from "../ui"
+import { IconChevronLgDown, IconDashboard, IconHeadphones, IconLogout } from "justd-icons"
+import { authClient, signOut } from "@/lib/auth/auth-client"
+import { useLocation, useNavigate } from "@tanstack/react-router"
+
+import { usePockets } from "@/hooks/pockets/usePockets"
+import { useState } from "react"
 
 export default function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
-	const { setIsOpenOnMobile } = useSidebar();
-	const location = useLocation();
-	const currentPath = location.pathname;
-	const { data: pockets } = usePockets();
-	const { data: session } = authClient.useSession();
-	const navigate = useNavigate();
-	const [isOpen, setIsOpen] = useState(false);
+	const { setIsOpenOnMobile } = useSidebar()
+	const location = useLocation()
+	const currentPath = location.pathname
+	const { data: pockets } = usePockets()
+	const { data: session } = authClient.useSession()
+	const navigate = useNavigate()
+	const [isOpen, setIsOpen] = useState(false)
 
 	return (
 		<Sidebar {...props}>
@@ -44,7 +43,7 @@ export default function AppSidebar(props: React.ComponentProps<typeof Sidebar>) 
 							tooltip="Dashboard"
 							isCurrent={"/" === currentPath}
 							onPress={(e) => {
-								setIsOpenOnMobile(false);
+								setIsOpenOnMobile(false)
 							}}
 						>
 							<IconDashboard />
@@ -58,8 +57,8 @@ export default function AppSidebar(props: React.ComponentProps<typeof Sidebar>) 
 									navigate({
 										to: "/pocket/$pocketId",
 										params: { pocketId: pocket.id },
-									});
-									setIsOpenOnMobile(false);
+									})
+									setIsOpenOnMobile(false)
 								}}
 							>
 								<SidebarLabel>{pocket.name}</SidebarLabel>
@@ -116,10 +115,10 @@ export default function AppSidebar(props: React.ComponentProps<typeof Sidebar>) 
 										onSuccess: () => {
 											navigate({
 												to: "/auth/sign-in",
-											});
+											})
 										},
 									},
-								});
+								})
 							}}
 						>
 							<IconLogout />
@@ -130,5 +129,5 @@ export default function AppSidebar(props: React.ComponentProps<typeof Sidebar>) 
 			</SidebarFooter>
 			<SidebarRail />
 		</Sidebar>
-	);
+	)
 }

@@ -6,6 +6,9 @@ export const usePockets = () =>
 		queryKey: ["pockets"],
 		queryFn: async () => {
 			const res = await hono.pockets.$get()
+			if (!res.ok) {
+				throw new Error("Failed to fetch pockets")
+			}
 			const data = await res.json()
 			return data
 		},

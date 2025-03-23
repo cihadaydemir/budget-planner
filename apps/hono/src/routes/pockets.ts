@@ -1,10 +1,10 @@
 import { and, eq } from "drizzle-orm"
+import { pocket, transaction } from "../db/schema"
 
 import type { AppContext } from ".."
 import { HTTPException } from "hono/http-exception"
 import { Hono } from "hono"
 import { insertPocketSchema } from "../db/zod"
-import { pocket } from "../db/schema"
 import { zValidator } from "@hono/zod-validator"
 
 //TODO: checek if zValidators are correct or there are better ways to do it
@@ -17,8 +17,20 @@ export const pocketsRoute = new Hono<AppContext>()
 			console.error("no session in api route", session)
 			throw new HTTPException(401, { message: "Unauthorized" })
 		}
+		const pockets = await db.select().from(pocket).where(eq(pocket.userId, session.user.id))
 
-		return c.json(await db?.select().from(pocket).where(eq(pocket.userId, session.user.id)))
+		const responseObject = pockets.map(async (pocket) => {
+			const transactions = await db.select().from(transaction).where(eq(transaction.pocketId, pocket.id))
+			const totalSpent = transactions.reduce((acc, transaction) => {
+				return acc + transaction.amount
+			}, 0)
+			return {
+				...pocket,
+				totalSpent,
+			}
+		})
+
+		return c.json(await Promise.all(responseObject))
 	})
 	.post(
 		"/",
@@ -31,10 +43,12 @@ export const pocketsRoute = new Hono<AppContext>()
 			const data = c.req.valid("json")
 			const db = c.var.DrizzleDB
 			const session = c.var.session
+
 			if (!session) {
 				console.error("no session", session)
 				throw new HTTPException(401, { message: "Unauthorized" })
 			}
+
 			const insertedPocket = await db
 				.insert(pocket)
 				.values({ ...data, userId: session.user.id })
