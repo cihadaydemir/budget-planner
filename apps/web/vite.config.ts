@@ -29,7 +29,6 @@ export default defineConfig({
 				start_url: "/",
 			},
 		}),
-		cloudflare(),
 		tailwindcss(),
 		TanStackRouterVite({}),
 		react(),
