@@ -1,13 +1,15 @@
 import { Avatar, Menu } from "../ui"
 import { IconDashboard, IconDeviceDesktop, IconLogout, IconMoon, IconSun } from "justd-icons"
-import { authClient, signOut } from "@/lib/auth/auth-client"
 
+import { signOut } from "@/lib/auth/auth-client"
 import { useAuth } from "@/lib/auth/use-auth"
 import { useNavigate } from "@tanstack/react-router"
+import { useQueryClient } from "@tanstack/react-query"
 import { useTheme } from "../theme-provider"
 
 export default function UserMenu() {
 	const { theme, setTheme } = useTheme()
+	const queryClient = useQueryClient()
 
 	const navigate = useNavigate()
 	const { data: session } = useAuth()
@@ -60,6 +62,7 @@ export default function UserMenu() {
 						await signOut({
 							fetchOptions: {
 								onSuccess: () => {
+									queryClient.removeQueries({ queryKey: ["auth"] })
 									navigate({
 										to: "/auth/sign-in",
 									})

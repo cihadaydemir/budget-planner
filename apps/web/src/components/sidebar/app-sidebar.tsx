@@ -20,9 +20,11 @@ import { useLocation, useNavigate } from "@tanstack/react-router"
 
 import { useAuth } from "@/lib/auth/use-auth"
 import { usePockets } from "@/hooks/pockets/usePockets"
+import { useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
 
 export default function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
+	const queryClient = useQueryClient()
 	const { setIsOpenOnMobile } = useSidebar()
 	const location = useLocation()
 	const currentPath = location.pathname
@@ -114,6 +116,7 @@ export default function AppSidebar(props: React.ComponentProps<typeof Sidebar>) 
 								await signOut({
 									fetchOptions: {
 										onSuccess: () => {
+											queryClient.removeQueries({ queryKey: ["auth"] })
 											navigate({
 												to: "/auth/sign-in",
 											})
