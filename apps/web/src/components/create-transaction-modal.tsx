@@ -13,7 +13,7 @@ export const CreateTransactionModal = () => {
 	const params = useParams({ from: "/_app/pocket/$pocketId" })
 	const queryClient = useQueryClient()
 	const [isModalOpen, setIsModalOpen] = useState(false)
-	const { control, handleSubmit, reset, setValue } = useForm({
+	const { control, handleSubmit, reset } = useForm({
 		resolver: zodResolver(insertTransactionSchema),
 		defaultValues: {
 			pocketId: params.pocketId,
@@ -27,7 +27,7 @@ export const CreateTransactionModal = () => {
 		createTransactionMutation.mutate(
 			{ ...data, pocketId: params.pocketId },
 			{
-				onSuccess: async (data, variables, context) => {
+				onSuccess: async (data, variables) => {
 					queryClient.invalidateQueries({
 						queryKey: ["transactions", params.pocketId],
 					})
@@ -50,7 +50,13 @@ export const CreateTransactionModal = () => {
 	}
 
 	return (
-		<Modal isOpen={isModalOpen} onOpenChange={setIsModalOpen}>
+		<Modal
+			isOpen={isModalOpen}
+			onOpenChange={(isOpen) => {
+				setIsModalOpen(isOpen)
+				reset()
+			}}
+		>
 			<Button>
 				<IconPlus className="" />
 				Add Expense
