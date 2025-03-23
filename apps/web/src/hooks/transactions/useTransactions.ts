@@ -5,9 +5,10 @@ export const useTransactions = (pocketId: string) =>
 	useQuery({
 		queryKey: ["transactions", pocketId],
 		queryFn: async () => {
-			const res = await hono.transactions.$get({ params: { pocketId } })
+			const res = await hono.transactions[":id"].$get({ param: { id: pocketId } })
 			return res.json()
 		},
+		staleTime: Number.POSITIVE_INFINITY,
 	})
 // export const useTransactions = (pocketId: string) =>
 // 	useQuery({

@@ -12,6 +12,7 @@ export const usePockets = () =>
 			const data = await res.json()
 			return data
 		},
+		staleTime: Number.POSITIVE_INFINITY,
 	})
 // export const usePockets = () =>
 // 	useQuery({
