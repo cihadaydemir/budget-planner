@@ -26,7 +26,7 @@ export const getAuth = ({
 	betterAuth({
 		baseURL: API_BASE_URL,
 		secret: BETTER_AUTH_SECRET,
-		trustedOrigins: ["http://localhost:3001/", CLIENT_BASE_URL],
+		trustedOrigins: [CLIENT_BASE_URL],
 		database: drizzleAdapter(drizzleDB, {
 			provider: "sqlite",
 			schema,
