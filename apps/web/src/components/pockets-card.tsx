@@ -1,14 +1,14 @@
 import { Button, Card, Menu, Meter } from "./ui"
+import type { ExtendedPocket, Pocket } from "@hono/db/zod"
 import { IconDotsVertical, IconHighlight, IconTrash } from "justd-icons"
 
-import type { Pocket } from "@hono/db/zod"
 import { toast } from "sonner"
 import { useDeletePocket } from "@/hooks/pockets/useDeletePocket"
 import { useNavigate } from "@tanstack/react-router"
 import { useQueryClient } from "@tanstack/react-query"
 
 interface PocketsCardProps {
-	pocket: Pocket & { totalSpent: number }
+	pocket: ExtendedPocket
 	isOpen: boolean
 	setIsOpen: (isOpen: boolean) => void
 	setEditingPocket: (pocket: Pocket) => void

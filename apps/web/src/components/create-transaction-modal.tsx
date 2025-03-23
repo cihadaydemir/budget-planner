@@ -7,7 +7,7 @@ import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { Button, Checkbox, Form, Label, Modal, NumberField, Switch, TextField } from "./ui"
-import { insertTransactionSchema, type InsertTransactionSchemaType } from "@hono/db/zod"
+import { insertTransactionSchema, type InsertTransactionSchemaType, type ExtendedPocket } from "@hono/db/zod"
 
 export const CreateTransactionModal = () => {
 	const params = useParams({ from: "/_app/pocket/$pocketId" })
@@ -30,6 +30,14 @@ export const CreateTransactionModal = () => {
 				onSuccess: async (data, variables, context) => {
 					queryClient.invalidateQueries({
 						queryKey: ["transactions", params.pocketId],
+					})
+
+					queryClient.setQueryData(["pockets"], (oldData: ExtendedPocket[]) => {
+						return oldData.map((pocket) =>
+							pocket.id === params.pocketId
+								? { ...pocket, totalSpent: pocket.totalSpent + variables.amount }
+								: pocket,
+						)
 					})
 					setIsModalOpen(false)
 					reset()

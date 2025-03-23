@@ -37,7 +37,7 @@ function RouteComponent() {
 		return <LoadingScreen />
 	}
 
-	if (!transactions) {
+	if (!transactions || transactionsError) {
 		return (
 			<div className="flex h-full w-full flex-col gap-4 py-4">
 				<div className="flex justify-between">

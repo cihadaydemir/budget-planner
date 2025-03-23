@@ -17,3 +17,4 @@ export const insertPocketSchema = createInsertSchema(pocket, {
 export const selectPocketSchema = createSelectSchema(pocket).omit({ serialId: true })
 export type InsertPocketSchemaType = z.infer<typeof insertPocketSchema>
 export type Pocket = z.infer<typeof selectPocketSchema>
+export type ExtendedPocket = Pocket & { totalSpent: number }
