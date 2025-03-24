@@ -30,6 +30,7 @@ export const transaction = sqliteTable("transactions", {
 	description: text("description"),
 	amount: integer("amount").notNull(),
 	isPaid: integer("is_paid", { mode: "boolean" }).notNull().default(false),
+	currency: text("currency").notNull(),
 	categoryId: text("category").references(() => expenseCategory.id),
 	pocketId: text("pocket_id")
 		.notNull()
