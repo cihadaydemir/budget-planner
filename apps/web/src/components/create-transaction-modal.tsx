@@ -6,13 +6,19 @@ import { IconPlus } from "justd-icons"
 import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
-import { Button, Checkbox, Form, Label, Modal, NumberField, Switch, TextField } from "./ui"
+import { Button, Checkbox, Form, Label, Modal, NumberField, PopoverContent, Switch, TextField } from "./ui"
 import { insertTransactionSchema, type InsertTransactionSchemaType, type ExtendedPocket } from "@hono/db/zod"
+import { Select } from "./ui/select"
+import { ListBox } from "./ui/list-box"
+import { Autocomplete, useFilter } from "react-aria-components"
+import { SearchField } from "./ui/search-field"
+import { currencies } from "@/lib/currencies"
 
 export const CreateTransactionModal = () => {
 	const params = useParams({ from: "/_app/pocket/$pocketId" })
 	const queryClient = useQueryClient()
 	const [isModalOpen, setIsModalOpen] = useState(false)
+	const { contains } = useFilter({ sensitivity: "base" })
 	const { control, handleSubmit, reset } = useForm({
 		resolver: zodResolver(insertTransactionSchema),
 		defaultValues: {
@@ -91,23 +97,48 @@ export const CreateTransactionModal = () => {
 								/>
 							)}
 						/>
-						<Controller
-							control={control}
-							name="amount"
-							render={({ field }) => (
-								<NumberField
-									{...field}
-									formatOptions={{
-										currency: "EUR",
-										currencyDisplay: "code",
-										currencySign: "accounting",
-									}}
-									isRequired
-									label="Amount"
-									placeholder="100"
-								/>
-							)}
-						/>
+						<div className="flex gap-1">
+							<Controller
+								control={control}
+								name="amount"
+								render={({ field }) => (
+									<NumberField
+										{...field}
+										formatOptions={{
+											currency: "EUR",
+											currencyDisplay: "code",
+											currencySign: "accounting",
+										}}
+										isRequired
+										label="Amount"
+										placeholder="100"
+									/>
+								)}
+							/>
+							<Controller
+								control={control}
+								name="currency"
+								render={({ field }) => (
+									<Select label="Select a language">
+										<Select.Trigger />
+										<PopoverContent
+											showArrow={false}
+											respectScreen={false}
+											className="min-w-(--trigger-width) overflow-hidden"
+										>
+											<Autocomplete filter={contains}>
+												<div className="border-b bg-muted p-2">
+													<SearchField className="rounded-lg bg-bg" autoFocus />
+												</div>
+												<ListBox className="border-0 shadow-none" items={currencies}>
+													{(item) => <Select.Option>{item.name}</Select.Option>}
+												</ListBox>
+											</Autocomplete>
+										</PopoverContent>
+									</Select>
+								)}
+							/>
+						</div>
 						{/* 
 						TODO: replaced with checkbox until switch is fixed
 						<Controller
