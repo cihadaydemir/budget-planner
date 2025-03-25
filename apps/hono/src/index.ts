@@ -4,6 +4,7 @@ import type { DrizzleDB } from "./db"
 import { Hono } from "hono"
 import { contextMiddleware } from "../middleware/context-middleware"
 import { cors } from "hono/cors"
+import { currenyRateRoutes } from "./routes/currency-rates"
 import { pocketsRoute } from "./routes/pockets"
 import { transactionsRoute } from "./routes/transactions"
 
@@ -49,7 +50,10 @@ app.on(["POST", "GET"], "/api/auth/**", async (c) => {
 		})
 })
 
-const routes = app.route("/pockets", pocketsRoute).route("/transactions", transactionsRoute)
+const routes = app
+	.route("/pockets", pocketsRoute)
+	.route("/transactions", transactionsRoute)
+	.route("/currencies", currenyRateRoutes)
 
 app.get("/", async (c) => {
 	return c.text("Budget Planner Hono v1 🔥")
