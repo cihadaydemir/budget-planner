@@ -2,6 +2,7 @@ import type { Session, getAuth } from "./lib/auth/auth"
 
 import type { DrizzleDB } from "./db"
 import { Hono } from "hono"
+import { instrument, type ResolveConfigFn } from "@microlabs/otel-cf-workers"
 import { contextMiddleware } from "../middleware/context-middleware"
 import { cors } from "hono/cors"
 import { currenyRateRoutes } from "./routes/currency-rates"
@@ -26,7 +27,6 @@ app.use("*", async (c, next) => {
 		origin: [c.env.CLIENT_BASE_URL],
 		allowHeaders: ["Content-Type", "Authorization"],
 		allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-		exposeHeaders: ["Content-Length"],
 		maxAge: 600,
 		credentials: true,
 	})
@@ -40,11 +40,6 @@ app.on(["POST", "GET"], "/api/auth/**", async (c) => {
 	return c
 		.get("auth")
 		.handler(c.req.raw)
-		.then(async (res) => {
-			// c.var.auth.api.getSession
-
-			return res
-		})
 		.catch((err) => {
 			return c.json({ error: "Unauthorized access" }, 401)
 		})
@@ -64,9 +59,21 @@ app.onError((error, c) => {
 	return c.json({ error: `Internal Server Error: ${error.message}` }, 500)
 })
 
-export default {
+const handler = {
 	port: 3000,
 	fetch: app.fetch,
 }
+
+const config: ResolveConfigFn = (env: Env, _trigger) => {
+	return {
+		exporter: {
+			url: "https://otel.baselime.io/v1",
+			headers: { "x-api-key": env.BASELIME_API_KEY },
+		},
+		service: { name: "budget-planner" },
+	}
+}
+
+export default instrument(handler, config)
 
 export type AppType = typeof routes
