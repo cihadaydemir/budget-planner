@@ -4,12 +4,12 @@ import { pocket, transaction } from "../db/schema"
 import type { AppContext } from ".."
 import { HTTPException } from "hono/http-exception"
 import { Hono } from "hono"
-import { insertPocketSchema } from "../db/zod"
+import { type ExtendedPocket, insertPocketSchema } from "../db/zod"
 import { zValidator } from "@hono/zod-validator"
 
 //TODO: checek if zValidators are correct or there are better ways to do it
 export const pocketsRoute = new Hono<AppContext>()
-	.get("/", async (c, next) => {
+	.get("/", async (c) => {
 		const db = c.var.DrizzleDB
 
 		const session = c.var.session
@@ -17,20 +17,41 @@ export const pocketsRoute = new Hono<AppContext>()
 			console.error("no session in api route", session)
 			throw new HTTPException(401, { message: "Unauthorized" })
 		}
-		const pockets = await db.select().from(pocket).where(eq(pocket.userId, session.user.id))
+		const pocketsWithTransactions = await db
+			.select({
+				pocket,
+				transactionAmount: transaction.amount,
+			})
+			.from(pocket)
+			.leftJoin(transaction, eq(pocket.id, transaction.pocketId))
+			.where(eq(pocket.userId, session.user.id))
 
-		const responseObject = pockets.map(async (pocket) => {
-			const transactions = await db.select().from(transaction).where(eq(transaction.pocketId, pocket.id))
-			const totalSpent = transactions.reduce((acc, transaction) => {
-				return acc + transaction.amount
-			}, 0)
-			return {
-				...pocket,
-				totalSpent,
+		const responseObject = pocketsWithTransactions.reduce<Record<string, ExtendedPocket>>((acc, row) => {
+			const pocketId = row.pocket.id
+
+			if (!acc[pocketId]) {
+				acc[pocketId] = {
+					id: pocketId,
+					name: row.pocket.name,
+					userId: row.pocket.userId,
+					budget: row.pocket.budget,
+					createdAt: row.pocket.createdAt,
+					updatedAt: row.pocket.updatedAt,
+					deletedAt: row.pocket.deletedAt,
+					description: row.pocket.description,
+					totalSpent: 0,
+				}
 			}
-		})
 
-		return c.json(await Promise.all(responseObject))
+			if (row.transactionAmount !== null) {
+				acc[pocketId].totalSpent += row.transactionAmount
+			}
+
+			return acc
+		}, {})
+
+		const pocketsWithTotalSpent = Object.values(responseObject)
+		return c.json(pocketsWithTotalSpent)
 	})
 	.post(
 		"/",
