@@ -1,7 +1,7 @@
 name = "budget-planner-app"
 compatibility_date = "2025-02-01"
 compatibility_flags = ["nodejs_compat"]
-
+pages_build_output_dir="./dist"
 [dev]
 port = 3001
 
