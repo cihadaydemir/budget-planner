@@ -32,12 +32,12 @@
       "migrations_dir": "./drizzle/migrations/",
     },
   ],
-  // "kv_namespaces": [
-  //   {
-  //     "binding": "MY_KV_NAMESPACE",
-  //     "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-  //   }
-  // ],
+  "kv_namespaces": [
+    {
+      "binding": "budget-planner-sesssion",
+      "id": "f8c1eae212044bf18cd63a429b4d3ea1",
+    },
+  ],
   // "r2_buckets": [
   //   {
   //     "binding": "MY_BUCKET",

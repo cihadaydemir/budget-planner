@@ -21,14 +21,6 @@ export type AppContext = {
 }
 
 const app = new Hono<AppContext>()
-app.use(async (c, next) => {
-	const start = Date.now() // Startzeitpunkt erfassen
-	await next() // Anfrage an den nächsten Middleware-Handler weiterleiten
-	const end = Date.now() // Endzeitpunkt erfassen
-	const duration = end - start // Dauer berechnen
-	// c.res.headers.set("X-Response-Time", `${duration}ms`) // Header hinzufügen
-	console.log(`Request took ${duration}ms`) // Dauer in der Konsole ausgeben
-})
 
 app.use("*", async (c, next) => {
 	const corsMiddlewareHandler = cors({

@@ -13,6 +13,7 @@ export const getAuth = ({
 	GITHUB_CLIENT_SECRET,
 	GOOGLE_CLIENT_ID,
 	GOOGLE_CLIENT_SECRET,
+	kvStore,
 }: {
 	BETTER_AUTH_SECRET: string
 	API_BASE_URL: string
@@ -22,6 +23,7 @@ export const getAuth = ({
 	GOOGLE_CLIENT_ID: string
 	GOOGLE_CLIENT_SECRET: string
 	drizzleDB: DrizzleDB
+	kvStore: KVNamespace
 }) =>
 	betterAuth({
 		baseURL: API_BASE_URL,
@@ -43,6 +45,16 @@ export const getAuth = ({
 			onError: (error) => {
 				// Custom error handling
 				console.error("Auth error:", error)
+			},
+		},
+		secondaryStorage: {
+			delete: async (key) => await kvStore.delete(key),
+			get: async (key) => {
+				const val = await kvStore.get(key)
+				return val ? val : null
+			},
+			set: async (key, value, ttl) => {
+				kvStore.put(key, value, { expirationTtl: ttl })
 			},
 		},
 		advanced: {
