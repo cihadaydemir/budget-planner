@@ -18,27 +18,4 @@
       },
     },
   },
-  //   "d1_databases": [
-  //     {
-  //       "binding": "DB",
-  //       "database_name": "budget-planner-dev",
-  //       "database_id": "a5cbff0c-a9c9-4b7b-96ab-29c51aa4a3ae",
-  //       "migrations_dir": "./drizzle/migrations/",
-  //     },
-  //   ],
-  // "kv_namespaces": [
-  //   {
-  //     "binding": "MY_KV_NAMESPACE",
-  //     "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-  //   }
-  // ],
-  // "r2_buckets": [
-  //   {
-  //     "binding": "MY_BUCKET",
-  //     "bucket_name": "my-bucket"
-  //   }
-  // ],
-  // "ai": {
-  //   "binding": "AI"
-  // },
 }
