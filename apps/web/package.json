@@ -34,6 +34,7 @@
     "@tanstack/router-devtools": "^1.114.27",
     "better-auth": "^1.2.4",
     "hono": "^4.7.4",
+    "inherits": "^2.0.4",
     "justd-icons": "^1.10.25",
     "motion": "^12.4.7",
     "react": "^19.0.0",
