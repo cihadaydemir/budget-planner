@@ -1,0 +1,16 @@
+name = "budget-planner-app"
+compatibility_date = "2025-02-01"
+compatibility_flags = ["nodejs_compat"]
+
+[dev]
+port = 3001
+
+[vars]
+VITE_BETTER_AUTH_URL = "https://hono.cihad.dev/"
+
+[env.production.vars]
+VITE_BETTER_AUTH_URL = "https://hono.cihad.dev/"
+
+[observability]
+enabled = true
+head_sampling_rate = 1
