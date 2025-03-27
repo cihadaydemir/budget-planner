@@ -22,7 +22,7 @@
     "tailwind-variants": "^0.3.1",
     "tailwindcss-animate": "^1.0.7",
     "vite": "^6.0.3",
-    "vite-plugin-pwa": "^0.21.1",
+    "vite-plugin-pwa": "^0.21.2",
     "@budget-planner/hono": "workspace:*"
   },
   "dependencies": {
@@ -35,7 +35,6 @@
     "better-auth": "^1.2.4",
     "hono": "^4.7.4",
     "justd-icons": "^1.10.25",
-    "latest": "^0.2.0",
     "motion": "^12.4.7",
     "react": "^19.0.0",
     "react-aria-components": "^1.7.1",
