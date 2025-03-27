@@ -24,6 +24,7 @@ export const CreateTransactionModal = () => {
 		defaultValues: {
 			pocketId: params.pocketId,
 			isPaid: false,
+			currency: "EUR",
 		},
 	})
 
@@ -115,7 +116,7 @@ export const CreateTransactionModal = () => {
 									/>
 								)}
 							/>
-							<Controller
+							{/* <Controller
 								control={control}
 								name="currency"
 								render={({ field }) => (
@@ -131,13 +132,15 @@ export const CreateTransactionModal = () => {
 													<SearchField className="rounded-lg bg-bg" autoFocus />
 												</div>
 												<ListBox className="border-0 shadow-none" items={currencies}>
-													{(item) => <Select.Option>{item.name}</Select.Option>}
+													{(item) => (
+														<Select.Option key={item.iso_code}>{item.name}</Select.Option>
+													)}
 												</ListBox>
 											</Autocomplete>
 										</PopoverContent>
 									</Select>
 								)}
-							/>
+							/> */}
 						</div>
 						{/* 
 						TODO: replaced with checkbox until switch is fixed
