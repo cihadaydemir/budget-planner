@@ -47,5 +47,6 @@
   },
   "overrides": {
     "react-is": "^19.0.0"
-  }
+  },
+  "packageManager": "bun@1.2.1"
 }
