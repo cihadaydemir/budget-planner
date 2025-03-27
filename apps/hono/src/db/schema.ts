@@ -21,7 +21,9 @@ export const pocket = sqliteTable("pockets", {
 	name: text("name").notNull(),
 	description: text("description"),
 	budget: integer("budget"),
-	userId: text("user_id").references(() => user.id, { onDelete: "cascade" }),
+	userId: text("user_id")
+		.references(() => user.id, { onDelete: "cascade" })
+		.notNull(),
 })
 
 export const transaction = sqliteTable("transactions", {
