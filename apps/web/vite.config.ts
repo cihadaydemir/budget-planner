@@ -21,6 +21,9 @@ export default defineConfig({
 			// injectManifest: {
 			// 	swDest: "dist/service-worker.js",
 			// },
+			workbox: {
+				cleanupOutdatedCaches: true,
+			},
 			manifest: {
 				name: "Budget Planner",
 				short_name: "Budget Planner",
