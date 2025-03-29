@@ -11,6 +11,7 @@
     "start": "vite"
   },
   "devDependencies": {
+    "@budget-planner/hono": "workspace:*",
     "@tanstack/router-plugin": "^1.114.27",
     "@types/bun": "^1.2.5",
     "@types/react": "^19.0.12",
@@ -22,8 +23,7 @@
     "tailwind-variants": "^0.3.1",
     "tailwindcss-animate": "^1.0.7",
     "vite": "^6.2.3",
-    "vite-plugin-pwa": "^0.21.2",
-    "@budget-planner/hono": "workspace:*"
+    "vite-plugin-pwa": "^0.21.2"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^0.1.19",
