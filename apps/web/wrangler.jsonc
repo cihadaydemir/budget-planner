@@ -18,4 +18,10 @@
       },
     },
   },
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "budget-planner",
+    },
+  ],
 }
