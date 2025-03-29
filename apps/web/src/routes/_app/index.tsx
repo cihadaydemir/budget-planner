@@ -22,7 +22,7 @@ function HomeComponent() {
 		return <LoadingScreen />
 	}
 
-	if (!pockets) {
+	if (!pockets || pockets.length === 0) {
 		return (
 			<div className="flex h-full flex-col items-center justify-center gap-3">
 				<p>Seems like you don't have any pockets yet.</p>
