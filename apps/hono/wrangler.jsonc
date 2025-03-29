@@ -18,19 +18,31 @@
     "API_BASE_URL": "https://hono.cihad.dev",
     "CLIENT_BASE_URL": "https://funds.cihad.dev",
   },
+  "env": {
+    "staging": {
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "funds-db-staging",
+          "database_id": "a390e4d6-46f7-4595-9a40-a67573a6b789",
+          "migrations_dir": "./drizzle/migrations/",
+        },
+      ],
+    },
+  },
   "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "funds-db-prod",
+      "database_id": "a9abe8eb-2efd-45bf-874f-b5d2690cc5e4",
+      "migrations_dir": "./drizzle/migrations/",
+    },
     // {
     //   "binding": "DB",
     //   "database_name": "budget-planner-dev",
     //   "database_id": "a5cbff0c-a9c9-4b7b-96ab-29c51aa4a3ae",
     //   "migrations_dir": "./drizzle/migrations/",
     // },
-    {
-      "binding": "DB",
-      "database_name": "new-database",
-      "database_id": "d7039d5a-b695-4626-bfa5-2dddb5a68051",
-      "migrations_dir": "./drizzle/migrations/",
-    },
   ],
   "kv_namespaces": [
     {

@@ -7,8 +7,9 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "d1:local": "bun run wrangler d1 migrations apply new-database --local",
-    "d1:remote": "bun run wrangler d1 migrations apply new-database --remote"
+    "d1:local": "bun run wrangler d1 migrations apply funds-db-prod --local",
+    "d1:remote": "bun run wrangler d1 migrations apply funds-db-prod --remote",
+    "d1:staging": "bun run wrangler d1 migrations apply funds-db-staging --remote"
   },
   "dependencies": {
     "@better-fetch/fetch": "^1.1.15",
