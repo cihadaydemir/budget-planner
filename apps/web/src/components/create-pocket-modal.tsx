@@ -49,13 +49,12 @@ export const CreatePocketModal = ({ editingPocket, setEditingPocket, isOpen, set
 			)
 		} else {
 			createPocketMutation.mutate(data, {
-				async onSuccess(data, variables, context) {
-					queryClient.invalidateQueries({
-						queryKey: ["pockets"],
-					})
+				async onSettled(data, variables, context) {
+					// queryClient.invalidateQueries({
+					// 	queryKey: ["pockets"],
+					// })
 					setIsOpen(false)
-					const res = await data.json()
-					toast(`Pocket ${res?.[0].name} created successfully`)
+
 					setTimeout(() => {
 						setEditingPocket?.(undefined)
 						reset()
