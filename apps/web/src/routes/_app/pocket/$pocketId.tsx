@@ -93,16 +93,16 @@ function RouteComponent() {
 				/>
 			)}
 
-			<Tabs aria-label="Expenses" className="mt-4">
+			<div className="mt-4 block self-end md:hidden">
+				<CreateTransactionModal />
+			</div>
+			<Tabs aria-label="Expenses" className="">
 				<Tabs.List aria-label="Expense tabs" items={tabs}>
 					{(item) => <Tabs.Tab>{item.title}</Tabs.Tab>}
 				</Tabs.List>
 
 				<Collection items={tabs}>{(item) => <Tabs.Panel key={item.id}>{item.content}</Tabs.Panel>}</Collection>
 			</Tabs>
-			<div className="fixed bottom-10 z-10 mt-auto self-center md:hidden">
-				<CreateTransactionModal />
-			</div>
 		</div>
 	)
 }
