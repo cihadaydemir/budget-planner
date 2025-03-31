@@ -16,7 +16,7 @@
     "@libsql/client": "^0.14.0",
     "better-auth": "^1.2.0",
     "dotenv": "^16.4.7",
-    "drizzle-orm": "^0.40.0",
+    "drizzle-orm": "^0.41.0",
     "elysia": "^1.2.24",
     "superjson": "^2.2.2",
     "wangler": "^0.0.7"
@@ -24,7 +24,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250319.0",
     "bun-types": "latest",
-    "drizzle-kit": "^0.30.5",
+    "drizzle-kit": "^0.30.6",
     "wrangler": "^3.114.0"
   },
   "override": {
