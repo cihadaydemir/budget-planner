@@ -1,32 +1,33 @@
 {
-	"name": "@budget-planner/hono",
-	"scripts": {
-		"dev": "wrangler dev",
-		"deploy": "wrangler deploy --minify",
-		"db:generate": "drizzle-kit generate",
-		"db:migrate": "drizzle-kit migrate",
-		"db:push": "drizzle-kit push",
-		"db:studio": "drizzle-kit studio",
-		"d1:local": "bun run wrangler d1 migrations apply funds-db-prod --local",
-		"d1:remote": "bun run wrangler d1 migrations apply funds-db-prod --remote",
-		"d1:staging": "bun run wrangler d1 migrations apply funds-db-staging --remote"
-	},
-	"dependencies": {
-		"@better-fetch/fetch": "^1.1.15",
-		"@hono/zod-validator": "^0.4.3",
-		"@microlabs/otel-cf-workers": "^1.0.0-rc.49",
-		"better-auth": "^1.2.4",
-		"drizzle-orm": "^0.41.0",
-		"drizzle-zod": "^0.7.1",
-		"hono": "^4.7.4",
-		"wangler": "^0.0.7",
-		"zod": "^3.24.2"
-	},
-	"devDependencies": {
-		"drizzle-kit": "^0.30.6",
-		"wrangler": "^4.2.0"
-	},
-	"exports": {
-		".": "./src/index.ts"
-	}
+  "name": "@budget-planner/hono",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy --minify",
+    "deploy:prod": "wrangler deploy --env prod --minify",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "d1:local": "bun run wrangler d1 migrations apply funds-db-prod --local",
+    "d1:remote": "bun run wrangler d1 migrations apply funds-db-prod --remote",
+    "d1:staging": "bun run wrangler d1 migrations apply funds-db-staging --remote"
+  },
+  "dependencies": {
+    "@better-fetch/fetch": "^1.1.15",
+    "@hono/zod-validator": "^0.4.3",
+    "@microlabs/otel-cf-workers": "^1.0.0-rc.49",
+    "better-auth": "^1.2.4",
+    "drizzle-orm": "^0.41.0",
+    "drizzle-zod": "^0.7.1",
+    "hono": "^4.7.4",
+    "wangler": "^0.0.7",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.30.6",
+    "wrangler": "^4.2.0"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  }
 }

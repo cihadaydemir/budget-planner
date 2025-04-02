@@ -8,24 +8,40 @@
     "mode": "off",
   },
   "route": {
-    "pattern": "hono.cihad.dev",
+    "pattern": "hono-dev.cihad.dev",
     "custom_domain": true,
   },
   "dev": {
     "port": 3000,
   },
   "vars": {
-    "API_BASE_URL": "https://hono.cihad.dev",
+    "API_BASE_URL": "https://hono-dev.cihad.dev",
     "CLIENT_BASE_URL": "https://funds.cihad.dev",
+    "ENVIRONMENT": "dev",
   },
   "env": {
-    "staging": {
+    "prod": {
+      "vars": {
+        "API_BASE_URL": "https://hono.cihad.dev",
+        "CLIENT_BASE_URL": "https://funds.cihad.dev",
+        "ENVIRONMENT": "prod",
+      },
+      "route": {
+        "pattern": "hono.cihad.dev",
+        "custom_domain": true,
+      },
       "d1_databases": [
         {
           "binding": "DB",
-          "database_name": "funds-db-staging",
-          "database_id": "a390e4d6-46f7-4595-9a40-a67573a6b789",
+          "database_name": "funds-db-prod",
+          "database_id": "a9abe8eb-2efd-45bf-874f-b5d2690cc5e4",
           "migrations_dir": "./drizzle/migrations/",
+        },
+      ],
+      "kv_namespaces": [
+        {
+          "binding": "budget-planner-sesssion",
+          "id": "f8c1eae212044bf18cd63a429b4d3ea1",
         },
       ],
     },
@@ -33,16 +49,10 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "funds-db-prod",
-      "database_id": "a9abe8eb-2efd-45bf-874f-b5d2690cc5e4",
+      "database_name": "budget-planner-dev",
+      "database_id": "a5cbff0c-a9c9-4b7b-96ab-29c51aa4a3ae",
       "migrations_dir": "./drizzle/migrations/",
     },
-    // {
-    //   "binding": "DB",
-    //   "database_name": "budget-planner-dev",
-    //   "database_id": "a5cbff0c-a9c9-4b7b-96ab-29c51aa4a3ae",
-    //   "migrations_dir": "./drizzle/migrations/",
-    // },
   ],
   "kv_namespaces": [
     {
