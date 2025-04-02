@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "budget-planner-api",
+  "name": "budget-planner-api-dev",
   "main": "src/index.ts",
   "compatibility_date": "2025-02-01",
   "compatibility_flags": ["nodejs_compat"],
@@ -21,6 +21,7 @@
   },
   "env": {
     "prod": {
+      "name": "budget-planner-api-prod",
       "vars": {
         "API_BASE_URL": "https://hono.cihad.dev",
         "CLIENT_BASE_URL": "https://funds.cihad.dev",
