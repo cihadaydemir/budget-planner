@@ -1,76 +1,101 @@
 import { useCreateTransactionMutation } from "@/hooks/transactions/useCreateTransactionMutation"
+import { useEditTransaction } from "@/hooks/transactions/useEditTransaction"
+import {
+	insertTransactionSchema,
+	type ExtendedPocket,
+	type InsertTransactionSchemaType,
+	type Transaction,
+} from "@hono/db/zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
 import { useParams } from "@tanstack/react-router"
-import { IconPlus } from "justd-icons"
-import { useState } from "react"
+import { useFilter } from "react-aria-components"
 import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
-import { Button, Checkbox, Form, Label, Modal, NumberField, PopoverContent, Switch, TextField } from "./ui"
-import { insertTransactionSchema, type InsertTransactionSchemaType, type ExtendedPocket } from "@hono/db/zod"
-import { Select } from "./ui/select"
-import { ListBox } from "./ui/list-box"
-import { Autocomplete, useFilter } from "react-aria-components"
-import { SearchField } from "./ui/search-field"
-import { currencies } from "@/lib/currencies"
+import { Button, Checkbox, Form, Label, Modal, NumberField, TextField } from "./ui"
+import { useEffect } from "react"
 
-export const CreateTransactionModal = () => {
+interface CreateTransactionModalProps {
+	isOpen: boolean
+	setIsOpen: (isOpen: boolean) => void
+	editingTransaction?: Transaction
+	setEditingTransaction?: (editingTransaction: Transaction | undefined) => void
+}
+
+export const CreateTransactionModal = ({
+	isOpen,
+	setIsOpen,
+	editingTransaction,
+	setEditingTransaction,
+}: CreateTransactionModalProps) => {
 	const params = useParams({ from: "/_app/pocket/$pocketId" })
 	const queryClient = useQueryClient()
-	const [isModalOpen, setIsModalOpen] = useState(false)
+
 	const { contains } = useFilter({ sensitivity: "base" })
 	const { control, handleSubmit, reset } = useForm({
 		resolver: zodResolver(insertTransactionSchema),
 		defaultValues: {
 			pocketId: params.pocketId,
-			isPaid: false,
 			currency: "EUR",
 		},
 	})
 
 	const createTransactionMutation = useCreateTransactionMutation()
+	const editTransactionMutation = useEditTransaction()
 
 	const onSubmit = (data: InsertTransactionSchemaType) => {
-		createTransactionMutation.mutate(
-			{ ...data, pocketId: params.pocketId },
-			{
-				onSuccess: async (data, variables) => {
-					queryClient.invalidateQueries({
-						queryKey: ["transactions", params.pocketId],
-					})
+		if (editingTransaction) {
+			editTransactionMutation.mutate({ transactionId: editingTransaction.id, data })
+		} else {
+			createTransactionMutation.mutate(
+				{ ...data, pocketId: params.pocketId },
+				{
+					onSuccess: async (data, variables) => {
+						queryClient.invalidateQueries({
+							queryKey: ["transactions", params.pocketId],
+						})
 
-					queryClient.setQueryData(["pockets"], (oldData: ExtendedPocket[]) => {
-						return oldData.map((pocket) =>
-							pocket.id === params.pocketId
-								? { ...pocket, totalSpent: pocket.totalSpent + variables.amount }
-								: pocket,
-						)
-					})
-					setIsModalOpen(false)
-					reset()
-					const res = await data.json()
+						queryClient.setQueryData(["pockets"], (oldData: ExtendedPocket[]) => {
+							return oldData.map((pocket) =>
+								pocket.id === params.pocketId
+									? { ...pocket, totalSpent: pocket.totalSpent + variables.amount }
+									: pocket,
+							)
+						})
+						setIsOpen(false)
+						reset()
+						const res = await data.json()
 
-					toast(`Transaction ${res?.[0].name} created successfully`)
+						toast(`Transaction ${res?.[0].name} created successfully`)
+					},
 				},
-			},
-		)
+			)
+		}
 	}
+
+	useEffect(() => {
+		reset({
+			isPaid: editingTransaction?.isPaid && false,
+			amount: editingTransaction?.amount && undefined,
+			name: editingTransaction?.name && undefined,
+			description: editingTransaction?.description && undefined,
+		})
+	}, [reset, editingTransaction])
 
 	return (
 		<Modal
-			isOpen={isModalOpen}
+			isOpen={isOpen}
 			onOpenChange={(isOpen) => {
-				setIsModalOpen(isOpen)
+				setIsOpen(isOpen)
+				if (setEditingTransaction) {
+					setEditingTransaction(undefined)
+				}
 				reset()
 			}}
 		>
-			<Button>
-				<IconPlus className="" />
-				Add Expense
-			</Button>
 			<Modal.Content isBlurred>
 				<Modal.Header>
-					<Modal.Title>Add Expense</Modal.Title>
+					<Modal.Title>{editingTransaction ? "Edit Expense" : "Add Expense"}</Modal.Title>
 				</Modal.Header>
 				<Form onSubmit={handleSubmit(onSubmit)}>
 					<Modal.Body className="mb-2 flex flex-col gap-2">
@@ -172,7 +197,7 @@ export const CreateTransactionModal = () => {
 					</Modal.Body>
 					<Modal.Footer>
 						<Modal.Close>Cancel</Modal.Close>
-						<Button type="submit">Add</Button>
+						<Button type="submit">{editingTransaction ? "Save" : "Add"}</Button>
 					</Modal.Footer>
 				</Form>
 			</Modal.Content>

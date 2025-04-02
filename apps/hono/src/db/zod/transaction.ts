@@ -5,7 +5,7 @@ import { z } from "zod"
 
 export const insertTransactionSchema = createInsertSchema(transaction, {
 	amount: z.number().int().min(1, { message: "Amount must be greater than 0" }),
-	description: z.string().optional(),
+	description: z.string().nullable().optional(),
 }).omit({
 	id: true,
 	serialId: true,

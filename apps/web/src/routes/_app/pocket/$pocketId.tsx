@@ -1,5 +1,6 @@
 import { Button, Heading, Tabs } from "@/components/ui"
 import { createFileRoute, useRouter } from "@tanstack/react-router"
+import { useMemo, useState } from "react"
 
 import { BudgetOverviewCard } from "@/components/budget-overview-card"
 import { Collection } from "react-aria-components"
@@ -7,8 +8,8 @@ import { CreateTransactionModal } from "@/components/create-transaction-modal"
 import { ExpenseList } from "@/components/expense-list"
 import { IconChevronLeft } from "justd-icons"
 import { LoadingScreen } from "@/components/loading-screen"
+import type { Transaction } from "@hono/db/zod"
 import { getTransactionsStatistics } from "@/utils/statistics"
-import { useMemo } from "react"
 import { usePockets } from "@/hooks/pockets/usePockets"
 import { useTransactions } from "@/hooks/transactions/useTransactions"
 
@@ -20,7 +21,8 @@ function RouteComponent() {
 	const params = Route.useParams()
 	const { data: pockets } = usePockets()
 	const pocket = pockets?.find((pocket) => pocket.id === params.pocketId)
-
+	const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false)
+	const [editingTransaction, setEditingTransaction] = useState<Transaction>()
 	const {
 		data: transactions,
 		isLoading: transactionsIsLoading,
@@ -43,7 +45,8 @@ function RouteComponent() {
 				<div className="flex justify-between">
 					<Heading level={1}>{pocket?.name}</Heading>
 					<div className="hidden md:block">
-						<CreateTransactionModal />
+						<Button onPress={() => setIsTransactionModalOpen(true)}>Add Expense</Button>
+						<CreateTransactionModal isOpen={isTransactionModalOpen} setIsOpen={setIsTransactionModalOpen} />
 					</div>
 				</div>
 			</div>
@@ -54,17 +57,35 @@ function RouteComponent() {
 		{
 			id: 1,
 			title: "All",
-			content: <ExpenseList transactions={transactions} />,
+			content: (
+				<ExpenseList
+					transactions={transactions}
+					setEditingTransaction={setEditingTransaction}
+					setIsTransactionModalOpen={setIsTransactionModalOpen}
+				/>
+			),
 		},
 		{
 			id: 2,
 			title: "Paid",
-			content: <ExpenseList transactions={transactions.filter((transaction) => transaction.isPaid === true)} />,
+			content: (
+				<ExpenseList
+					transactions={transactions.filter((transaction) => transaction.isPaid === true)}
+					setEditingTransaction={setEditingTransaction}
+					setIsTransactionModalOpen={setIsTransactionModalOpen}
+				/>
+			),
 		},
 		{
 			id: 3,
 			title: "Unpaid",
-			content: <ExpenseList transactions={transactions.filter((transaction) => transaction.isPaid === false)} />,
+			content: (
+				<ExpenseList
+					transactions={transactions.filter((transaction) => transaction.isPaid === false)}
+					setEditingTransaction={setEditingTransaction}
+					setIsTransactionModalOpen={setIsTransactionModalOpen}
+				/>
+			),
 		},
 	]
 
@@ -82,7 +103,7 @@ function RouteComponent() {
 				</Button>
 
 				<div className="ml-auto hidden md:block ">
-					<CreateTransactionModal />
+					<Button onPress={() => setIsTransactionModalOpen(true)}>Add Expense</Button>
 				</div>
 			</div>
 			{pocket && calculateStatistics && (
@@ -94,7 +115,7 @@ function RouteComponent() {
 			)}
 
 			<div className="mt-4 block self-end md:hidden">
-				<CreateTransactionModal />
+				<Button onPress={() => setIsTransactionModalOpen(true)}>Add Expense</Button>
 			</div>
 			<Tabs aria-label="Expenses" className="">
 				<Tabs.List aria-label="Expense tabs" items={tabs}>
@@ -103,6 +124,7 @@ function RouteComponent() {
 
 				<Collection items={tabs}>{(item) => <Tabs.Panel key={item.id}>{item.content}</Tabs.Panel>}</Collection>
 			</Tabs>
+			<CreateTransactionModal isOpen={isTransactionModalOpen} setIsOpen={setIsTransactionModalOpen} />
 		</div>
 	)
 }

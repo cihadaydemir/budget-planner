@@ -9,9 +9,11 @@ import { useQueryClient } from "@tanstack/react-query"
 
 interface ExpenseListProps {
 	transactions: Transaction[]
+	setIsTransactionModalOpen: (isOpen: boolean) => void
+	setEditingTransaction: (transaction: Transaction | undefined) => void
 }
 
-export const ExpenseList = ({ transactions }: ExpenseListProps) => {
+export const ExpenseList = ({ transactions, setIsTransactionModalOpen, setEditingTransaction }: ExpenseListProps) => {
 	const deleteExpenseMutation = useDeleteTransaction()
 	const editTransactionMutation = useEditTransaction()
 	const queryClient = useQueryClient()
@@ -62,7 +64,12 @@ export const ExpenseList = ({ transactions }: ExpenseListProps) => {
 							<Menu.Trigger>
 								<IconDotsVertical />
 								<Menu.Content>
-									<Menu.Item>
+									<Menu.Item
+										onAction={() => {
+											setIsTransactionModalOpen(true)
+											setEditingTransaction(transaction)
+										}}
+									>
 										<IconHighlight />
 										Edit
 									</Menu.Item>

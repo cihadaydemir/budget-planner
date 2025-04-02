@@ -48,7 +48,7 @@ function HomeComponent() {
 					</Button>
 				</div>
 			</div>
-			<div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2">
+			<div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-2">
 				{pockets.map((pocket) => (
 					<PocketsCard
 						key={pocket.id}
