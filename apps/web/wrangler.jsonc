@@ -9,7 +9,7 @@
   },
 
   "vars": {
-    "VITE_BETTER_AUTH_URL": "https://hono.cihad.dev/",
+    "VITE_BETTER_AUTH_URL": "https://hono-dev.cihad.dev/",
   },
   "env": {
     "production": {
