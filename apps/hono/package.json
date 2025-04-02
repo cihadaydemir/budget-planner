@@ -30,5 +30,6 @@
   },
   "exports": {
     ".": "./src/index.ts"
-  }
+  },
+  "packageManager": "bun@1.2.1"
 }
