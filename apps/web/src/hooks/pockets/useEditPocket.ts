@@ -10,7 +10,7 @@ export const useEditPocket = () =>
 		}: {
 			data: Partial<InsertPocketSchemaType>
 			pocketId: string
-		}) => hono.pockets[":id"].$post({ json: { ...data }, param: { id: pocketId } }),
+		}) => hono.api.pockets[":id"].$post({ json: { ...data }, param: { id: pocketId } }),
 	})
 
 // export const useEditPocket = () =>

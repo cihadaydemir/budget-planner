@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query"
 
 export const useDeleteTransaction = () =>
 	useMutation({
-		mutationFn: (transactionId: string) => hono.transactions[":id"].$delete({ param: { id: transactionId } }),
+		mutationFn: (transactionId: string) => hono.api.transactions[":id"].$delete({ param: { id: transactionId } }),
 	})
 // export const useDeleteTransaction = () =>
 // 	useMutation({

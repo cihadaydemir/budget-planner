@@ -13,13 +13,14 @@
   },
   "assets": {
     "directory": "../web/dist",
+    "binding": "ASSETS",
   },
   "dev": {
     "port": 3000,
   },
   "vars": {
     "API_BASE_URL": "https://hono-dev.cihad.dev",
-    "CLIENT_BASE_URL": "https://funds.cihad.dev",
+    "CLIENT_BASE_URL": "https://funds-dev.cihad.dev",
     "ENVIRONMENT": "dev",
   },
   "env": {
@@ -29,6 +30,9 @@
         "API_BASE_URL": "https://hono.cihad.dev",
         "CLIENT_BASE_URL": "https://funds.cihad.dev",
         "ENVIRONMENT": "prod",
+      },
+      "assets": {
+        "directory": "../web/dist",
       },
       "route": {
         "pattern": "hono.cihad.dev",

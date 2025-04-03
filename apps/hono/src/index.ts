@@ -20,7 +20,7 @@ export type AppContext = {
 	Variables: Variables
 }
 
-const app = new Hono<AppContext>()
+const app = new Hono<AppContext>().basePath("/api")
 
 app.use("*", async (c, next) => {
 	const corsMiddlewareHandler = cors({
@@ -36,7 +36,7 @@ app.use("*", async (c, next) => {
 // DB and Auth middleware
 app.use("*", contextMiddleware)
 
-app.on(["POST", "GET"], "/api/auth/**", async (c) => {
+app.on(["POST", "GET"], "/auth/**", async (c) => {
 	return c
 		.get("auth")
 		.handler(c.req.raw)

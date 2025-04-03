@@ -10,7 +10,7 @@ export const useEditTransaction = () =>
 		}: {
 			transactionId: string
 			data: Partial<InsertTransactionSchemaType>
-		}) => hono.transactions[":id"].$post({ json: data, param: { id: transactionId } }),
+		}) => hono.api.transactions[":id"].$post({ json: data, param: { id: transactionId } }),
 	})
 // export const useEditTransaction = () =>
 // 	useMutation({

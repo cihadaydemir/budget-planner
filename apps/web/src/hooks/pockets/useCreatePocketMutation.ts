@@ -9,7 +9,7 @@ import { toast } from "sonner"
 export const useCreatePocketMutation = () => {
 	const queryClient = useQueryClient()
 	return useMutation({
-		mutationFn: (data: InsertPocketSchemaType) => hono.pockets.$post({ json: data }),
+		mutationFn: (data: InsertPocketSchemaType) => hono.api.pockets.$post({ json: data }),
 		onMutate: async (updatedData) => {
 			await queryClient.cancelQueries({ queryKey: ["pockets"] })
 			const previousPockets = queryClient.getQueryData<ExtendedPocket[]>(["pockets"])
@@ -29,8 +29,7 @@ export const useCreatePocketMutation = () => {
 				updatedAt: null,
 				deletedAt: null,
 			}
-			const optimisticArray = previousPockets ? [...previousPockets, optimistcPocket] : [optimistcPocket]
-			console.log("optimisticArray", optimisticArray)
+			previousPockets ? [...previousPockets, optimistcPocket] : [optimistcPocket]
 			queryClient.setQueryData<ExtendedPocket[]>(["pockets"], (old) => [...(old ?? []), optimistcPocket])
 			return { previousPockets }
 		},

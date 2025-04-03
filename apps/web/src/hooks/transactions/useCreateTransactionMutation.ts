@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query"
 
 export const useCreateTransactionMutation = () =>
 	useMutation({
-		mutationFn: (data: InsertTransactionSchemaType) => hono.transactions.$post({ json: data }),
+		mutationFn: (data: InsertTransactionSchemaType) => hono.api.transactions.$post({ json: data }),
 	})
 // export const useCreateTransactionMutation = () =>
 // 	useMutation({
