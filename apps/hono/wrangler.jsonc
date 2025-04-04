@@ -8,7 +8,7 @@
     "mode": "off",
   },
   "route": {
-    "pattern": "hono-dev.cihad.dev",
+    "pattern": "funds-dev.cihad.dev",
     "custom_domain": true,
   },
   "assets": {
@@ -19,7 +19,7 @@
     "port": 3000,
   },
   "vars": {
-    "API_BASE_URL": "https://hono-dev.cihad.dev",
+    "API_BASE_URL": "https://funds-dev.cihad.dev/api",
     "CLIENT_BASE_URL": "https://funds-dev.cihad.dev",
     "ENVIRONMENT": "dev",
   },
