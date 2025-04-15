@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "budget-planner-dev",
   "main": "src/index.ts",
-  "compatibility_date": "2025-02-01",
+  "compatibility_date": "2025-04-03",
   "compatibility_flags": ["nodejs_compat"],
   "placement": {
     "mode": "off",
@@ -34,7 +34,7 @@
         "ENVIRONMENT": "prod",
       },
       "assets": {
-        "directory": "../web/dist",
+        "directory": "./dist",
       },
       "route": {
         "pattern": "hono.cihad.dev",
