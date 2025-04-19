@@ -1,4 +1,4 @@
-import { IconChevronLgDown } from "justd-icons"
+import { IconChevronLgDown } from "@intentui/icons"
 import type {
   ListBoxProps,
   PopoverProps,
@@ -146,5 +146,5 @@ Select.Section = SelectSection
 Select.Trigger = SelectTrigger
 Select.List = SelectList
 
-export type { SelectProps, SelectTriggerProps }
 export { Select }
+export type { SelectProps, SelectTriggerProps }

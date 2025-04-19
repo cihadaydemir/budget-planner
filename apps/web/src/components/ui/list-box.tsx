@@ -1,4 +1,4 @@
-import { IconCheck, IconHamburger } from "justd-icons"
+import { IconCheck, IconHamburger } from "@intentui/icons"
 import type {
   ListBoxItemProps as ListBoxItemPrimitiveProps,
   ListBoxProps,
@@ -28,7 +28,7 @@ interface ListBoxItemProps<T extends object> extends ListBoxItemPrimitiveProps<T
 }
 
 const ListBoxItem = <T extends object>({ children, className, ...props }: ListBoxItemProps<T>) => {
-  const textValue = typeof children === "string" ? children : undefined
+  const textValue = props.textValue || (typeof children === "string" ? children : undefined)
 
   return (
     <ListBoxItemPrimitive
@@ -41,22 +41,32 @@ const ListBoxItem = <T extends object>({ children, className, ...props }: ListBo
         }),
       )}
     >
-      {({ allowsDragging, isSelected, isFocused, isDragging }) => (
-        <>
-          {allowsDragging && (
-            <IconHamburger
-              className={twMerge(
-                "size-4 shrink-0 text-muted-fg transition",
-                isFocused && "text-fg",
-                isDragging && "text-fg",
-                isSelected && "text-accent-fg/70",
-              )}
-            />
-          )}
-          {isSelected && <IconCheck className="-mx-0.5 mr-2" data-slot="checked-icon" />}
-          {typeof children === "string" ? <DropdownLabel>{children}</DropdownLabel> : children}
-        </>
-      )}
+      {(renderProps) => {
+        const { allowsDragging, isSelected, isFocused, isDragging } = renderProps
+
+        return (
+          <>
+            {allowsDragging && (
+              <IconHamburger
+                className={twMerge(
+                  "size-4 shrink-0 text-muted-fg transition",
+                  isFocused && "text-fg",
+                  isDragging && "text-fg",
+                  isSelected && "text-accent-fg/70",
+                )}
+              />
+            )}
+            {isSelected && <IconCheck className="-mx-0.5 mr-2" data-slot="checked-icon" />}
+            {typeof children === "function" ? (
+              children(renderProps)
+            ) : typeof children === "string" ? (
+              <DropdownLabel>{children}</DropdownLabel>
+            ) : (
+              children
+            )}
+          </>
+        )
+      }}
     </ListBoxItemPrimitive>
   )
 }
@@ -78,4 +88,4 @@ ListBox.ItemDetails = ListBoxItemDetails
 ListBox.Item = ListBoxItem
 
 export type { ListBoxItemProps, ListBoxSectionProps }
-export { ListBox }
+export { ListBox, ListBoxSection, ListBoxItem }
