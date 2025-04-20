@@ -1,27 +1,81 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "budget-planner-app",
+  "name": "budget-planner-api-prod",
   "compatibility_date": "2025-04-03",
   "compatibility_flags": ["nodejs_compat"],
-  "dev": {
-    "port": 3001,
+  "main": "src/server/index.ts",
+  "placement": {
+    "mode": "off",
   },
-  "route": "funds.cihad.dev",
-  "vars": {
-    "VITE_BETTER_AUTH_URL": "https://hono-dev.cihad.dev/",
+  "route": {
+    "pattern": "hono.cihad.dev",
+    "custom_domain": true,
+  },
+  "dev": {
+    "port": 3000,
   },
   "env": {
-    "production": {
-      "route": "dev.funds.cihad.dev",
-      "vars": {
-        "VITE_BETTER_AUTH_URL": "https://hono.cihad.dev/",
+    "dev": {
+      "name": "budget-planner-dev",
+      "placement": {
+        "mode": "off",
       },
+      "route": {
+        "pattern": "funds-dev.cihad.dev",
+        "custom_domain": true,
+      },
+      "assets": {
+        "binding": "ASSETS",
+        "not_found_handling": "single-page-application",
+        "run_worker_first": false,
+      },
+      "vars": {
+        "API_BASE_URL": "https://funds-dev.cihad.dev/api",
+        "CLIENT_BASE_URL": "https://funds-dev.cihad.dev",
+        "ENVIRONMENT": "dev",
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "budget-planner-dev",
+          "database_id": "a5cbff0c-a9c9-4b7b-96ab-29c51aa4a3ae",
+          "migrations_dir": ".src/server/drizzle/migrations/",
+        },
+      ],
+      "kv_namespaces": [
+        {
+          "binding": "budget-planner-sesssion",
+          "id": "f8c1eae212044bf18cd63a429b4d3ea1",
+        },
+      ],
     },
   },
-  "r2_buckets": [
+  "assets": {
+    "binding": "ASSETS",
+    "run_worker_first": false,
+    "not_found_handling": "single-page-application",
+  },
+  "vars": {
+    "API_BASE_URL": "https://hono.cihad.dev/api",
+    "CLIENT_BASE_URL": "https://hono.cihad.dev",
+    "ENVIRONMENT": "prod",
+  },
+  "d1_databases": [
     {
-      "binding": "MEDIA",
-      "bucket_name": "budget-planner",
+      "binding": "DB",
+      "database_name": "funds-db-prod",
+      "database_id": "a9abe8eb-2efd-45bf-874f-b5d2690cc5e4",
+      "migrations_dir": "./drizzle/migrations/",
     },
   ],
+  "kv_namespaces": [
+    {
+      "binding": "budget-planner-sesssion",
+      "id": "f8c1eae212044bf18cd63a429b4d3ea1",
+    },
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+  },
 }

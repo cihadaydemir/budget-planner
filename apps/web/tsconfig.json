@@ -13,7 +13,7 @@
       // "@api/*": ["../api/src/*"],
       "@hono/*": ["../hono/src/*"],
       "@hono": ["../hono/src/index.ts"],
-      "ui": ["./src/components/ui/index.ts"]
+      "ui": ["src/client/components/ui/index.ts"]
     }
   }
 }

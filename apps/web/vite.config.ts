@@ -10,38 +10,40 @@ import tailwindcss from "@tailwindcss/vite"
 export default defineConfig({
 	plugins: [
 		cloudflare(),
-		VitePWA({
-			registerType: "autoUpdate",
-			devOptions: {
-				enabled: true,
-			},
-			strategies: "generateSW",
-			// srcDir: "./src",
-			//  filename: "service-worker.ts",
-			// injectManifest: {
-			// 	swDest: "dist/service-worker.js",
-			// },
-			workbox: {
-				cleanupOutdatedCaches: true,
-			},
-			manifest: {
-				name: "Budget Planner",
-				short_name: "Budget Planner",
-				theme_color: "#020618",
-				background_color: "#020618",
-				display: "standalone",
-				start_url: "/",
-			},
-		}),
+		// VitePWA({
+		// 	registerType: "autoUpdate",
+		// 	devOptions: {
+		// 		enabled: true,
+		// 	},
+		// 	strategies: "generateSW",
+		// 	workbox: {
+		// 		cleanupOutdatedCaches: true,
+		// 	},
+		// 	manifest: {
+		// 		name: "Budget Planner",
+		// 		short_name: "Budget Planner",
+		// 		theme_color: "#020618",
+		// 		background_color: "#020618",
+		// 		display: "standalone",
+		// 		start_url: "/",
+		// 	},
+		// }),
 		tailwindcss(),
-		TanStackRouterVite({}),
+		TanStackRouterVite({
+			target: "react",
+			autoCodeSplitting: true,
+			routesDirectory: "./src/client/routes",
+			generatedRouteTree: "./src/client/routeTree.gen.ts",
+		}),
 		react(),
 	],
+	server: {
+		port: 3000,
+		strictPort: true,
+	},
 	resolve: {
 		alias: {
 			"@": path.resolve(__dirname, "./src"),
-			// "@api": path.resolve(__dirname, "../api/src"),
-			"@hono": path.resolve(__dirname, "../hono/src"),
 		},
 	},
 })

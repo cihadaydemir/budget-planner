@@ -1,8 +1,8 @@
 {
-  "ui": "src/components/ui",
-  "utils": "src/utils",
+  "ui": "src/client/components/ui",
+  "utils": "src/client/utils",
   "gray": "slate",
-  "css": "src/index.css",
+  "css": "src/client/index.css",
   "alias": "@",
   "language": "typescript",
   "$schema": "https://intentui.com/schema.json"

@@ -23,3 +23,4 @@ dev-dist
 # Env
 .env
 .env.*
+.*.vars
