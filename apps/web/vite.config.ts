@@ -28,7 +28,6 @@ export default defineConfig({
 		// 		start_url: "/",
 		// 	},
 		// }),
-		tailwindcss(),
 		TanStackRouterVite({
 			target: "react",
 			autoCodeSplitting: true,
@@ -36,6 +35,7 @@ export default defineConfig({
 			generatedRouteTree: "./src/client/routeTree.gen.ts",
 		}),
 		react(),
+		tailwindcss(),
 	],
 	server: {
 		port: 3000,
