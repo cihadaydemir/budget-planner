@@ -1,7 +1,6 @@
 import { Button, Form, Modal, NumberField, TextField } from "./ui"
 import { Controller, useForm } from "react-hook-form"
 
-import { insertPocketSchema, type InsertPocketSchemaType, type Pocket } from "@hono/db/zod"
 import { toast } from "sonner"
 import { useCreatePocketMutation } from "@/client/hooks/pockets/useCreatePocketMutation"
 import { useEditPocket } from "@/client/hooks/pockets/useEditPocket"
@@ -9,6 +8,7 @@ import { useEffect } from "react"
 
 import { useQueryClient } from "@tanstack/react-query"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { insertPocketSchema, type InsertPocketSchemaType, type Pocket } from "@/server/db/zod"
 
 interface CreatePocketModalProps {
 	isOpen: boolean
