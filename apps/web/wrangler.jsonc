@@ -13,7 +13,7 @@
     "mode": "off",
   },
   "route": {
-    "pattern": "hono.cihad.dev",
+    "pattern": "funds.cihad.dev",
     "custom_domain": true,
   },
   "dev": {
@@ -57,8 +57,8 @@
   // },
 
   "vars": {
-    "API_BASE_URL": "https://hono.cihad.dev/api",
-    "CLIENT_BASE_URL": "https://hono.cihad.dev",
+    "API_BASE_URL": "https://funds.cihad.dev/api",
+    "CLIENT_BASE_URL": "https://funds.cihad.dev",
     "ENVIRONMENT": "prod",
   },
   "d1_databases": [
