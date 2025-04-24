@@ -1,6 +1,6 @@
 import { createAuthClient } from "better-auth/react"
 export const authClient = createAuthClient({
-	baseURL: import.meta.env.VITE_BETTER_AUTH_URL ?? "https://hono.cihad.dev/api/auth",
+	baseURL: import.meta.env.VITE_BETTER_AUTH_URL,
 	fetchOptions: {
 		credentials: "include",
 		disableValidation: true,
