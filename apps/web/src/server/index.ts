@@ -51,10 +51,6 @@ const routes = app
 	.route("/transactions", transactionsRoute)
 	.route("/currencies", currenyRateRoutes)
 
-app.get("/", async (c) => {
-	return c.text("Budget Planner Hono v1 🔥")
-})
-
 app.onError((error, c) => {
 	console.error(error)
 	return c.json({ error: `Internal Server Error: ${error.message}` }, 500)
