@@ -58,9 +58,6 @@ export const getAuth = ({
 			},
 		},
 		advanced: {
-			crossSubDomainCookies: {
-				enabled: true,
-			},
 			defaultCookieAttributes: {
 				httpOnly: true,
 				secure: true,
