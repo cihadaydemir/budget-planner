@@ -6,7 +6,7 @@
   "main": "./src/server/index.ts",
   "assets": {
     "binding": "ASSETS",
-    "run_worker_first": false,
+    "run_worker_first": true,
     "not_found_handling": "single-page-application",
   },
   "placement": {
@@ -32,10 +32,10 @@
       "assets": {
         "binding": "ASSETS",
         "not_found_handling": "single-page-application",
-        "run_worker_first": false,
+        "run_worker_first": true,
       },
       "vars": {
-        "API_BASE_URL": "https://funds-dev.cihad.dev/api",
+        "API_BASE_URL": "https://funds-dev.cihad.dev/",
         "CLIENT_BASE_URL": "https://funds-dev.cihad.dev",
         "VITE_BETTER_AUTH_URL": "https://funds-dev.cihad.dev/api/auth",
         "ENVIRONMENT": "dev",
@@ -57,7 +57,7 @@
     },
   },
   "vars": {
-    "API_BASE_URL": "https://funds.cihad.dev/api",
+    "API_BASE_URL": "https://funds.cihad.dev/",
     "CLIENT_BASE_URL": "https://funds.cihad.dev",
     "VITE_BETTER_AUTH_URL": "https://funds.cihad.dev/api/auth",
     "ENVIRONMENT": "prod",
