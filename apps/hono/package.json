@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@better-fetch/fetch": "^1.1.15",
-    "@hono/zod-validator": "^0.4.3",
     "@microlabs/otel-cf-workers": "^1.0.0-rc.49",
     "better-auth": "^1.2.4",
     "drizzle-orm": "^0.41.0",
