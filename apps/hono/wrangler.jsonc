@@ -15,7 +15,7 @@
     "binding": "ASSETS",
     "directory": "../web/dist",
     "not_found_handling": "single-page-application",
-    "run_worker_first": true,
+    "run_worker_first": false,
   },
   "dev": {
     "port": 3000,
@@ -29,12 +29,14 @@
     "prod": {
       "name": "budget-planner-api-prod",
       "vars": {
-        "API_BASE_URL": "https://hono.cihad.dev",
-        "CLIENT_BASE_URL": "https://funds.cihad.dev",
+        "API_BASE_URL": "https://hono.cihad.dev/api",
+        "CLIENT_BASE_URL": "https://hono.cihad.dev",
         "ENVIRONMENT": "prod",
       },
       "assets": {
-        "directory": "./dist",
+        "directory": "../web/dist",
+        "run_worker_first": false,
+        "not_found_handling": "single-page-application",
       },
       "route": {
         "pattern": "hono.cihad.dev",
