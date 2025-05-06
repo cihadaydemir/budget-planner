@@ -6,7 +6,7 @@
   "main": "./src/server/index.ts",
   "assets": {
     "binding": "ASSETS",
-    "run_worker_first": true,
+    "run_worker_first": false,
     "not_found_handling": "single-page-application",
   },
   "placement": {
@@ -32,7 +32,7 @@
       "assets": {
         "binding": "ASSETS",
         "not_found_handling": "single-page-application",
-        "run_worker_first": true,
+        "run_worker_first": false,
       },
       "vars": {
         "API_BASE_URL": "https://funds-dev.cihad.dev/",
@@ -50,7 +50,7 @@
       ],
       "kv_namespaces": [
         {
-          "binding": "budget-planner-sesssion",
+          "binding": "budget-planner-session",
           "id": "f8c1eae212044bf18cd63a429b4d3ea1",
         },
       ],
@@ -72,7 +72,7 @@
   ],
   "kv_namespaces": [
     {
-      "binding": "budget-planner-sesssion",
+      "binding": "budget-planner-session",
       "id": "f8c1eae212044bf18cd63a429b4d3ea1",
     },
   ],
