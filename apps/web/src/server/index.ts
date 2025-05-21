@@ -21,7 +21,7 @@ export type AppContext = {
 	Variables: Variables
 }
 
-const app = new Hono<AppContext>().basePath("/api")
+const app = new Hono<AppContext>()
 
 // app.use("*", async (c, next) => {
 // 	const corsMiddlewareHandler = cors({
@@ -37,7 +37,7 @@ app.use("*", logger())
 // DB and Auth middleware
 app.use("*", contextMiddleware)
 
-app.on(["POST", "GET"], "/auth/**", async (c) => {
+app.on(["POST", "GET"], "/api/auth/**", async (c) => {
 	const authInstance = c.get("auth")
 	if (!authInstance) {
 		throw new Error("Auth instance not found")
@@ -47,6 +47,7 @@ app.on(["POST", "GET"], "/auth/**", async (c) => {
 })
 
 const routes = app
+	.basePath("/hc")
 	.route("/pockets", pocketsRoute)
 	.route("/transactions", transactionsRoute)
 	.route("/currencies", currenyRateRoutes)

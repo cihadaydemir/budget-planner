@@ -58,9 +58,10 @@
     },
   },
   "vars": {
-    "API_BASE_URL": "https://funds.cihad.dev/",
+    "API_BASE_URL": "https://funds.cihad.dev/hc/",
     "CLIENT_BASE_URL": "https://funds.cihad.dev",
     "VITE_BETTER_AUTH_URL": "https://funds.cihad.dev/api/auth",
+
     "ENVIRONMENT": "prod",
   },
   "d1_databases": [
