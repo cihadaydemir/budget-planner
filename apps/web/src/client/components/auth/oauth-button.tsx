@@ -1,4 +1,4 @@
-import { IconBrandGithub, IconBrandGoogle } from "justd-icons"
+import { IconBrandGithub, IconBrandGoogle } from "@intentui/icons"
 
 import { Button } from "../ui"
 import type { oauthProviders } from "@/client/lib/auth/constants"

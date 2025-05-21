@@ -1,37 +1,18 @@
-import { Controller, useForm } from "react-hook-form"
-
-import { signIn, signUp } from "@/client/lib/auth/auth-client"
-import { type Static, Type } from "@sinclair/typebox"
-import { useLocation, useNavigate } from "@tanstack/react-router"
-import { toast } from "sonner"
 import { Button, Form, TextField } from "../ui"
+import { Controller, useForm } from "react-hook-form"
+import { signIn, signUp } from "@/client/lib/auth/auth-client"
+import { useLocation, useNavigate } from "@tanstack/react-router"
 
-export const credentialsSchema = Type.Object({
-	name: Type.Optional(
-		Type.String({
-			errorMessage: { format: "Username is required" },
-		}),
-	),
-	email: Type.String({
-		format: "email",
-		errorMessage: { format: "Invalid email" },
-	}),
-	password: Type.String({
-		minLength: 8,
-		errorMessage: { minLength: "Password must be at least 8 characters" },
-	}),
-})
-
-export type CredentialsSchemaType = Static<typeof credentialsSchema>
+import { toast } from "sonner"
 
 interface CredentialLoginFormProps {
 	isSignUp?: boolean
 }
 
 export const CredentialLoginForm = ({ isSignUp = false }: CredentialLoginFormProps) => {
-	const { handleSubmit, control, setError, formState } = useForm<CredentialsSchemaType>()
+	const { handleSubmit, control, setError, formState } = useForm()
 
-	const onSubmit = async (data: CredentialsSchemaType) => {
+	const onSubmit = async (data: any) => {
 		const { error } = await signIn.email({
 			...data,
 			callbackURL: window.location.origin,
@@ -54,7 +35,7 @@ export const CredentialLoginForm = ({ isSignUp = false }: CredentialLoginFormPro
 	}
 
 	return (
-		<Form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3 w-full">
+		<Form onSubmit={handleSubmit(onSubmit)} className="flex w-full flex-col gap-3">
 			{isSignUp && (
 				<Controller
 					control={control}
