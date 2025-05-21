@@ -17,7 +17,7 @@ export const contextMiddleware = createMiddleware<AppContext>(async (c, next) =>
 			GITHUB_CLIENT_SECRET: c.env.GITHUB_CLIENT_SECRET,
 			GOOGLE_CLIENT_ID: c.env.GOOGLE_CLIENT_ID,
 			GOOGLE_CLIENT_SECRET: c.env.GOOGLE_CLIENT_SECRET,
-			kvStore: c.env["budget-planner-sesssion"],
+			kvStore: c.env["budget-planner-session"],
 		}),
 	)
 

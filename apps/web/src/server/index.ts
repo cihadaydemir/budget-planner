@@ -4,7 +4,7 @@ import type { DrizzleDB } from "./db"
 import { Hono } from "hono"
 import { instrument, type ResolveConfigFn } from "@microlabs/otel-cf-workers"
 
-import { cors } from "hono/cors"
+import { logger } from "hono/logger"
 import { currenyRateRoutes } from "./routes/currency-rates"
 import { pocketsRoute } from "./routes/pockets"
 import { transactionsRoute } from "./routes/transactions"
@@ -23,27 +23,27 @@ export type AppContext = {
 
 const app = new Hono<AppContext>().basePath("/api")
 
-app.use("*", async (c, next) => {
-	const corsMiddlewareHandler = cors({
-		origin: [c.env.CLIENT_BASE_URL],
-		allowHeaders: ["Content-Type", "Authorization"],
-		allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-		maxAge: 600,
-		credentials: true,
-	})
-	return corsMiddlewareHandler(c, next)
-})
-
+// app.use("*", async (c, next) => {
+// 	const corsMiddlewareHandler = cors({
+// 		origin: [c.env.CLIENT_BASE_URL],
+// 		allowHeaders: ["Content-Type", "Authorization"],
+// 		allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+// 		maxAge: 600,
+// 		credentials: true,
+// 	})
+// 	return corsMiddlewareHandler(c, next)
+// })
+app.use("*", logger())
 // DB and Auth middleware
 app.use("*", contextMiddleware)
 
 app.on(["POST", "GET"], "/auth/**", async (c) => {
-	return c
-		.get("auth")
-		.handler(c.req.raw)
-		.catch((err) => {
-			return c.json({ error: "Unauthorized access" }, 401)
-		})
+	const authInstance = c.get("auth")
+	if (!authInstance) {
+		throw new Error("Auth instance not found")
+	}
+	const response = await authInstance.handler(c.req.raw)
+	return response
 })
 
 const routes = app
