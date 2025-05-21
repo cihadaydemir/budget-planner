@@ -1,4 +1,4 @@
-import type { InsertPocketSchemaType } from "@hono/db/zod"
+import type { InsertPocketSchemaType } from "@/server/db/zod"
 import { hono } from "@/client/lib/hono-client"
 import { useMutation } from "@tanstack/react-query"
 
@@ -10,7 +10,7 @@ export const useEditPocket = () =>
 		}: {
 			data: Partial<InsertPocketSchemaType>
 			pocketId: string
-		}) => hono.api.pockets[":id"].$post({ json: { ...data }, param: { id: pocketId } }),
+		}) => hono.hc.pockets[":id"].$post({ json: { ...data }, param: { id: pocketId } }),
 	})
 
 // export const useEditPocket = () =>

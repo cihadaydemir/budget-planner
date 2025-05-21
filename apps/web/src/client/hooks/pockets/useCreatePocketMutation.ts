@@ -1,4 +1,4 @@
-import type { ExtendedPocket, InsertPocketSchemaType } from "@hono/db/zod"
+import type { ExtendedPocket, InsertPocketSchemaType } from "@/server/db/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import type { Session } from "@/client/lib/auth/auth-client"
@@ -9,7 +9,7 @@ import { toast } from "sonner"
 export const useCreatePocketMutation = () => {
 	const queryClient = useQueryClient()
 	return useMutation({
-		mutationFn: (data: InsertPocketSchemaType) => hono.api.pockets.$post({ json: data }),
+		mutationFn: (data: InsertPocketSchemaType) => hono.hc.pockets.$post({ json: data }),
 		onMutate: async (updatedData) => {
 			await queryClient.cancelQueries({ queryKey: ["pockets"] })
 			const previousPockets = queryClient.getQueryData<ExtendedPocket[]>(["pockets"])

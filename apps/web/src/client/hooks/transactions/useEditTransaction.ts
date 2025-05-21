@@ -1,4 +1,4 @@
-import type { InsertTransactionSchemaType } from "@hono/db/zod"
+import type { InsertTransactionSchemaType } from "@/server/db/zod"
 import { hono } from "@/client/lib/hono-client"
 import { useMutation } from "@tanstack/react-query"
 
@@ -10,7 +10,7 @@ export const useEditTransaction = () =>
 		}: {
 			transactionId: string
 			data: Partial<InsertTransactionSchemaType>
-		}) => hono.api.transactions[":id"].$post({ json: data, param: { id: transactionId } }),
+		}) => hono.hc.transactions[":id"].$post({ json: data, param: { id: transactionId } }),
 	})
 // export const useEditTransaction = () =>
 // 	useMutation({

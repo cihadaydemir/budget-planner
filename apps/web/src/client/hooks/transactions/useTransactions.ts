@@ -5,7 +5,7 @@ export const useTransactions = (pocketId: string) =>
 	useQuery({
 		queryKey: ["transactions", pocketId],
 		queryFn: async () => {
-			const res = await hono.api.transactions[":id"].$get({ param: { id: pocketId } })
+			const res = await hono.hc.transactions[":id"].$get({ param: { id: pocketId } })
 			return res.json()
 		},
 		staleTime: Number.POSITIVE_INFINITY,

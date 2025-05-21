@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query"
 
 export const useDeletePocket = () =>
 	useMutation({
-		mutationFn: (pocketId: string) => hono.api.pockets[":id"].$delete({ param: { id: pocketId } }),
+		mutationFn: (pocketId: string) => hono.hc.pockets[":id"].$delete({ param: { id: pocketId } }),
 	})
 
 // export const useDeletePocket = () =>
