@@ -1,5 +1,6 @@
+import { IconMoon, IconSun } from "@intentui/icons"
+
 import { Button } from "@/client/components/ui"
-import { IconMoon, IconSun } from "justd-icons"
 import { useTheme } from "./theme-provider"
 
 interface Props {

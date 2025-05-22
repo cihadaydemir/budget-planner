@@ -14,7 +14,7 @@ import {
 	SidebarSectionGroup,
 	useSidebar,
 } from "../ui"
-import { IconChevronLgDown, IconDashboard, IconHeadphones, IconLogout } from "justd-icons"
+import { IconChevronLgDown, IconDashboard, IconHeadphones, IconLogout } from "@intentui/icons"
 import { authClient, signOut } from "@/client/lib/auth/auth-client"
 import { useLocation, useNavigate } from "@tanstack/react-router"
 

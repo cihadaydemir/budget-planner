@@ -1,6 +1,6 @@
 import { Button, Card, Menu, Meter } from "./ui"
-import type { ExtendedPocket, Pocket } from "@hono/db/zod"
-import { IconDotsVertical, IconHighlight, IconTrash } from "justd-icons"
+import type { ExtendedPocket, Pocket } from "@/server/db/zod"
+import { IconDotsVertical, IconHighlight, IconTrash } from "@intentui/icons"
 
 import { toast } from "sonner"
 import { useDeletePocket } from "@/client/hooks/pockets/useDeletePocket"

@@ -1,5 +1,5 @@
 import { Avatar, Menu } from "../ui"
-import { IconDashboard, IconDeviceDesktop, IconLogout, IconMoon, IconSun } from "justd-icons"
+import { IconDashboard, IconDeviceDesktop, IconLogout, IconMoon, IconSun } from "@intentui/icons"
 
 import { signOut } from "@/client/lib/auth/auth-client"
 import { useAuth } from "@/client/lib/auth/use-auth"
