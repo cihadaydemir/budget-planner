@@ -1,12 +1,8 @@
 import { createInsertSchema, createSelectSchema } from "drizzle-zod"
-
 import { transaction } from "../schema"
-import { z } from "zod"
+import type { z } from "zod"
 
-export const insertTransactionSchema = createInsertSchema(transaction, {
-	amount: z.number().int().min(1, { message: "Amount must be greater than 0" }),
-	description: z.string().nullable().optional(),
-}).omit({
+export const insertTransactionSchema = createInsertSchema(transaction).omit({
 	id: true,
 	serialId: true,
 	userId: true,
@@ -14,8 +10,6 @@ export const insertTransactionSchema = createInsertSchema(transaction, {
 	updatedAt: true,
 	deletedAt: true,
 })
-
-export type InsertTransactionSchemaType = z.infer<typeof insertTransactionSchema>
 
 export const selectTransactionSchema = createSelectSchema(transaction).omit({ serialId: true })
 
