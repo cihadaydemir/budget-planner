@@ -12,7 +12,7 @@
     "@biomejs/biome": "1.9.4",
     "prettier": "^3.5.0",
     "turbo": "^2.4.2",
-    "typescript": "5.7.3",
+    "typescript": "^5.8.3",
     "vite-plugin-pwa": "^0.21.2"
   },
   "engines": {
@@ -24,7 +24,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "@hono/zod-validator": "^0.4.3",
+    "@hono/zod-validator": "^0.5.0",
     "@microlabs/otel-cf-workers": "^1.0.0-rc.49"
   }
 }
