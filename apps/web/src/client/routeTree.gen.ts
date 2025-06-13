@@ -10,119 +10,155 @@
 
 import { createFileRoute } from '@tanstack/react-router'
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as AppRouteImport } from './routes/_app'
+import { Route as AppIndexRouteImport } from './routes/_app/index'
+import { Route as AuthLayoutRouteImport } from './routes/auth/_layout'
+import { Route as AuthLayoutSignUpRouteImport } from './routes/auth/_layout.sign-up'
+import { Route as AuthLayoutSignInRouteImport } from './routes/auth/_layout.sign-in'
+import { Route as AppPocketPocketIdRouteImport } from './routes/_app/pocket/$pocketId'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as AppImport } from './routes/_app'
-import { Route as AppIndexImport } from './routes/_app/index'
-import { Route as AuthLayoutImport } from './routes/auth/_layout'
-import { Route as AuthLayoutSignUpImport } from './routes/auth/_layout.sign-up'
-import { Route as AuthLayoutSignInImport } from './routes/auth/_layout.sign-in'
-import { Route as AppPocketPocketIdImport } from './routes/_app/pocket/$pocketId'
+const AuthRouteImport = createFileRoute('/auth')()
 
-// Create Virtual Routes
-
-const AuthImport = createFileRoute('/auth')()
-
-// Create/Update Routes
-
-const AuthRoute = AuthImport.update({
+const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const AppRoute = AppImport.update({
+const AppRoute = AppRouteImport.update({
   id: '/_app',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const AppIndexRoute = AppIndexImport.update({
+const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
-
-const AuthLayoutRoute = AuthLayoutImport.update({
+const AuthLayoutRoute = AuthLayoutRouteImport.update({
   id: '/_layout',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthLayoutSignUpRoute = AuthLayoutSignUpImport.update({
+const AuthLayoutSignUpRoute = AuthLayoutSignUpRouteImport.update({
   id: '/sign-up',
   path: '/sign-up',
   getParentRoute: () => AuthLayoutRoute,
 } as any)
-
-const AuthLayoutSignInRoute = AuthLayoutSignInImport.update({
+const AuthLayoutSignInRoute = AuthLayoutSignInRouteImport.update({
   id: '/sign-in',
   path: '/sign-in',
   getParentRoute: () => AuthLayoutRoute,
 } as any)
-
-const AppPocketPocketIdRoute = AppPocketPocketIdImport.update({
+const AppPocketPocketIdRoute = AppPocketPocketIdRouteImport.update({
   id: '/pocket/$pocketId',
   path: '/pocket/$pocketId',
   getParentRoute: () => AppRoute,
 } as any)
 
-// Populate the FileRoutesByPath interface
+export interface FileRoutesByFullPath {
+  '': typeof AppRouteWithChildren
+  '/auth': typeof AuthLayoutRouteWithChildren
+  '/': typeof AppIndexRoute
+  '/pocket/$pocketId': typeof AppPocketPocketIdRoute
+  '/auth/sign-in': typeof AuthLayoutSignInRoute
+  '/auth/sign-up': typeof AuthLayoutSignUpRoute
+}
+export interface FileRoutesByTo {
+  '/auth': typeof AuthLayoutRouteWithChildren
+  '/': typeof AppIndexRoute
+  '/pocket/$pocketId': typeof AppPocketPocketIdRoute
+  '/auth/sign-in': typeof AuthLayoutSignInRoute
+  '/auth/sign-up': typeof AuthLayoutSignUpRoute
+}
+export interface FileRoutesById {
+  __root__: typeof rootRouteImport
+  '/_app': typeof AppRouteWithChildren
+  '/auth': typeof AuthRouteWithChildren
+  '/auth/_layout': typeof AuthLayoutRouteWithChildren
+  '/_app/': typeof AppIndexRoute
+  '/_app/pocket/$pocketId': typeof AppPocketPocketIdRoute
+  '/auth/_layout/sign-in': typeof AuthLayoutSignInRoute
+  '/auth/_layout/sign-up': typeof AuthLayoutSignUpRoute
+}
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | ''
+    | '/auth'
+    | '/'
+    | '/pocket/$pocketId'
+    | '/auth/sign-in'
+    | '/auth/sign-up'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/auth' | '/' | '/pocket/$pocketId' | '/auth/sign-in' | '/auth/sign-up'
+  id:
+    | '__root__'
+    | '/_app'
+    | '/auth'
+    | '/auth/_layout'
+    | '/_app/'
+    | '/_app/pocket/$pocketId'
+    | '/auth/_layout/sign-in'
+    | '/auth/_layout/sign-up'
+  fileRoutesById: FileRoutesById
+}
+export interface RootRouteChildren {
+  AppRoute: typeof AppRouteWithChildren
+  AuthRoute: typeof AuthRouteWithChildren
+}
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_app': {
-      id: '/_app'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AppImport
-      parentRoute: typeof rootRoute
-    }
     '/auth': {
       id: '/auth'
       path: '/auth'
       fullPath: '/auth'
-      preLoaderRoute: typeof AuthImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/auth/_layout': {
-      id: '/auth/_layout'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthLayoutImport
-      parentRoute: typeof AuthRoute
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_app/': {
       id: '/_app/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof AppIndexImport
-      parentRoute: typeof AppImport
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
     }
-    '/_app/pocket/$pocketId': {
-      id: '/_app/pocket/$pocketId'
-      path: '/pocket/$pocketId'
-      fullPath: '/pocket/$pocketId'
-      preLoaderRoute: typeof AppPocketPocketIdImport
-      parentRoute: typeof AppImport
-    }
-    '/auth/_layout/sign-in': {
-      id: '/auth/_layout/sign-in'
-      path: '/sign-in'
-      fullPath: '/auth/sign-in'
-      preLoaderRoute: typeof AuthLayoutSignInImport
-      parentRoute: typeof AuthLayoutImport
+    '/auth/_layout': {
+      id: '/auth/_layout'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthLayoutRouteImport
+      parentRoute: typeof AuthRoute
     }
     '/auth/_layout/sign-up': {
       id: '/auth/_layout/sign-up'
       path: '/sign-up'
       fullPath: '/auth/sign-up'
-      preLoaderRoute: typeof AuthLayoutSignUpImport
-      parentRoute: typeof AuthLayoutImport
+      preLoaderRoute: typeof AuthLayoutSignUpRouteImport
+      parentRoute: typeof AuthLayoutRoute
+    }
+    '/auth/_layout/sign-in': {
+      id: '/auth/_layout/sign-in'
+      path: '/sign-in'
+      fullPath: '/auth/sign-in'
+      preLoaderRoute: typeof AuthLayoutSignInRouteImport
+      parentRoute: typeof AuthLayoutRoute
+    }
+    '/_app/pocket/$pocketId': {
+      id: '/_app/pocket/$pocketId'
+      path: '/pocket/$pocketId'
+      fullPath: '/pocket/$pocketId'
+      preLoaderRoute: typeof AppPocketPocketIdRouteImport
+      parentRoute: typeof AppRoute
     }
   }
 }
-
-// Create and export the route tree
 
 interface AppRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
@@ -160,118 +196,10 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
-export interface FileRoutesByFullPath {
-  '': typeof AppRouteWithChildren
-  '/auth': typeof AuthLayoutRouteWithChildren
-  '/': typeof AppIndexRoute
-  '/pocket/$pocketId': typeof AppPocketPocketIdRoute
-  '/auth/sign-in': typeof AuthLayoutSignInRoute
-  '/auth/sign-up': typeof AuthLayoutSignUpRoute
-}
-
-export interface FileRoutesByTo {
-  '/auth': typeof AuthLayoutRouteWithChildren
-  '/': typeof AppIndexRoute
-  '/pocket/$pocketId': typeof AppPocketPocketIdRoute
-  '/auth/sign-in': typeof AuthLayoutSignInRoute
-  '/auth/sign-up': typeof AuthLayoutSignUpRoute
-}
-
-export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/_app': typeof AppRouteWithChildren
-  '/auth': typeof AuthRouteWithChildren
-  '/auth/_layout': typeof AuthLayoutRouteWithChildren
-  '/_app/': typeof AppIndexRoute
-  '/_app/pocket/$pocketId': typeof AppPocketPocketIdRoute
-  '/auth/_layout/sign-in': typeof AuthLayoutSignInRoute
-  '/auth/_layout/sign-up': typeof AuthLayoutSignUpRoute
-}
-
-export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | ''
-    | '/auth'
-    | '/'
-    | '/pocket/$pocketId'
-    | '/auth/sign-in'
-    | '/auth/sign-up'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/auth' | '/' | '/pocket/$pocketId' | '/auth/sign-in' | '/auth/sign-up'
-  id:
-    | '__root__'
-    | '/_app'
-    | '/auth'
-    | '/auth/_layout'
-    | '/_app/'
-    | '/_app/pocket/$pocketId'
-    | '/auth/_layout/sign-in'
-    | '/auth/_layout/sign-up'
-  fileRoutesById: FileRoutesById
-}
-
-export interface RootRouteChildren {
-  AppRoute: typeof AppRouteWithChildren
-  AuthRoute: typeof AuthRouteWithChildren
-}
-
 const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/_app",
-        "/auth"
-      ]
-    },
-    "/_app": {
-      "filePath": "_app.tsx",
-      "children": [
-        "/_app/",
-        "/_app/pocket/$pocketId"
-      ]
-    },
-    "/auth": {
-      "filePath": "auth",
-      "children": [
-        "/auth/_layout"
-      ]
-    },
-    "/auth/_layout": {
-      "filePath": "auth/_layout.tsx",
-      "parent": "/auth",
-      "children": [
-        "/auth/_layout/sign-in",
-        "/auth/_layout/sign-up"
-      ]
-    },
-    "/_app/": {
-      "filePath": "_app/index.tsx",
-      "parent": "/_app"
-    },
-    "/_app/pocket/$pocketId": {
-      "filePath": "_app/pocket/$pocketId.tsx",
-      "parent": "/_app"
-    },
-    "/auth/_layout/sign-in": {
-      "filePath": "auth/_layout.sign-in.tsx",
-      "parent": "/auth/_layout"
-    },
-    "/auth/_layout/sign-up": {
-      "filePath": "auth/_layout.sign-up.tsx",
-      "parent": "/auth/_layout"
-    }
-  }
-}
-ROUTE_MANIFEST_END */

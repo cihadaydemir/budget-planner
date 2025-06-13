@@ -8,7 +8,7 @@ import { CreateTransactionModal } from "@/client/components/create-transaction-m
 import { ExpenseList } from "@/client/components/expense-list"
 import { IconChevronLeft } from "@intentui/icons"
 import { LoadingScreen } from "@/client/components/loading-screen"
-import type { Transaction } from "@/server/db/zod"
+import type { Transaction } from "@/server/db/arktype"
 import { getTransactionsStatistics } from "@/client/utils/statistics"
 import { usePockets } from "@/client/hooks/pockets/usePockets"
 import { useTransactions } from "@/client/hooks/transactions/useTransactions"

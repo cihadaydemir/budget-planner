@@ -6,7 +6,7 @@ import {
 	insertTransactionSchema,
 	type InsertTransactionSchemaType,
 	type Transaction,
-} from "@/server/db/zod"
+} from "@/server/db/arktype"
 import { toast } from "sonner"
 import { useCreateTransactionMutation } from "@/client/hooks/transactions/useCreateTransactionMutation"
 import { useEditTransaction } from "@/client/hooks/transactions/useEditTransaction"
@@ -14,7 +14,7 @@ import { useEffect } from "react"
 import { useFilter } from "react-aria-components"
 import { useParams } from "@tanstack/react-router"
 import { useQueryClient } from "@tanstack/react-query"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { arktypeResolver } from "@hookform/resolvers/arktype"
 
 interface CreateTransactionModalProps {
 	isOpen: boolean
@@ -33,8 +33,8 @@ export const CreateTransactionModal = ({
 	const queryClient = useQueryClient()
 
 	const { contains } = useFilter({ sensitivity: "base" })
-	const { control, handleSubmit, reset } = useForm({
-		resolver: zodResolver(insertTransactionSchema),
+	const { control, handleSubmit, reset } = useForm<InsertTransactionSchemaType>({
+		resolver: arktypeResolver(insertTransactionSchema),
 		defaultValues: {
 			pocketId: params.pocketId,
 			currency: "EUR",
@@ -119,6 +119,7 @@ export const CreateTransactionModal = ({
 							render={({ field }) => (
 								<TextField
 									{...field}
+									value={field.value ?? ""}
 									label="Description"
 									placeholder="Describe what your expense is about."
 								/>

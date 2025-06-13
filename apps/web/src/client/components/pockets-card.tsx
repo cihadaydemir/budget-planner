@@ -1,5 +1,5 @@
 import { Button, Card, Menu, Meter } from "./ui"
-import type { ExtendedPocket, Pocket } from "@/server/db/zod"
+import type { ExtendedPocket, Pocket } from "@/server/db/arktype"
 import { IconDotsVertical, IconHighlight, IconTrash } from "@intentui/icons"
 
 import { toast } from "sonner"

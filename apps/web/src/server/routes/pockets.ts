@@ -5,8 +5,12 @@ import type { AppContext } from ".."
 import { HTTPException } from "hono/http-exception"
 import { Hono } from "hono"
 
-import { type ExtendedPocket, insertPocketSchema } from "../db/zod"
-import { zValidator } from "@hono/zod-validator"
+import {
+	type ExtendedPocket,
+	insertPocketSchema,
+	updatePocketSchema,
+} from "../db/arktype"
+import { arktypeValidator } from "@hono/arktype-validator"
 
 //TODO: checek if zValidators are correct or there are better ways to do it
 export const pocketsRoute = new Hono<AppContext>()
@@ -56,11 +60,7 @@ export const pocketsRoute = new Hono<AppContext>()
 	})
 	.post(
 		"/",
-		zValidator("json", insertPocketSchema, (result, c) => {
-			if (!result.success) {
-				throw new HTTPException(400, { message: result.error.message })
-			}
-		}),
+		arktypeValidator("json", insertPocketSchema),
 		async (c) => {
 			const data = c.req.valid("json")
 			const db = c.var.DrizzleDB
@@ -80,11 +80,7 @@ export const pocketsRoute = new Hono<AppContext>()
 	)
 	.post(
 		"/:id",
-		zValidator("json", insertPocketSchema.partial(), (result, c) => {
-			if (!result.success) {
-				throw new HTTPException(400, { message: result.error.message })
-			}
-		}),
+		arktypeValidator("json", updatePocketSchema),
 		async (c) => {
 			const id = c.req.param("id")
 			const data = c.req.valid("json")

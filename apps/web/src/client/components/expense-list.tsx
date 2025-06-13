@@ -1,7 +1,7 @@
 import { Button, Card, Menu } from "./ui"
 import { IconCheck, IconDotsVertical, IconHighlight, IconTrash } from "@intentui/icons"
 
-import type { Transaction } from "@/server/db/zod"
+import type { Transaction } from "@/server/db/arktype"
 import { toast } from "sonner"
 import { useDeleteTransaction } from "@/client/hooks/transactions/useDeleteTransaction"
 import { useEditTransaction } from "@/client/hooks/transactions/useEditTransaction"

@@ -7,8 +7,8 @@ import { useEditPocket } from "@/client/hooks/pockets/useEditPocket"
 import { useEffect } from "react"
 
 import { useQueryClient } from "@tanstack/react-query"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { insertPocketSchema, type InsertPocketSchemaType, type Pocket } from "@/server/db/zod"
+import { arktypeResolver } from "@hookform/resolvers/arktype"
+import { insertPocketSchema, type InsertPocketSchemaType, type Pocket } from "@/server/db/arktype"
 
 interface CreatePocketModalProps {
 	isOpen: boolean
@@ -19,8 +19,8 @@ interface CreatePocketModalProps {
 
 export const CreatePocketModal = ({ editingPocket, setEditingPocket, isOpen, setIsOpen }: CreatePocketModalProps) => {
 	const queryClient = useQueryClient()
-	const { control, handleSubmit, reset } = useForm({
-		resolver: zodResolver(insertPocketSchema),
+	const { control, handleSubmit, reset } = useForm<InsertPocketSchemaType>({
+		resolver: arktypeResolver(insertPocketSchema),
 	})
 	const createPocketMutation = useCreatePocketMutation()
 	const editPocketMutation = useEditPocket()

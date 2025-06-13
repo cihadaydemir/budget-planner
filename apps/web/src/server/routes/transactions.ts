@@ -3,9 +3,12 @@ import { and, eq } from "drizzle-orm"
 import type { AppContext } from ".."
 import { HTTPException } from "hono/http-exception"
 import { Hono } from "hono"
-import { insertTransactionSchema } from "../db/zod/transaction"
+import {
+	insertTransactionSchema,
+	updateTransactionSchema,
+} from "../db/arktype/transaction"
 import { transaction } from "../db/schema"
-import { zValidator } from "@hono/zod-validator"
+import { arktypeValidator } from "@hono/arktype-validator"
 
 export const transactionsRoute = new Hono<AppContext>()
 	.get("/:id", async (c) => {
@@ -27,11 +30,7 @@ export const transactionsRoute = new Hono<AppContext>()
 	})
 	.post(
 		"/",
-		zValidator("json", insertTransactionSchema, (result, c) => {
-			if (!result.success) {
-				throw new HTTPException(400, { message: result.error.message })
-			}
-		}),
+		arktypeValidator("json", insertTransactionSchema),
 		async (c) => {
 			const data = c.req.valid("json")
 			const db = c.var.DrizzleDB
@@ -53,11 +52,7 @@ export const transactionsRoute = new Hono<AppContext>()
 	)
 	.post(
 		"/:id",
-		zValidator("json", insertTransactionSchema.partial(), (result, c) => {
-			if (!result.success) {
-				throw new HTTPException(400, { message: result.error.message })
-			}
-		}),
+		arktypeValidator("json", updateTransactionSchema),
 		async (c) => {
 			const id = c.req.param("id")
 			const data = c.req.valid("json")

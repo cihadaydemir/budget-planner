@@ -1,9 +1,9 @@
 import { Button, Heading, Loader } from "@/client/components/ui"
 
 import { CreatePocketModal } from "@/client/components/create-pocket-modal"
-import { IconPlus } from "justd-icons"
+import { IconPlus } from "@intentui/icons"
 import { LoadingScreen } from "@/client/components/loading-screen"
-import type { Pocket } from "@hono/db/zod"
+import type { Pocket } from "@/server/db/arktype"
 import { PocketsCard } from "@/client/components/pockets-card"
 import { createFileRoute } from "@tanstack/react-router"
 import { usePockets } from "@/client/hooks/pockets/usePockets"

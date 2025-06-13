@@ -1,4 +1,4 @@
-import type { Transaction } from "@hono/db/zod"
+import type { Transaction } from "@/server/db/arktype"
 
 export type StatisticsDataType = {
 	totalSpent: number

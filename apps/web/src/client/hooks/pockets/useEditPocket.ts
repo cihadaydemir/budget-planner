@@ -1,4 +1,4 @@
-import type { InsertPocketSchemaType } from "@/server/db/zod"
+import type { InsertPocketSchemaType } from "@/server/db/arktype"
 import { hono } from "@/client/lib/hono-client"
 import { useMutation } from "@tanstack/react-query"
 

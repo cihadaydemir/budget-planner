@@ -1,4 +1,4 @@
-import type { ExtendedPocket, InsertPocketSchemaType } from "@/server/db/zod"
+import type { ExtendedPocket, InsertPocketSchemaType } from "@/server/db/arktype"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import type { Session } from "@/client/lib/auth/auth-client"

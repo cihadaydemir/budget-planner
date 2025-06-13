@@ -24,8 +24,9 @@
     "packages/*"
   ],
   "dependencies": {
-    "zod": "^3.25.51",
-    "@hono/zod-validator": "^0.5.0",
-    "@microlabs/otel-cf-workers": "^1.0.0-rc.49"
+    "@hono/arktype-validator": "^2.0.1",
+    "@microlabs/otel-cf-workers": "^1.0.0-rc.49",
+    "arktype": "^2.1.20",
+    "drizzle-arktype": "^0.1.3"
   }
 }
