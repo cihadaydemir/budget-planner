@@ -46,7 +46,7 @@
           "binding": "DB",
           "database_name": "budget-planner-dev",
           "database_id": "a5cbff0c-a9c9-4b7b-96ab-29c51aa4a3ae",
-          "migrations_dir": ".src/server/drizzle/migrations/",
+          "migrations_dir": "./src/server/drizzle/migrations",
         },
       ],
       "kv_namespaces": [
@@ -69,7 +69,7 @@
       "binding": "DB",
       "database_name": "funds-db-prod",
       "database_id": "a9abe8eb-2efd-45bf-874f-b5d2690cc5e4",
-      "migrations_dir": "./src/server/drizzle/migrations/",
+      "migrations_dir": "./src/server/drizzle/migrations",
     },
   ],
   "kv_namespaces": [
